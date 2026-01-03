@@ -1,33 +1,75 @@
 import { Tabs } from 'expo-router';
-import React from 'react';
-
-import { HapticTab } from '@/components/haptic-tab';
-import { IconSymbol } from '@/components/ui/icon-symbol';
-import { Colors } from '@/constants/theme';
-import { useColorScheme } from '@/hooks/use-color-scheme';
+import { Ionicons, MaterialIcons } from '@expo/vector-icons';
+import { useAuthStore } from '@/store/authStore';
 
 export default function TabLayout() {
-  const colorScheme = useColorScheme();
+  const { user } = useAuthStore();
+  const isAdmin = user?.is_admin;
 
   return (
-    <Tabs
-      screenOptions={{
-        tabBarActiveTintColor: Colors[colorScheme ?? 'light'].tint,
-        headerShown: false,
-        tabBarButton: HapticTab,
-      }}>
+    <Tabs screenOptions={{ headerShown: false }}>
+      {/* Главная страница для всех */}
       <Tabs.Screen
         name="index"
         options={{
-          title: 'Home',
-          tabBarIcon: ({ color }) => <IconSymbol size={28} name="house.fill" color={color} />,
+          title: 'Главная',
+          tabBarIcon: ({ color, size }) => (
+            <Ionicons name="home" size={size} color={color} />
+          )
+        }}
+      />
+
+      {/* Профиль для юзера */}
+      <Tabs.Screen
+        name="user-profile/index"
+        options={{
+          title: 'Профиль',
+          tabBarIcon: ({ color, size }) => (
+            <Ionicons name="person" size={size} color={color} />
+          ),
+          href: !isAdmin ? undefined : null
+        }}
+      />
+
+      {/* Табы только для администратора */}
+      <Tabs.Screen
+        name="admin-applications/index"
+        options={{
+          title: 'Заявки',
+          tabBarIcon: ({ color, size }) => (
+            <MaterialIcons name="assignment" size={size} color={color} />
+          ),
+          href: isAdmin ? undefined : null
         }}
       />
       <Tabs.Screen
-        name="explore"
+        name="admin-users/index"
         options={{
-          title: 'Explore',
-          tabBarIcon: ({ color }) => <IconSymbol size={28} name="paperplane.fill" color={color} />,
+          title: 'Пользователи',
+          tabBarIcon: ({ color, size }) => (
+            <Ionicons name="people" size={size} color={color} />
+          ),
+          href: isAdmin ? undefined : null
+        }}
+      />
+
+      {/*скрытые табы*/}
+      <Tabs.Screen
+        name="admin-applications/[id]"
+        options={{
+          href: null
+        }}
+      />
+      <Tabs.Screen
+        name="admin-users/[id]"
+        options={{
+          href: null
+        }}
+      />
+      <Tabs.Screen
+        name="sensor/[type]/[id]"
+        options={{
+          href: null
         }}
       />
     </Tabs>

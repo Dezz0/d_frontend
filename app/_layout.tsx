@@ -1,24 +1,49 @@
-import { DarkTheme, DefaultTheme, ThemeProvider } from '@react-navigation/native';
-import { Stack } from 'expo-router';
-import { StatusBar } from 'expo-status-bar';
-import 'react-native-reanimated';
+import { router, Stack, usePathname } from 'expo-router';
+import { useEffect, useState } from 'react';
+import { useAuthStore } from '@/store/authStore';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
-import { useColorScheme } from '@/hooks/use-color-scheme';
-
-export const unstable_settings = {
-  anchor: '(tabs)',
-};
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      retry: 1,
+      staleTime: 0,
+      gcTime: 0
+    },
+    mutations: {
+      retry: 1
+    }
+  }
+});
 
 export default function RootLayout() {
-  const colorScheme = useColorScheme();
+  const isAuthenticated = useAuthStore((state) => state.isAuthenticated);
+  const pathname = usePathname();
+  const [isReady, setIsReady] = useState(false);
+
+  useEffect(() => {
+    setIsReady(true);
+  }, []);
+
+  useEffect(() => {
+    if (!isReady) return;
+
+    const isAuthPage = pathname.includes('/login') || pathname.includes('/register');
+
+    if (!isAuthenticated && !isAuthPage) {
+      router.replace('/login');
+    } else if (isAuthenticated && isAuthPage) {
+      router.replace('/(tabs)');
+    }
+  }, [isAuthenticated, pathname, isReady]);
 
   return (
-    <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
-      <Stack>
-        <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-        <Stack.Screen name="modal" options={{ presentation: 'modal', title: 'Modal' }} />
+    <QueryClientProvider client={queryClient}>
+      <Stack screenOptions={{ headerShown: false }}>
+        <Stack.Screen name="login" />
+        <Stack.Screen name="register" />
+        <Stack.Screen name="(tabs)" />
       </Stack>
-      <StatusBar style="auto" />
-    </ThemeProvider>
+    </QueryClientProvider>
   );
 }
