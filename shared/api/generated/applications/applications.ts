@@ -5,11 +5,7 @@
  * API для управления умным домом
  * OpenAPI spec version: 1.0.0
  */
-import {
-  useInfiniteQuery,
-  useMutation,
-  useQuery
-} from '@tanstack/react-query';
+import { useInfiniteQuery, useMutation, useQuery } from '@tanstack/react-query'
 import type {
   DataTag,
   DefinedInitialDataOptions,
@@ -26,1134 +22,2370 @@ import type {
   UseMutationOptions,
   UseMutationResult,
   UseQueryOptions,
-  UseQueryResult
-} from '@tanstack/react-query';
+  UseQueryResult,
+} from '@tanstack/react-query'
 
 import type {
   ApplicationCreate,
   ApplicationResponse,
   ApplicationUpdate,
   DictionariesResponse,
-  HTTPValidationError
-} from '.././model';
+  HTTPValidationError,
+} from '.././model'
 
-import { baseApiRequest } from '../../baseApiRequest';
-
-
-
+import { baseApiRequest } from '../../baseApiRequest'
 
 /**
  * Получить справочники комнат и датчиков
  * @summary Get Dictionaries
  */
 export const getDictionariesApplicationsDictionariesGet = (
-    
- signal?: AbortSignal
+  signal?: AbortSignal,
 ) => {
-      
-      
-      return baseApiRequest<DictionariesResponse>(
-      {url: `/applications/dictionaries`, method: 'GET', signal
-    },
-      );
-    }
-  
+  return baseApiRequest<DictionariesResponse>({
+    url: `/applications/dictionaries`,
+    method: 'GET',
+    signal,
+  })
+}
 
-
-
-export const getGetDictionariesApplicationsDictionariesGetInfiniteQueryKey = () => {
-    return [
-    'infinate', `/applications/dictionaries`
-    ] as const;
-    }
+export const getGetDictionariesApplicationsDictionariesGetInfiniteQueryKey =
+  () => {
+    return ['infinate', `/applications/dictionaries`] as const
+  }
 
 export const getGetDictionariesApplicationsDictionariesGetQueryKey = () => {
-    return [
-    `/applications/dictionaries`
-    ] as const;
-    }
-
-    
-export const getGetDictionariesApplicationsDictionariesGetInfiniteQueryOptions = <TData = InfiniteData<Awaited<ReturnType<typeof getDictionariesApplicationsDictionariesGet>>>, TError = unknown>( options?: { query?:Partial<UseInfiniteQueryOptions<Awaited<ReturnType<typeof getDictionariesApplicationsDictionariesGet>>, TError, TData>>, }
-) => {
-
-const {query: queryOptions} = options ?? {};
-
-  const queryKey =  queryOptions?.queryKey ?? getGetDictionariesApplicationsDictionariesGetInfiniteQueryKey();
-
-  
-
-    const queryFn: QueryFunction<Awaited<ReturnType<typeof getDictionariesApplicationsDictionariesGet>>> = ({ signal }) => getDictionariesApplicationsDictionariesGet(signal);
-
-      
-
-      
-
-   return  { queryKey, queryFn, ...queryOptions} as UseInfiniteQueryOptions<Awaited<ReturnType<typeof getDictionariesApplicationsDictionariesGet>>, TError, TData> & { queryKey: DataTag<QueryKey, TData, TError> }
+  return [`/applications/dictionaries`] as const
 }
 
-export type GetDictionariesApplicationsDictionariesGetInfiniteQueryResult = NonNullable<Awaited<ReturnType<typeof getDictionariesApplicationsDictionariesGet>>>
-export type GetDictionariesApplicationsDictionariesGetInfiniteQueryError = unknown
+export const getGetDictionariesApplicationsDictionariesGetInfiniteQueryOptions =
+  <
+    TData = InfiniteData<
+      Awaited<ReturnType<typeof getDictionariesApplicationsDictionariesGet>>
+    >,
+    TError = unknown,
+  >(options?: {
+    query?: Partial<
+      UseInfiniteQueryOptions<
+        Awaited<ReturnType<typeof getDictionariesApplicationsDictionariesGet>>,
+        TError,
+        TData
+      >
+    >
+  }) => {
+    const { query: queryOptions } = options ?? {}
 
+    const queryKey =
+      queryOptions?.queryKey ??
+      getGetDictionariesApplicationsDictionariesGetInfiniteQueryKey()
 
-export function useGetDictionariesApplicationsDictionariesGetInfinite<TData = InfiniteData<Awaited<ReturnType<typeof getDictionariesApplicationsDictionariesGet>>>, TError = unknown>(
-  options: { query:Partial<UseInfiniteQueryOptions<Awaited<ReturnType<typeof getDictionariesApplicationsDictionariesGet>>, TError, TData>> & Pick<
+    const queryFn: QueryFunction<
+      Awaited<ReturnType<typeof getDictionariesApplicationsDictionariesGet>>
+    > = ({ signal }) => getDictionariesApplicationsDictionariesGet(signal)
+
+    return { queryKey, queryFn, ...queryOptions } as UseInfiniteQueryOptions<
+      Awaited<ReturnType<typeof getDictionariesApplicationsDictionariesGet>>,
+      TError,
+      TData
+    > & { queryKey: DataTag<QueryKey, TData, TError> }
+  }
+
+export type GetDictionariesApplicationsDictionariesGetInfiniteQueryResult =
+  NonNullable<
+    Awaited<ReturnType<typeof getDictionariesApplicationsDictionariesGet>>
+  >
+export type GetDictionariesApplicationsDictionariesGetInfiniteQueryError =
+  unknown
+
+export function useGetDictionariesApplicationsDictionariesGetInfinite<
+  TData = InfiniteData<
+    Awaited<ReturnType<typeof getDictionariesApplicationsDictionariesGet>>
+  >,
+  TError = unknown,
+>(
+  options: {
+    query: Partial<
+      UseInfiniteQueryOptions<
+        Awaited<ReturnType<typeof getDictionariesApplicationsDictionariesGet>>,
+        TError,
+        TData
+      >
+    > &
+      Pick<
         DefinedInitialDataOptions<
-          Awaited<ReturnType<typeof getDictionariesApplicationsDictionariesGet>>,
+          Awaited<
+            ReturnType<typeof getDictionariesApplicationsDictionariesGet>
+          >,
           TError,
           Awaited<ReturnType<typeof getDictionariesApplicationsDictionariesGet>>
-        > , 'initialData'
-      >, }
- , queryClient?: QueryClient
-  ):  DefinedUseInfiniteQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-export function useGetDictionariesApplicationsDictionariesGetInfinite<TData = InfiniteData<Awaited<ReturnType<typeof getDictionariesApplicationsDictionariesGet>>>, TError = unknown>(
-  options?: { query?:Partial<UseInfiniteQueryOptions<Awaited<ReturnType<typeof getDictionariesApplicationsDictionariesGet>>, TError, TData>> & Pick<
+        >,
+        'initialData'
+      >
+  },
+  queryClient?: QueryClient,
+): DefinedUseInfiniteQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>
+}
+export function useGetDictionariesApplicationsDictionariesGetInfinite<
+  TData = InfiniteData<
+    Awaited<ReturnType<typeof getDictionariesApplicationsDictionariesGet>>
+  >,
+  TError = unknown,
+>(
+  options?: {
+    query?: Partial<
+      UseInfiniteQueryOptions<
+        Awaited<ReturnType<typeof getDictionariesApplicationsDictionariesGet>>,
+        TError,
+        TData
+      >
+    > &
+      Pick<
         UndefinedInitialDataOptions<
-          Awaited<ReturnType<typeof getDictionariesApplicationsDictionariesGet>>,
+          Awaited<
+            ReturnType<typeof getDictionariesApplicationsDictionariesGet>
+          >,
           TError,
           Awaited<ReturnType<typeof getDictionariesApplicationsDictionariesGet>>
-        > , 'initialData'
-      >, }
- , queryClient?: QueryClient
-  ):  UseInfiniteQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-export function useGetDictionariesApplicationsDictionariesGetInfinite<TData = InfiniteData<Awaited<ReturnType<typeof getDictionariesApplicationsDictionariesGet>>>, TError = unknown>(
-  options?: { query?:Partial<UseInfiniteQueryOptions<Awaited<ReturnType<typeof getDictionariesApplicationsDictionariesGet>>, TError, TData>>, }
- , queryClient?: QueryClient
-  ):  UseInfiniteQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+        >,
+        'initialData'
+      >
+  },
+  queryClient?: QueryClient,
+): UseInfiniteQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>
+}
+export function useGetDictionariesApplicationsDictionariesGetInfinite<
+  TData = InfiniteData<
+    Awaited<ReturnType<typeof getDictionariesApplicationsDictionariesGet>>
+  >,
+  TError = unknown,
+>(
+  options?: {
+    query?: Partial<
+      UseInfiniteQueryOptions<
+        Awaited<ReturnType<typeof getDictionariesApplicationsDictionariesGet>>,
+        TError,
+        TData
+      >
+    >
+  },
+  queryClient?: QueryClient,
+): UseInfiniteQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>
+}
 /**
  * @summary Get Dictionaries
  */
 
-export function useGetDictionariesApplicationsDictionariesGetInfinite<TData = InfiniteData<Awaited<ReturnType<typeof getDictionariesApplicationsDictionariesGet>>>, TError = unknown>(
-  options?: { query?:Partial<UseInfiniteQueryOptions<Awaited<ReturnType<typeof getDictionariesApplicationsDictionariesGet>>, TError, TData>>, }
- , queryClient?: QueryClient 
- ):  UseInfiniteQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+export function useGetDictionariesApplicationsDictionariesGetInfinite<
+  TData = InfiniteData<
+    Awaited<ReturnType<typeof getDictionariesApplicationsDictionariesGet>>
+  >,
+  TError = unknown,
+>(
+  options?: {
+    query?: Partial<
+      UseInfiniteQueryOptions<
+        Awaited<ReturnType<typeof getDictionariesApplicationsDictionariesGet>>,
+        TError,
+        TData
+      >
+    >
+  },
+  queryClient?: QueryClient,
+): UseInfiniteQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>
+} {
+  const queryOptions =
+    getGetDictionariesApplicationsDictionariesGetInfiniteQueryOptions(options)
 
-  const queryOptions = getGetDictionariesApplicationsDictionariesGetInfiniteQueryOptions(options)
+  const query = useInfiniteQuery(
+    queryOptions,
+    queryClient,
+  ) as UseInfiniteQueryResult<TData, TError> & {
+    queryKey: DataTag<QueryKey, TData, TError>
+  }
 
-  const query = useInfiniteQuery(queryOptions, queryClient) as  UseInfiniteQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
+  query.queryKey = queryOptions.queryKey
 
-  query.queryKey = queryOptions.queryKey ;
-
-  return query;
+  return query
 }
 
+export const getGetDictionariesApplicationsDictionariesGetQueryOptions = <
+  TData = Awaited<
+    ReturnType<typeof getDictionariesApplicationsDictionariesGet>
+  >,
+  TError = unknown,
+>(options?: {
+  query?: Partial<
+    UseQueryOptions<
+      Awaited<ReturnType<typeof getDictionariesApplicationsDictionariesGet>>,
+      TError,
+      TData
+    >
+  >
+}) => {
+  const { query: queryOptions } = options ?? {}
 
+  const queryKey =
+    queryOptions?.queryKey ??
+    getGetDictionariesApplicationsDictionariesGetQueryKey()
 
-export const getGetDictionariesApplicationsDictionariesGetQueryOptions = <TData = Awaited<ReturnType<typeof getDictionariesApplicationsDictionariesGet>>, TError = unknown>( options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getDictionariesApplicationsDictionariesGet>>, TError, TData>>, }
-) => {
+  const queryFn: QueryFunction<
+    Awaited<ReturnType<typeof getDictionariesApplicationsDictionariesGet>>
+  > = ({ signal }) => getDictionariesApplicationsDictionariesGet(signal)
 
-const {query: queryOptions} = options ?? {};
-
-  const queryKey =  queryOptions?.queryKey ?? getGetDictionariesApplicationsDictionariesGetQueryKey();
-
-  
-
-    const queryFn: QueryFunction<Awaited<ReturnType<typeof getDictionariesApplicationsDictionariesGet>>> = ({ signal }) => getDictionariesApplicationsDictionariesGet(signal);
-
-      
-
-      
-
-   return  { queryKey, queryFn, ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof getDictionariesApplicationsDictionariesGet>>, TError, TData> & { queryKey: DataTag<QueryKey, TData, TError> }
+  return { queryKey, queryFn, ...queryOptions } as UseQueryOptions<
+    Awaited<ReturnType<typeof getDictionariesApplicationsDictionariesGet>>,
+    TError,
+    TData
+  > & { queryKey: DataTag<QueryKey, TData, TError> }
 }
 
-export type GetDictionariesApplicationsDictionariesGetQueryResult = NonNullable<Awaited<ReturnType<typeof getDictionariesApplicationsDictionariesGet>>>
+export type GetDictionariesApplicationsDictionariesGetQueryResult = NonNullable<
+  Awaited<ReturnType<typeof getDictionariesApplicationsDictionariesGet>>
+>
 export type GetDictionariesApplicationsDictionariesGetQueryError = unknown
 
-
-export function useGetDictionariesApplicationsDictionariesGet<TData = Awaited<ReturnType<typeof getDictionariesApplicationsDictionariesGet>>, TError = unknown>(
-  options: { query:Partial<UseQueryOptions<Awaited<ReturnType<typeof getDictionariesApplicationsDictionariesGet>>, TError, TData>> & Pick<
+export function useGetDictionariesApplicationsDictionariesGet<
+  TData = Awaited<
+    ReturnType<typeof getDictionariesApplicationsDictionariesGet>
+  >,
+  TError = unknown,
+>(
+  options: {
+    query: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof getDictionariesApplicationsDictionariesGet>>,
+        TError,
+        TData
+      >
+    > &
+      Pick<
         DefinedInitialDataOptions<
-          Awaited<ReturnType<typeof getDictionariesApplicationsDictionariesGet>>,
+          Awaited<
+            ReturnType<typeof getDictionariesApplicationsDictionariesGet>
+          >,
           TError,
           Awaited<ReturnType<typeof getDictionariesApplicationsDictionariesGet>>
-        > , 'initialData'
-      >, }
- , queryClient?: QueryClient
-  ):  DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-export function useGetDictionariesApplicationsDictionariesGet<TData = Awaited<ReturnType<typeof getDictionariesApplicationsDictionariesGet>>, TError = unknown>(
-  options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getDictionariesApplicationsDictionariesGet>>, TError, TData>> & Pick<
+        >,
+        'initialData'
+      >
+  },
+  queryClient?: QueryClient,
+): DefinedUseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>
+}
+export function useGetDictionariesApplicationsDictionariesGet<
+  TData = Awaited<
+    ReturnType<typeof getDictionariesApplicationsDictionariesGet>
+  >,
+  TError = unknown,
+>(
+  options?: {
+    query?: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof getDictionariesApplicationsDictionariesGet>>,
+        TError,
+        TData
+      >
+    > &
+      Pick<
         UndefinedInitialDataOptions<
-          Awaited<ReturnType<typeof getDictionariesApplicationsDictionariesGet>>,
+          Awaited<
+            ReturnType<typeof getDictionariesApplicationsDictionariesGet>
+          >,
           TError,
           Awaited<ReturnType<typeof getDictionariesApplicationsDictionariesGet>>
-        > , 'initialData'
-      >, }
- , queryClient?: QueryClient
-  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-export function useGetDictionariesApplicationsDictionariesGet<TData = Awaited<ReturnType<typeof getDictionariesApplicationsDictionariesGet>>, TError = unknown>(
-  options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getDictionariesApplicationsDictionariesGet>>, TError, TData>>, }
- , queryClient?: QueryClient
-  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+        >,
+        'initialData'
+      >
+  },
+  queryClient?: QueryClient,
+): UseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>
+}
+export function useGetDictionariesApplicationsDictionariesGet<
+  TData = Awaited<
+    ReturnType<typeof getDictionariesApplicationsDictionariesGet>
+  >,
+  TError = unknown,
+>(
+  options?: {
+    query?: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof getDictionariesApplicationsDictionariesGet>>,
+        TError,
+        TData
+      >
+    >
+  },
+  queryClient?: QueryClient,
+): UseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>
+}
 /**
  * @summary Get Dictionaries
  */
 
-export function useGetDictionariesApplicationsDictionariesGet<TData = Awaited<ReturnType<typeof getDictionariesApplicationsDictionariesGet>>, TError = unknown>(
-  options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getDictionariesApplicationsDictionariesGet>>, TError, TData>>, }
- , queryClient?: QueryClient 
- ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+export function useGetDictionariesApplicationsDictionariesGet<
+  TData = Awaited<
+    ReturnType<typeof getDictionariesApplicationsDictionariesGet>
+  >,
+  TError = unknown,
+>(
+  options?: {
+    query?: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof getDictionariesApplicationsDictionariesGet>>,
+        TError,
+        TData
+      >
+    >
+  },
+  queryClient?: QueryClient,
+): UseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>
+} {
+  const queryOptions =
+    getGetDictionariesApplicationsDictionariesGetQueryOptions(options)
 
-  const queryOptions = getGetDictionariesApplicationsDictionariesGetQueryOptions(options)
+  const query = useQuery(queryOptions, queryClient) as UseQueryResult<
+    TData,
+    TError
+  > & { queryKey: DataTag<QueryKey, TData, TError> }
 
-  const query = useQuery(queryOptions, queryClient) as  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
+  query.queryKey = queryOptions.queryKey
 
-  query.queryKey = queryOptions.queryKey ;
-
-  return query;
+  return query
 }
-
-
 
 /**
  * Создать новую заявку
  * @summary Create Application
  */
 export const createApplicationApplicationsPost = (
-    applicationCreate: ApplicationCreate,
- signal?: AbortSignal
+  applicationCreate: ApplicationCreate,
+  signal?: AbortSignal,
 ) => {
-      
-      
-      return baseApiRequest<ApplicationResponse>(
-      {url: `/applications/`, method: 'POST',
-      headers: {'Content-Type': 'application/json', },
-      data: applicationCreate, signal
-    },
-      );
-    }
-  
+  return baseApiRequest<ApplicationResponse>({
+    url: `/applications/`,
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    data: applicationCreate,
+    signal,
+  })
+}
 
+export const getCreateApplicationApplicationsPostMutationOptions = <
+  TError = HTTPValidationError,
+  TContext = unknown,
+>(options?: {
+  mutation?: UseMutationOptions<
+    Awaited<ReturnType<typeof createApplicationApplicationsPost>>,
+    TError,
+    { data: ApplicationCreate },
+    TContext
+  >
+}): UseMutationOptions<
+  Awaited<ReturnType<typeof createApplicationApplicationsPost>>,
+  TError,
+  { data: ApplicationCreate },
+  TContext
+> => {
+  const mutationKey = ['createApplicationApplicationsPost']
+  const { mutation: mutationOptions } = options
+    ? options.mutation &&
+      'mutationKey' in options.mutation &&
+      options.mutation.mutationKey
+      ? options
+      : { ...options, mutation: { ...options.mutation, mutationKey } }
+    : { mutation: { mutationKey } }
 
-export const getCreateApplicationApplicationsPostMutationOptions = <TError = HTTPValidationError,
-    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof createApplicationApplicationsPost>>, TError,{data: ApplicationCreate}, TContext>, }
-): UseMutationOptions<Awaited<ReturnType<typeof createApplicationApplicationsPost>>, TError,{data: ApplicationCreate}, TContext> => {
+  const mutationFn: MutationFunction<
+    Awaited<ReturnType<typeof createApplicationApplicationsPost>>,
+    { data: ApplicationCreate }
+  > = props => {
+    const { data } = props ?? {}
 
-const mutationKey = ['createApplicationApplicationsPost'];
-const {mutation: mutationOptions} = options ?
-      options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
-      options
-      : {...options, mutation: {...options.mutation, mutationKey}}
-      : {mutation: { mutationKey, }};
+    return createApplicationApplicationsPost(data)
+  }
 
-      
+  return { mutationFn, ...mutationOptions }
+}
 
+export type CreateApplicationApplicationsPostMutationResult = NonNullable<
+  Awaited<ReturnType<typeof createApplicationApplicationsPost>>
+>
+export type CreateApplicationApplicationsPostMutationBody = ApplicationCreate
+export type CreateApplicationApplicationsPostMutationError = HTTPValidationError
 
-      const mutationFn: MutationFunction<Awaited<ReturnType<typeof createApplicationApplicationsPost>>, {data: ApplicationCreate}> = (props) => {
-          const {data} = props ?? {};
-
-          return  createApplicationApplicationsPost(data,)
-        }
-
-        
-
-
-  return  { mutationFn, ...mutationOptions }}
-
-    export type CreateApplicationApplicationsPostMutationResult = NonNullable<Awaited<ReturnType<typeof createApplicationApplicationsPost>>>
-    export type CreateApplicationApplicationsPostMutationBody = ApplicationCreate
-    export type CreateApplicationApplicationsPostMutationError = HTTPValidationError
-
-    /**
+/**
  * @summary Create Application
  */
-export const useCreateApplicationApplicationsPost = <TError = HTTPValidationError,
-    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof createApplicationApplicationsPost>>, TError,{data: ApplicationCreate}, TContext>, }
- , queryClient?: QueryClient): UseMutationResult<
-        Awaited<ReturnType<typeof createApplicationApplicationsPost>>,
-        TError,
-        {data: ApplicationCreate},
-        TContext
-      > => {
+export const useCreateApplicationApplicationsPost = <
+  TError = HTTPValidationError,
+  TContext = unknown,
+>(
+  options?: {
+    mutation?: UseMutationOptions<
+      Awaited<ReturnType<typeof createApplicationApplicationsPost>>,
+      TError,
+      { data: ApplicationCreate },
+      TContext
+    >
+  },
+  queryClient?: QueryClient,
+): UseMutationResult<
+  Awaited<ReturnType<typeof createApplicationApplicationsPost>>,
+  TError,
+  { data: ApplicationCreate },
+  TContext
+> => {
+  const mutationOptions =
+    getCreateApplicationApplicationsPostMutationOptions(options)
 
-      const mutationOptions = getCreateApplicationApplicationsPostMutationOptions(options);
-
-      return useMutation(mutationOptions, queryClient);
-    }
-    /**
+  return useMutation(mutationOptions, queryClient)
+}
+/**
  * Получить мои заявки
  * @summary Get My Applications
  */
-export const getMyApplicationsApplicationsMyGet = (
-    
- signal?: AbortSignal
-) => {
-      
-      
-      return baseApiRequest<ApplicationResponse[]>(
-      {url: `/applications/my`, method: 'GET', signal
-    },
-      );
-    }
-  
-
-
+export const getMyApplicationsApplicationsMyGet = (signal?: AbortSignal) => {
+  return baseApiRequest<ApplicationResponse[]>({
+    url: `/applications/my`,
+    method: 'GET',
+    signal,
+  })
+}
 
 export const getGetMyApplicationsApplicationsMyGetInfiniteQueryKey = () => {
-    return [
-    'infinate', `/applications/my`
-    ] as const;
-    }
+  return ['infinate', `/applications/my`] as const
+}
 
 export const getGetMyApplicationsApplicationsMyGetQueryKey = () => {
-    return [
-    `/applications/my`
-    ] as const;
-    }
-
-    
-export const getGetMyApplicationsApplicationsMyGetInfiniteQueryOptions = <TData = InfiniteData<Awaited<ReturnType<typeof getMyApplicationsApplicationsMyGet>>>, TError = unknown>( options?: { query?:Partial<UseInfiniteQueryOptions<Awaited<ReturnType<typeof getMyApplicationsApplicationsMyGet>>, TError, TData>>, }
-) => {
-
-const {query: queryOptions} = options ?? {};
-
-  const queryKey =  queryOptions?.queryKey ?? getGetMyApplicationsApplicationsMyGetInfiniteQueryKey();
-
-  
-
-    const queryFn: QueryFunction<Awaited<ReturnType<typeof getMyApplicationsApplicationsMyGet>>> = ({ signal }) => getMyApplicationsApplicationsMyGet(signal);
-
-      
-
-      
-
-   return  { queryKey, queryFn, ...queryOptions} as UseInfiniteQueryOptions<Awaited<ReturnType<typeof getMyApplicationsApplicationsMyGet>>, TError, TData> & { queryKey: DataTag<QueryKey, TData, TError> }
+  return [`/applications/my`] as const
 }
 
-export type GetMyApplicationsApplicationsMyGetInfiniteQueryResult = NonNullable<Awaited<ReturnType<typeof getMyApplicationsApplicationsMyGet>>>
+export const getGetMyApplicationsApplicationsMyGetInfiniteQueryOptions = <
+  TData = InfiniteData<
+    Awaited<ReturnType<typeof getMyApplicationsApplicationsMyGet>>
+  >,
+  TError = unknown,
+>(options?: {
+  query?: Partial<
+    UseInfiniteQueryOptions<
+      Awaited<ReturnType<typeof getMyApplicationsApplicationsMyGet>>,
+      TError,
+      TData
+    >
+  >
+}) => {
+  const { query: queryOptions } = options ?? {}
+
+  const queryKey =
+    queryOptions?.queryKey ??
+    getGetMyApplicationsApplicationsMyGetInfiniteQueryKey()
+
+  const queryFn: QueryFunction<
+    Awaited<ReturnType<typeof getMyApplicationsApplicationsMyGet>>
+  > = ({ signal }) => getMyApplicationsApplicationsMyGet(signal)
+
+  return { queryKey, queryFn, ...queryOptions } as UseInfiniteQueryOptions<
+    Awaited<ReturnType<typeof getMyApplicationsApplicationsMyGet>>,
+    TError,
+    TData
+  > & { queryKey: DataTag<QueryKey, TData, TError> }
+}
+
+export type GetMyApplicationsApplicationsMyGetInfiniteQueryResult = NonNullable<
+  Awaited<ReturnType<typeof getMyApplicationsApplicationsMyGet>>
+>
 export type GetMyApplicationsApplicationsMyGetInfiniteQueryError = unknown
 
-
-export function useGetMyApplicationsApplicationsMyGetInfinite<TData = InfiniteData<Awaited<ReturnType<typeof getMyApplicationsApplicationsMyGet>>>, TError = unknown>(
-  options: { query:Partial<UseInfiniteQueryOptions<Awaited<ReturnType<typeof getMyApplicationsApplicationsMyGet>>, TError, TData>> & Pick<
+export function useGetMyApplicationsApplicationsMyGetInfinite<
+  TData = InfiniteData<
+    Awaited<ReturnType<typeof getMyApplicationsApplicationsMyGet>>
+  >,
+  TError = unknown,
+>(
+  options: {
+    query: Partial<
+      UseInfiniteQueryOptions<
+        Awaited<ReturnType<typeof getMyApplicationsApplicationsMyGet>>,
+        TError,
+        TData
+      >
+    > &
+      Pick<
         DefinedInitialDataOptions<
           Awaited<ReturnType<typeof getMyApplicationsApplicationsMyGet>>,
           TError,
           Awaited<ReturnType<typeof getMyApplicationsApplicationsMyGet>>
-        > , 'initialData'
-      >, }
- , queryClient?: QueryClient
-  ):  DefinedUseInfiniteQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-export function useGetMyApplicationsApplicationsMyGetInfinite<TData = InfiniteData<Awaited<ReturnType<typeof getMyApplicationsApplicationsMyGet>>>, TError = unknown>(
-  options?: { query?:Partial<UseInfiniteQueryOptions<Awaited<ReturnType<typeof getMyApplicationsApplicationsMyGet>>, TError, TData>> & Pick<
+        >,
+        'initialData'
+      >
+  },
+  queryClient?: QueryClient,
+): DefinedUseInfiniteQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>
+}
+export function useGetMyApplicationsApplicationsMyGetInfinite<
+  TData = InfiniteData<
+    Awaited<ReturnType<typeof getMyApplicationsApplicationsMyGet>>
+  >,
+  TError = unknown,
+>(
+  options?: {
+    query?: Partial<
+      UseInfiniteQueryOptions<
+        Awaited<ReturnType<typeof getMyApplicationsApplicationsMyGet>>,
+        TError,
+        TData
+      >
+    > &
+      Pick<
         UndefinedInitialDataOptions<
           Awaited<ReturnType<typeof getMyApplicationsApplicationsMyGet>>,
           TError,
           Awaited<ReturnType<typeof getMyApplicationsApplicationsMyGet>>
-        > , 'initialData'
-      >, }
- , queryClient?: QueryClient
-  ):  UseInfiniteQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-export function useGetMyApplicationsApplicationsMyGetInfinite<TData = InfiniteData<Awaited<ReturnType<typeof getMyApplicationsApplicationsMyGet>>>, TError = unknown>(
-  options?: { query?:Partial<UseInfiniteQueryOptions<Awaited<ReturnType<typeof getMyApplicationsApplicationsMyGet>>, TError, TData>>, }
- , queryClient?: QueryClient
-  ):  UseInfiniteQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+        >,
+        'initialData'
+      >
+  },
+  queryClient?: QueryClient,
+): UseInfiniteQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>
+}
+export function useGetMyApplicationsApplicationsMyGetInfinite<
+  TData = InfiniteData<
+    Awaited<ReturnType<typeof getMyApplicationsApplicationsMyGet>>
+  >,
+  TError = unknown,
+>(
+  options?: {
+    query?: Partial<
+      UseInfiniteQueryOptions<
+        Awaited<ReturnType<typeof getMyApplicationsApplicationsMyGet>>,
+        TError,
+        TData
+      >
+    >
+  },
+  queryClient?: QueryClient,
+): UseInfiniteQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>
+}
 /**
  * @summary Get My Applications
  */
 
-export function useGetMyApplicationsApplicationsMyGetInfinite<TData = InfiniteData<Awaited<ReturnType<typeof getMyApplicationsApplicationsMyGet>>>, TError = unknown>(
-  options?: { query?:Partial<UseInfiniteQueryOptions<Awaited<ReturnType<typeof getMyApplicationsApplicationsMyGet>>, TError, TData>>, }
- , queryClient?: QueryClient 
- ):  UseInfiniteQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+export function useGetMyApplicationsApplicationsMyGetInfinite<
+  TData = InfiniteData<
+    Awaited<ReturnType<typeof getMyApplicationsApplicationsMyGet>>
+  >,
+  TError = unknown,
+>(
+  options?: {
+    query?: Partial<
+      UseInfiniteQueryOptions<
+        Awaited<ReturnType<typeof getMyApplicationsApplicationsMyGet>>,
+        TError,
+        TData
+      >
+    >
+  },
+  queryClient?: QueryClient,
+): UseInfiniteQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>
+} {
+  const queryOptions =
+    getGetMyApplicationsApplicationsMyGetInfiniteQueryOptions(options)
 
-  const queryOptions = getGetMyApplicationsApplicationsMyGetInfiniteQueryOptions(options)
+  const query = useInfiniteQuery(
+    queryOptions,
+    queryClient,
+  ) as UseInfiniteQueryResult<TData, TError> & {
+    queryKey: DataTag<QueryKey, TData, TError>
+  }
 
-  const query = useInfiniteQuery(queryOptions, queryClient) as  UseInfiniteQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
+  query.queryKey = queryOptions.queryKey
 
-  query.queryKey = queryOptions.queryKey ;
-
-  return query;
+  return query
 }
 
+export const getGetMyApplicationsApplicationsMyGetQueryOptions = <
+  TData = Awaited<ReturnType<typeof getMyApplicationsApplicationsMyGet>>,
+  TError = unknown,
+>(options?: {
+  query?: Partial<
+    UseQueryOptions<
+      Awaited<ReturnType<typeof getMyApplicationsApplicationsMyGet>>,
+      TError,
+      TData
+    >
+  >
+}) => {
+  const { query: queryOptions } = options ?? {}
 
+  const queryKey =
+    queryOptions?.queryKey ?? getGetMyApplicationsApplicationsMyGetQueryKey()
 
-export const getGetMyApplicationsApplicationsMyGetQueryOptions = <TData = Awaited<ReturnType<typeof getMyApplicationsApplicationsMyGet>>, TError = unknown>( options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getMyApplicationsApplicationsMyGet>>, TError, TData>>, }
-) => {
+  const queryFn: QueryFunction<
+    Awaited<ReturnType<typeof getMyApplicationsApplicationsMyGet>>
+  > = ({ signal }) => getMyApplicationsApplicationsMyGet(signal)
 
-const {query: queryOptions} = options ?? {};
-
-  const queryKey =  queryOptions?.queryKey ?? getGetMyApplicationsApplicationsMyGetQueryKey();
-
-  
-
-    const queryFn: QueryFunction<Awaited<ReturnType<typeof getMyApplicationsApplicationsMyGet>>> = ({ signal }) => getMyApplicationsApplicationsMyGet(signal);
-
-      
-
-      
-
-   return  { queryKey, queryFn, ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof getMyApplicationsApplicationsMyGet>>, TError, TData> & { queryKey: DataTag<QueryKey, TData, TError> }
+  return { queryKey, queryFn, ...queryOptions } as UseQueryOptions<
+    Awaited<ReturnType<typeof getMyApplicationsApplicationsMyGet>>,
+    TError,
+    TData
+  > & { queryKey: DataTag<QueryKey, TData, TError> }
 }
 
-export type GetMyApplicationsApplicationsMyGetQueryResult = NonNullable<Awaited<ReturnType<typeof getMyApplicationsApplicationsMyGet>>>
+export type GetMyApplicationsApplicationsMyGetQueryResult = NonNullable<
+  Awaited<ReturnType<typeof getMyApplicationsApplicationsMyGet>>
+>
 export type GetMyApplicationsApplicationsMyGetQueryError = unknown
 
-
-export function useGetMyApplicationsApplicationsMyGet<TData = Awaited<ReturnType<typeof getMyApplicationsApplicationsMyGet>>, TError = unknown>(
-  options: { query:Partial<UseQueryOptions<Awaited<ReturnType<typeof getMyApplicationsApplicationsMyGet>>, TError, TData>> & Pick<
+export function useGetMyApplicationsApplicationsMyGet<
+  TData = Awaited<ReturnType<typeof getMyApplicationsApplicationsMyGet>>,
+  TError = unknown,
+>(
+  options: {
+    query: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof getMyApplicationsApplicationsMyGet>>,
+        TError,
+        TData
+      >
+    > &
+      Pick<
         DefinedInitialDataOptions<
           Awaited<ReturnType<typeof getMyApplicationsApplicationsMyGet>>,
           TError,
           Awaited<ReturnType<typeof getMyApplicationsApplicationsMyGet>>
-        > , 'initialData'
-      >, }
- , queryClient?: QueryClient
-  ):  DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-export function useGetMyApplicationsApplicationsMyGet<TData = Awaited<ReturnType<typeof getMyApplicationsApplicationsMyGet>>, TError = unknown>(
-  options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getMyApplicationsApplicationsMyGet>>, TError, TData>> & Pick<
+        >,
+        'initialData'
+      >
+  },
+  queryClient?: QueryClient,
+): DefinedUseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>
+}
+export function useGetMyApplicationsApplicationsMyGet<
+  TData = Awaited<ReturnType<typeof getMyApplicationsApplicationsMyGet>>,
+  TError = unknown,
+>(
+  options?: {
+    query?: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof getMyApplicationsApplicationsMyGet>>,
+        TError,
+        TData
+      >
+    > &
+      Pick<
         UndefinedInitialDataOptions<
           Awaited<ReturnType<typeof getMyApplicationsApplicationsMyGet>>,
           TError,
           Awaited<ReturnType<typeof getMyApplicationsApplicationsMyGet>>
-        > , 'initialData'
-      >, }
- , queryClient?: QueryClient
-  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-export function useGetMyApplicationsApplicationsMyGet<TData = Awaited<ReturnType<typeof getMyApplicationsApplicationsMyGet>>, TError = unknown>(
-  options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getMyApplicationsApplicationsMyGet>>, TError, TData>>, }
- , queryClient?: QueryClient
-  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+        >,
+        'initialData'
+      >
+  },
+  queryClient?: QueryClient,
+): UseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>
+}
+export function useGetMyApplicationsApplicationsMyGet<
+  TData = Awaited<ReturnType<typeof getMyApplicationsApplicationsMyGet>>,
+  TError = unknown,
+>(
+  options?: {
+    query?: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof getMyApplicationsApplicationsMyGet>>,
+        TError,
+        TData
+      >
+    >
+  },
+  queryClient?: QueryClient,
+): UseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>
+}
 /**
  * @summary Get My Applications
  */
 
-export function useGetMyApplicationsApplicationsMyGet<TData = Awaited<ReturnType<typeof getMyApplicationsApplicationsMyGet>>, TError = unknown>(
-  options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getMyApplicationsApplicationsMyGet>>, TError, TData>>, }
- , queryClient?: QueryClient 
- ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+export function useGetMyApplicationsApplicationsMyGet<
+  TData = Awaited<ReturnType<typeof getMyApplicationsApplicationsMyGet>>,
+  TError = unknown,
+>(
+  options?: {
+    query?: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof getMyApplicationsApplicationsMyGet>>,
+        TError,
+        TData
+      >
+    >
+  },
+  queryClient?: QueryClient,
+): UseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>
+} {
+  const queryOptions =
+    getGetMyApplicationsApplicationsMyGetQueryOptions(options)
 
-  const queryOptions = getGetMyApplicationsApplicationsMyGetQueryOptions(options)
+  const query = useQuery(queryOptions, queryClient) as UseQueryResult<
+    TData,
+    TError
+  > & { queryKey: DataTag<QueryKey, TData, TError> }
 
-  const query = useQuery(queryOptions, queryClient) as  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
+  query.queryKey = queryOptions.queryKey
 
-  query.queryKey = queryOptions.queryKey ;
-
-  return query;
+  return query
 }
-
-
 
 /**
  * Получить все заявки (только для админа)
  * @summary Get All Applications
  */
 export const getAllApplicationsApplicationsAdminAllGet = (
-    
- signal?: AbortSignal
+  signal?: AbortSignal,
 ) => {
-      
-      
-      return baseApiRequest<ApplicationResponse[]>(
-      {url: `/applications/admin/all`, method: 'GET', signal
-    },
-      );
-    }
-  
+  return baseApiRequest<ApplicationResponse[]>({
+    url: `/applications/admin/all`,
+    method: 'GET',
+    signal,
+  })
+}
 
-
-
-export const getGetAllApplicationsApplicationsAdminAllGetInfiniteQueryKey = () => {
-    return [
-    'infinate', `/applications/admin/all`
-    ] as const;
-    }
+export const getGetAllApplicationsApplicationsAdminAllGetInfiniteQueryKey =
+  () => {
+    return ['infinate', `/applications/admin/all`] as const
+  }
 
 export const getGetAllApplicationsApplicationsAdminAllGetQueryKey = () => {
-    return [
-    `/applications/admin/all`
-    ] as const;
-    }
-
-    
-export const getGetAllApplicationsApplicationsAdminAllGetInfiniteQueryOptions = <TData = InfiniteData<Awaited<ReturnType<typeof getAllApplicationsApplicationsAdminAllGet>>>, TError = unknown>( options?: { query?:Partial<UseInfiniteQueryOptions<Awaited<ReturnType<typeof getAllApplicationsApplicationsAdminAllGet>>, TError, TData>>, }
-) => {
-
-const {query: queryOptions} = options ?? {};
-
-  const queryKey =  queryOptions?.queryKey ?? getGetAllApplicationsApplicationsAdminAllGetInfiniteQueryKey();
-
-  
-
-    const queryFn: QueryFunction<Awaited<ReturnType<typeof getAllApplicationsApplicationsAdminAllGet>>> = ({ signal }) => getAllApplicationsApplicationsAdminAllGet(signal);
-
-      
-
-      
-
-   return  { queryKey, queryFn, ...queryOptions} as UseInfiniteQueryOptions<Awaited<ReturnType<typeof getAllApplicationsApplicationsAdminAllGet>>, TError, TData> & { queryKey: DataTag<QueryKey, TData, TError> }
+  return [`/applications/admin/all`] as const
 }
 
-export type GetAllApplicationsApplicationsAdminAllGetInfiniteQueryResult = NonNullable<Awaited<ReturnType<typeof getAllApplicationsApplicationsAdminAllGet>>>
-export type GetAllApplicationsApplicationsAdminAllGetInfiniteQueryError = unknown
+export const getGetAllApplicationsApplicationsAdminAllGetInfiniteQueryOptions =
+  <
+    TData = InfiniteData<
+      Awaited<ReturnType<typeof getAllApplicationsApplicationsAdminAllGet>>
+    >,
+    TError = unknown,
+  >(options?: {
+    query?: Partial<
+      UseInfiniteQueryOptions<
+        Awaited<ReturnType<typeof getAllApplicationsApplicationsAdminAllGet>>,
+        TError,
+        TData
+      >
+    >
+  }) => {
+    const { query: queryOptions } = options ?? {}
 
+    const queryKey =
+      queryOptions?.queryKey ??
+      getGetAllApplicationsApplicationsAdminAllGetInfiniteQueryKey()
 
-export function useGetAllApplicationsApplicationsAdminAllGetInfinite<TData = InfiniteData<Awaited<ReturnType<typeof getAllApplicationsApplicationsAdminAllGet>>>, TError = unknown>(
-  options: { query:Partial<UseInfiniteQueryOptions<Awaited<ReturnType<typeof getAllApplicationsApplicationsAdminAllGet>>, TError, TData>> & Pick<
+    const queryFn: QueryFunction<
+      Awaited<ReturnType<typeof getAllApplicationsApplicationsAdminAllGet>>
+    > = ({ signal }) => getAllApplicationsApplicationsAdminAllGet(signal)
+
+    return { queryKey, queryFn, ...queryOptions } as UseInfiniteQueryOptions<
+      Awaited<ReturnType<typeof getAllApplicationsApplicationsAdminAllGet>>,
+      TError,
+      TData
+    > & { queryKey: DataTag<QueryKey, TData, TError> }
+  }
+
+export type GetAllApplicationsApplicationsAdminAllGetInfiniteQueryResult =
+  NonNullable<
+    Awaited<ReturnType<typeof getAllApplicationsApplicationsAdminAllGet>>
+  >
+export type GetAllApplicationsApplicationsAdminAllGetInfiniteQueryError =
+  unknown
+
+export function useGetAllApplicationsApplicationsAdminAllGetInfinite<
+  TData = InfiniteData<
+    Awaited<ReturnType<typeof getAllApplicationsApplicationsAdminAllGet>>
+  >,
+  TError = unknown,
+>(
+  options: {
+    query: Partial<
+      UseInfiniteQueryOptions<
+        Awaited<ReturnType<typeof getAllApplicationsApplicationsAdminAllGet>>,
+        TError,
+        TData
+      >
+    > &
+      Pick<
         DefinedInitialDataOptions<
           Awaited<ReturnType<typeof getAllApplicationsApplicationsAdminAllGet>>,
           TError,
           Awaited<ReturnType<typeof getAllApplicationsApplicationsAdminAllGet>>
-        > , 'initialData'
-      >, }
- , queryClient?: QueryClient
-  ):  DefinedUseInfiniteQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-export function useGetAllApplicationsApplicationsAdminAllGetInfinite<TData = InfiniteData<Awaited<ReturnType<typeof getAllApplicationsApplicationsAdminAllGet>>>, TError = unknown>(
-  options?: { query?:Partial<UseInfiniteQueryOptions<Awaited<ReturnType<typeof getAllApplicationsApplicationsAdminAllGet>>, TError, TData>> & Pick<
+        >,
+        'initialData'
+      >
+  },
+  queryClient?: QueryClient,
+): DefinedUseInfiniteQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>
+}
+export function useGetAllApplicationsApplicationsAdminAllGetInfinite<
+  TData = InfiniteData<
+    Awaited<ReturnType<typeof getAllApplicationsApplicationsAdminAllGet>>
+  >,
+  TError = unknown,
+>(
+  options?: {
+    query?: Partial<
+      UseInfiniteQueryOptions<
+        Awaited<ReturnType<typeof getAllApplicationsApplicationsAdminAllGet>>,
+        TError,
+        TData
+      >
+    > &
+      Pick<
         UndefinedInitialDataOptions<
           Awaited<ReturnType<typeof getAllApplicationsApplicationsAdminAllGet>>,
           TError,
           Awaited<ReturnType<typeof getAllApplicationsApplicationsAdminAllGet>>
-        > , 'initialData'
-      >, }
- , queryClient?: QueryClient
-  ):  UseInfiniteQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-export function useGetAllApplicationsApplicationsAdminAllGetInfinite<TData = InfiniteData<Awaited<ReturnType<typeof getAllApplicationsApplicationsAdminAllGet>>>, TError = unknown>(
-  options?: { query?:Partial<UseInfiniteQueryOptions<Awaited<ReturnType<typeof getAllApplicationsApplicationsAdminAllGet>>, TError, TData>>, }
- , queryClient?: QueryClient
-  ):  UseInfiniteQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+        >,
+        'initialData'
+      >
+  },
+  queryClient?: QueryClient,
+): UseInfiniteQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>
+}
+export function useGetAllApplicationsApplicationsAdminAllGetInfinite<
+  TData = InfiniteData<
+    Awaited<ReturnType<typeof getAllApplicationsApplicationsAdminAllGet>>
+  >,
+  TError = unknown,
+>(
+  options?: {
+    query?: Partial<
+      UseInfiniteQueryOptions<
+        Awaited<ReturnType<typeof getAllApplicationsApplicationsAdminAllGet>>,
+        TError,
+        TData
+      >
+    >
+  },
+  queryClient?: QueryClient,
+): UseInfiniteQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>
+}
 /**
  * @summary Get All Applications
  */
 
-export function useGetAllApplicationsApplicationsAdminAllGetInfinite<TData = InfiniteData<Awaited<ReturnType<typeof getAllApplicationsApplicationsAdminAllGet>>>, TError = unknown>(
-  options?: { query?:Partial<UseInfiniteQueryOptions<Awaited<ReturnType<typeof getAllApplicationsApplicationsAdminAllGet>>, TError, TData>>, }
- , queryClient?: QueryClient 
- ):  UseInfiniteQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+export function useGetAllApplicationsApplicationsAdminAllGetInfinite<
+  TData = InfiniteData<
+    Awaited<ReturnType<typeof getAllApplicationsApplicationsAdminAllGet>>
+  >,
+  TError = unknown,
+>(
+  options?: {
+    query?: Partial<
+      UseInfiniteQueryOptions<
+        Awaited<ReturnType<typeof getAllApplicationsApplicationsAdminAllGet>>,
+        TError,
+        TData
+      >
+    >
+  },
+  queryClient?: QueryClient,
+): UseInfiniteQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>
+} {
+  const queryOptions =
+    getGetAllApplicationsApplicationsAdminAllGetInfiniteQueryOptions(options)
 
-  const queryOptions = getGetAllApplicationsApplicationsAdminAllGetInfiniteQueryOptions(options)
+  const query = useInfiniteQuery(
+    queryOptions,
+    queryClient,
+  ) as UseInfiniteQueryResult<TData, TError> & {
+    queryKey: DataTag<QueryKey, TData, TError>
+  }
 
-  const query = useInfiniteQuery(queryOptions, queryClient) as  UseInfiniteQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
+  query.queryKey = queryOptions.queryKey
 
-  query.queryKey = queryOptions.queryKey ;
-
-  return query;
+  return query
 }
 
+export const getGetAllApplicationsApplicationsAdminAllGetQueryOptions = <
+  TData = Awaited<ReturnType<typeof getAllApplicationsApplicationsAdminAllGet>>,
+  TError = unknown,
+>(options?: {
+  query?: Partial<
+    UseQueryOptions<
+      Awaited<ReturnType<typeof getAllApplicationsApplicationsAdminAllGet>>,
+      TError,
+      TData
+    >
+  >
+}) => {
+  const { query: queryOptions } = options ?? {}
 
+  const queryKey =
+    queryOptions?.queryKey ??
+    getGetAllApplicationsApplicationsAdminAllGetQueryKey()
 
-export const getGetAllApplicationsApplicationsAdminAllGetQueryOptions = <TData = Awaited<ReturnType<typeof getAllApplicationsApplicationsAdminAllGet>>, TError = unknown>( options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getAllApplicationsApplicationsAdminAllGet>>, TError, TData>>, }
-) => {
+  const queryFn: QueryFunction<
+    Awaited<ReturnType<typeof getAllApplicationsApplicationsAdminAllGet>>
+  > = ({ signal }) => getAllApplicationsApplicationsAdminAllGet(signal)
 
-const {query: queryOptions} = options ?? {};
-
-  const queryKey =  queryOptions?.queryKey ?? getGetAllApplicationsApplicationsAdminAllGetQueryKey();
-
-  
-
-    const queryFn: QueryFunction<Awaited<ReturnType<typeof getAllApplicationsApplicationsAdminAllGet>>> = ({ signal }) => getAllApplicationsApplicationsAdminAllGet(signal);
-
-      
-
-      
-
-   return  { queryKey, queryFn, ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof getAllApplicationsApplicationsAdminAllGet>>, TError, TData> & { queryKey: DataTag<QueryKey, TData, TError> }
+  return { queryKey, queryFn, ...queryOptions } as UseQueryOptions<
+    Awaited<ReturnType<typeof getAllApplicationsApplicationsAdminAllGet>>,
+    TError,
+    TData
+  > & { queryKey: DataTag<QueryKey, TData, TError> }
 }
 
-export type GetAllApplicationsApplicationsAdminAllGetQueryResult = NonNullable<Awaited<ReturnType<typeof getAllApplicationsApplicationsAdminAllGet>>>
+export type GetAllApplicationsApplicationsAdminAllGetQueryResult = NonNullable<
+  Awaited<ReturnType<typeof getAllApplicationsApplicationsAdminAllGet>>
+>
 export type GetAllApplicationsApplicationsAdminAllGetQueryError = unknown
 
-
-export function useGetAllApplicationsApplicationsAdminAllGet<TData = Awaited<ReturnType<typeof getAllApplicationsApplicationsAdminAllGet>>, TError = unknown>(
-  options: { query:Partial<UseQueryOptions<Awaited<ReturnType<typeof getAllApplicationsApplicationsAdminAllGet>>, TError, TData>> & Pick<
+export function useGetAllApplicationsApplicationsAdminAllGet<
+  TData = Awaited<ReturnType<typeof getAllApplicationsApplicationsAdminAllGet>>,
+  TError = unknown,
+>(
+  options: {
+    query: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof getAllApplicationsApplicationsAdminAllGet>>,
+        TError,
+        TData
+      >
+    > &
+      Pick<
         DefinedInitialDataOptions<
           Awaited<ReturnType<typeof getAllApplicationsApplicationsAdminAllGet>>,
           TError,
           Awaited<ReturnType<typeof getAllApplicationsApplicationsAdminAllGet>>
-        > , 'initialData'
-      >, }
- , queryClient?: QueryClient
-  ):  DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-export function useGetAllApplicationsApplicationsAdminAllGet<TData = Awaited<ReturnType<typeof getAllApplicationsApplicationsAdminAllGet>>, TError = unknown>(
-  options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getAllApplicationsApplicationsAdminAllGet>>, TError, TData>> & Pick<
+        >,
+        'initialData'
+      >
+  },
+  queryClient?: QueryClient,
+): DefinedUseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>
+}
+export function useGetAllApplicationsApplicationsAdminAllGet<
+  TData = Awaited<ReturnType<typeof getAllApplicationsApplicationsAdminAllGet>>,
+  TError = unknown,
+>(
+  options?: {
+    query?: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof getAllApplicationsApplicationsAdminAllGet>>,
+        TError,
+        TData
+      >
+    > &
+      Pick<
         UndefinedInitialDataOptions<
           Awaited<ReturnType<typeof getAllApplicationsApplicationsAdminAllGet>>,
           TError,
           Awaited<ReturnType<typeof getAllApplicationsApplicationsAdminAllGet>>
-        > , 'initialData'
-      >, }
- , queryClient?: QueryClient
-  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-export function useGetAllApplicationsApplicationsAdminAllGet<TData = Awaited<ReturnType<typeof getAllApplicationsApplicationsAdminAllGet>>, TError = unknown>(
-  options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getAllApplicationsApplicationsAdminAllGet>>, TError, TData>>, }
- , queryClient?: QueryClient
-  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+        >,
+        'initialData'
+      >
+  },
+  queryClient?: QueryClient,
+): UseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>
+}
+export function useGetAllApplicationsApplicationsAdminAllGet<
+  TData = Awaited<ReturnType<typeof getAllApplicationsApplicationsAdminAllGet>>,
+  TError = unknown,
+>(
+  options?: {
+    query?: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof getAllApplicationsApplicationsAdminAllGet>>,
+        TError,
+        TData
+      >
+    >
+  },
+  queryClient?: QueryClient,
+): UseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>
+}
 /**
  * @summary Get All Applications
  */
 
-export function useGetAllApplicationsApplicationsAdminAllGet<TData = Awaited<ReturnType<typeof getAllApplicationsApplicationsAdminAllGet>>, TError = unknown>(
-  options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getAllApplicationsApplicationsAdminAllGet>>, TError, TData>>, }
- , queryClient?: QueryClient 
- ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+export function useGetAllApplicationsApplicationsAdminAllGet<
+  TData = Awaited<ReturnType<typeof getAllApplicationsApplicationsAdminAllGet>>,
+  TError = unknown,
+>(
+  options?: {
+    query?: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof getAllApplicationsApplicationsAdminAllGet>>,
+        TError,
+        TData
+      >
+    >
+  },
+  queryClient?: QueryClient,
+): UseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>
+} {
+  const queryOptions =
+    getGetAllApplicationsApplicationsAdminAllGetQueryOptions(options)
 
-  const queryOptions = getGetAllApplicationsApplicationsAdminAllGetQueryOptions(options)
+  const query = useQuery(queryOptions, queryClient) as UseQueryResult<
+    TData,
+    TError
+  > & { queryKey: DataTag<QueryKey, TData, TError> }
 
-  const query = useQuery(queryOptions, queryClient) as  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
+  query.queryKey = queryOptions.queryKey
 
-  query.queryKey = queryOptions.queryKey ;
-
-  return query;
+  return query
 }
-
-
 
 /**
  * Получить заявки в ожидании (только для админа)
  * @summary Get Pending Applications
  */
 export const getPendingApplicationsApplicationsAdminPendingGet = (
-    
- signal?: AbortSignal
+  signal?: AbortSignal,
 ) => {
-      
-      
-      return baseApiRequest<ApplicationResponse[]>(
-      {url: `/applications/admin/pending`, method: 'GET', signal
-    },
-      );
-    }
-  
-
-
-
-export const getGetPendingApplicationsApplicationsAdminPendingGetInfiniteQueryKey = () => {
-    return [
-    'infinate', `/applications/admin/pending`
-    ] as const;
-    }
-
-export const getGetPendingApplicationsApplicationsAdminPendingGetQueryKey = () => {
-    return [
-    `/applications/admin/pending`
-    ] as const;
-    }
-
-    
-export const getGetPendingApplicationsApplicationsAdminPendingGetInfiniteQueryOptions = <TData = InfiniteData<Awaited<ReturnType<typeof getPendingApplicationsApplicationsAdminPendingGet>>>, TError = unknown>( options?: { query?:Partial<UseInfiniteQueryOptions<Awaited<ReturnType<typeof getPendingApplicationsApplicationsAdminPendingGet>>, TError, TData>>, }
-) => {
-
-const {query: queryOptions} = options ?? {};
-
-  const queryKey =  queryOptions?.queryKey ?? getGetPendingApplicationsApplicationsAdminPendingGetInfiniteQueryKey();
-
-  
-
-    const queryFn: QueryFunction<Awaited<ReturnType<typeof getPendingApplicationsApplicationsAdminPendingGet>>> = ({ signal }) => getPendingApplicationsApplicationsAdminPendingGet(signal);
-
-      
-
-      
-
-   return  { queryKey, queryFn, ...queryOptions} as UseInfiniteQueryOptions<Awaited<ReturnType<typeof getPendingApplicationsApplicationsAdminPendingGet>>, TError, TData> & { queryKey: DataTag<QueryKey, TData, TError> }
+  return baseApiRequest<ApplicationResponse[]>({
+    url: `/applications/admin/pending`,
+    method: 'GET',
+    signal,
+  })
 }
 
-export type GetPendingApplicationsApplicationsAdminPendingGetInfiniteQueryResult = NonNullable<Awaited<ReturnType<typeof getPendingApplicationsApplicationsAdminPendingGet>>>
-export type GetPendingApplicationsApplicationsAdminPendingGetInfiniteQueryError = unknown
+export const getGetPendingApplicationsApplicationsAdminPendingGetInfiniteQueryKey =
+  () => {
+    return ['infinate', `/applications/admin/pending`] as const
+  }
 
+export const getGetPendingApplicationsApplicationsAdminPendingGetQueryKey =
+  () => {
+    return [`/applications/admin/pending`] as const
+  }
 
-export function useGetPendingApplicationsApplicationsAdminPendingGetInfinite<TData = InfiniteData<Awaited<ReturnType<typeof getPendingApplicationsApplicationsAdminPendingGet>>>, TError = unknown>(
-  options: { query:Partial<UseInfiniteQueryOptions<Awaited<ReturnType<typeof getPendingApplicationsApplicationsAdminPendingGet>>, TError, TData>> & Pick<
+export const getGetPendingApplicationsApplicationsAdminPendingGetInfiniteQueryOptions =
+  <
+    TData = InfiniteData<
+      Awaited<
+        ReturnType<typeof getPendingApplicationsApplicationsAdminPendingGet>
+      >
+    >,
+    TError = unknown,
+  >(options?: {
+    query?: Partial<
+      UseInfiniteQueryOptions<
+        Awaited<
+          ReturnType<typeof getPendingApplicationsApplicationsAdminPendingGet>
+        >,
+        TError,
+        TData
+      >
+    >
+  }) => {
+    const { query: queryOptions } = options ?? {}
+
+    const queryKey =
+      queryOptions?.queryKey ??
+      getGetPendingApplicationsApplicationsAdminPendingGetInfiniteQueryKey()
+
+    const queryFn: QueryFunction<
+      Awaited<
+        ReturnType<typeof getPendingApplicationsApplicationsAdminPendingGet>
+      >
+    > = ({ signal }) =>
+      getPendingApplicationsApplicationsAdminPendingGet(signal)
+
+    return { queryKey, queryFn, ...queryOptions } as UseInfiniteQueryOptions<
+      Awaited<
+        ReturnType<typeof getPendingApplicationsApplicationsAdminPendingGet>
+      >,
+      TError,
+      TData
+    > & { queryKey: DataTag<QueryKey, TData, TError> }
+  }
+
+export type GetPendingApplicationsApplicationsAdminPendingGetInfiniteQueryResult =
+  NonNullable<
+    Awaited<
+      ReturnType<typeof getPendingApplicationsApplicationsAdminPendingGet>
+    >
+  >
+export type GetPendingApplicationsApplicationsAdminPendingGetInfiniteQueryError =
+  unknown
+
+export function useGetPendingApplicationsApplicationsAdminPendingGetInfinite<
+  TData = InfiniteData<
+    Awaited<
+      ReturnType<typeof getPendingApplicationsApplicationsAdminPendingGet>
+    >
+  >,
+  TError = unknown,
+>(
+  options: {
+    query: Partial<
+      UseInfiniteQueryOptions<
+        Awaited<
+          ReturnType<typeof getPendingApplicationsApplicationsAdminPendingGet>
+        >,
+        TError,
+        TData
+      >
+    > &
+      Pick<
         DefinedInitialDataOptions<
-          Awaited<ReturnType<typeof getPendingApplicationsApplicationsAdminPendingGet>>,
+          Awaited<
+            ReturnType<typeof getPendingApplicationsApplicationsAdminPendingGet>
+          >,
           TError,
-          Awaited<ReturnType<typeof getPendingApplicationsApplicationsAdminPendingGet>>
-        > , 'initialData'
-      >, }
- , queryClient?: QueryClient
-  ):  DefinedUseInfiniteQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-export function useGetPendingApplicationsApplicationsAdminPendingGetInfinite<TData = InfiniteData<Awaited<ReturnType<typeof getPendingApplicationsApplicationsAdminPendingGet>>>, TError = unknown>(
-  options?: { query?:Partial<UseInfiniteQueryOptions<Awaited<ReturnType<typeof getPendingApplicationsApplicationsAdminPendingGet>>, TError, TData>> & Pick<
+          Awaited<
+            ReturnType<typeof getPendingApplicationsApplicationsAdminPendingGet>
+          >
+        >,
+        'initialData'
+      >
+  },
+  queryClient?: QueryClient,
+): DefinedUseInfiniteQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>
+}
+export function useGetPendingApplicationsApplicationsAdminPendingGetInfinite<
+  TData = InfiniteData<
+    Awaited<
+      ReturnType<typeof getPendingApplicationsApplicationsAdminPendingGet>
+    >
+  >,
+  TError = unknown,
+>(
+  options?: {
+    query?: Partial<
+      UseInfiniteQueryOptions<
+        Awaited<
+          ReturnType<typeof getPendingApplicationsApplicationsAdminPendingGet>
+        >,
+        TError,
+        TData
+      >
+    > &
+      Pick<
         UndefinedInitialDataOptions<
-          Awaited<ReturnType<typeof getPendingApplicationsApplicationsAdminPendingGet>>,
+          Awaited<
+            ReturnType<typeof getPendingApplicationsApplicationsAdminPendingGet>
+          >,
           TError,
-          Awaited<ReturnType<typeof getPendingApplicationsApplicationsAdminPendingGet>>
-        > , 'initialData'
-      >, }
- , queryClient?: QueryClient
-  ):  UseInfiniteQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-export function useGetPendingApplicationsApplicationsAdminPendingGetInfinite<TData = InfiniteData<Awaited<ReturnType<typeof getPendingApplicationsApplicationsAdminPendingGet>>>, TError = unknown>(
-  options?: { query?:Partial<UseInfiniteQueryOptions<Awaited<ReturnType<typeof getPendingApplicationsApplicationsAdminPendingGet>>, TError, TData>>, }
- , queryClient?: QueryClient
-  ):  UseInfiniteQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+          Awaited<
+            ReturnType<typeof getPendingApplicationsApplicationsAdminPendingGet>
+          >
+        >,
+        'initialData'
+      >
+  },
+  queryClient?: QueryClient,
+): UseInfiniteQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>
+}
+export function useGetPendingApplicationsApplicationsAdminPendingGetInfinite<
+  TData = InfiniteData<
+    Awaited<
+      ReturnType<typeof getPendingApplicationsApplicationsAdminPendingGet>
+    >
+  >,
+  TError = unknown,
+>(
+  options?: {
+    query?: Partial<
+      UseInfiniteQueryOptions<
+        Awaited<
+          ReturnType<typeof getPendingApplicationsApplicationsAdminPendingGet>
+        >,
+        TError,
+        TData
+      >
+    >
+  },
+  queryClient?: QueryClient,
+): UseInfiniteQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>
+}
 /**
  * @summary Get Pending Applications
  */
 
-export function useGetPendingApplicationsApplicationsAdminPendingGetInfinite<TData = InfiniteData<Awaited<ReturnType<typeof getPendingApplicationsApplicationsAdminPendingGet>>>, TError = unknown>(
-  options?: { query?:Partial<UseInfiniteQueryOptions<Awaited<ReturnType<typeof getPendingApplicationsApplicationsAdminPendingGet>>, TError, TData>>, }
- , queryClient?: QueryClient 
- ):  UseInfiniteQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+export function useGetPendingApplicationsApplicationsAdminPendingGetInfinite<
+  TData = InfiniteData<
+    Awaited<
+      ReturnType<typeof getPendingApplicationsApplicationsAdminPendingGet>
+    >
+  >,
+  TError = unknown,
+>(
+  options?: {
+    query?: Partial<
+      UseInfiniteQueryOptions<
+        Awaited<
+          ReturnType<typeof getPendingApplicationsApplicationsAdminPendingGet>
+        >,
+        TError,
+        TData
+      >
+    >
+  },
+  queryClient?: QueryClient,
+): UseInfiniteQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>
+} {
+  const queryOptions =
+    getGetPendingApplicationsApplicationsAdminPendingGetInfiniteQueryOptions(
+      options,
+    )
 
-  const queryOptions = getGetPendingApplicationsApplicationsAdminPendingGetInfiniteQueryOptions(options)
+  const query = useInfiniteQuery(
+    queryOptions,
+    queryClient,
+  ) as UseInfiniteQueryResult<TData, TError> & {
+    queryKey: DataTag<QueryKey, TData, TError>
+  }
 
-  const query = useInfiniteQuery(queryOptions, queryClient) as  UseInfiniteQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
+  query.queryKey = queryOptions.queryKey
 
-  query.queryKey = queryOptions.queryKey ;
-
-  return query;
+  return query
 }
 
+export const getGetPendingApplicationsApplicationsAdminPendingGetQueryOptions =
+  <
+    TData = Awaited<
+      ReturnType<typeof getPendingApplicationsApplicationsAdminPendingGet>
+    >,
+    TError = unknown,
+  >(options?: {
+    query?: Partial<
+      UseQueryOptions<
+        Awaited<
+          ReturnType<typeof getPendingApplicationsApplicationsAdminPendingGet>
+        >,
+        TError,
+        TData
+      >
+    >
+  }) => {
+    const { query: queryOptions } = options ?? {}
 
+    const queryKey =
+      queryOptions?.queryKey ??
+      getGetPendingApplicationsApplicationsAdminPendingGetQueryKey()
 
-export const getGetPendingApplicationsApplicationsAdminPendingGetQueryOptions = <TData = Awaited<ReturnType<typeof getPendingApplicationsApplicationsAdminPendingGet>>, TError = unknown>( options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getPendingApplicationsApplicationsAdminPendingGet>>, TError, TData>>, }
-) => {
+    const queryFn: QueryFunction<
+      Awaited<
+        ReturnType<typeof getPendingApplicationsApplicationsAdminPendingGet>
+      >
+    > = ({ signal }) =>
+      getPendingApplicationsApplicationsAdminPendingGet(signal)
 
-const {query: queryOptions} = options ?? {};
+    return { queryKey, queryFn, ...queryOptions } as UseQueryOptions<
+      Awaited<
+        ReturnType<typeof getPendingApplicationsApplicationsAdminPendingGet>
+      >,
+      TError,
+      TData
+    > & { queryKey: DataTag<QueryKey, TData, TError> }
+  }
 
-  const queryKey =  queryOptions?.queryKey ?? getGetPendingApplicationsApplicationsAdminPendingGetQueryKey();
+export type GetPendingApplicationsApplicationsAdminPendingGetQueryResult =
+  NonNullable<
+    Awaited<
+      ReturnType<typeof getPendingApplicationsApplicationsAdminPendingGet>
+    >
+  >
+export type GetPendingApplicationsApplicationsAdminPendingGetQueryError =
+  unknown
 
-  
-
-    const queryFn: QueryFunction<Awaited<ReturnType<typeof getPendingApplicationsApplicationsAdminPendingGet>>> = ({ signal }) => getPendingApplicationsApplicationsAdminPendingGet(signal);
-
-      
-
-      
-
-   return  { queryKey, queryFn, ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof getPendingApplicationsApplicationsAdminPendingGet>>, TError, TData> & { queryKey: DataTag<QueryKey, TData, TError> }
-}
-
-export type GetPendingApplicationsApplicationsAdminPendingGetQueryResult = NonNullable<Awaited<ReturnType<typeof getPendingApplicationsApplicationsAdminPendingGet>>>
-export type GetPendingApplicationsApplicationsAdminPendingGetQueryError = unknown
-
-
-export function useGetPendingApplicationsApplicationsAdminPendingGet<TData = Awaited<ReturnType<typeof getPendingApplicationsApplicationsAdminPendingGet>>, TError = unknown>(
-  options: { query:Partial<UseQueryOptions<Awaited<ReturnType<typeof getPendingApplicationsApplicationsAdminPendingGet>>, TError, TData>> & Pick<
+export function useGetPendingApplicationsApplicationsAdminPendingGet<
+  TData = Awaited<
+    ReturnType<typeof getPendingApplicationsApplicationsAdminPendingGet>
+  >,
+  TError = unknown,
+>(
+  options: {
+    query: Partial<
+      UseQueryOptions<
+        Awaited<
+          ReturnType<typeof getPendingApplicationsApplicationsAdminPendingGet>
+        >,
+        TError,
+        TData
+      >
+    > &
+      Pick<
         DefinedInitialDataOptions<
-          Awaited<ReturnType<typeof getPendingApplicationsApplicationsAdminPendingGet>>,
+          Awaited<
+            ReturnType<typeof getPendingApplicationsApplicationsAdminPendingGet>
+          >,
           TError,
-          Awaited<ReturnType<typeof getPendingApplicationsApplicationsAdminPendingGet>>
-        > , 'initialData'
-      >, }
- , queryClient?: QueryClient
-  ):  DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-export function useGetPendingApplicationsApplicationsAdminPendingGet<TData = Awaited<ReturnType<typeof getPendingApplicationsApplicationsAdminPendingGet>>, TError = unknown>(
-  options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getPendingApplicationsApplicationsAdminPendingGet>>, TError, TData>> & Pick<
+          Awaited<
+            ReturnType<typeof getPendingApplicationsApplicationsAdminPendingGet>
+          >
+        >,
+        'initialData'
+      >
+  },
+  queryClient?: QueryClient,
+): DefinedUseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>
+}
+export function useGetPendingApplicationsApplicationsAdminPendingGet<
+  TData = Awaited<
+    ReturnType<typeof getPendingApplicationsApplicationsAdminPendingGet>
+  >,
+  TError = unknown,
+>(
+  options?: {
+    query?: Partial<
+      UseQueryOptions<
+        Awaited<
+          ReturnType<typeof getPendingApplicationsApplicationsAdminPendingGet>
+        >,
+        TError,
+        TData
+      >
+    > &
+      Pick<
         UndefinedInitialDataOptions<
-          Awaited<ReturnType<typeof getPendingApplicationsApplicationsAdminPendingGet>>,
+          Awaited<
+            ReturnType<typeof getPendingApplicationsApplicationsAdminPendingGet>
+          >,
           TError,
-          Awaited<ReturnType<typeof getPendingApplicationsApplicationsAdminPendingGet>>
-        > , 'initialData'
-      >, }
- , queryClient?: QueryClient
-  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-export function useGetPendingApplicationsApplicationsAdminPendingGet<TData = Awaited<ReturnType<typeof getPendingApplicationsApplicationsAdminPendingGet>>, TError = unknown>(
-  options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getPendingApplicationsApplicationsAdminPendingGet>>, TError, TData>>, }
- , queryClient?: QueryClient
-  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+          Awaited<
+            ReturnType<typeof getPendingApplicationsApplicationsAdminPendingGet>
+          >
+        >,
+        'initialData'
+      >
+  },
+  queryClient?: QueryClient,
+): UseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>
+}
+export function useGetPendingApplicationsApplicationsAdminPendingGet<
+  TData = Awaited<
+    ReturnType<typeof getPendingApplicationsApplicationsAdminPendingGet>
+  >,
+  TError = unknown,
+>(
+  options?: {
+    query?: Partial<
+      UseQueryOptions<
+        Awaited<
+          ReturnType<typeof getPendingApplicationsApplicationsAdminPendingGet>
+        >,
+        TError,
+        TData
+      >
+    >
+  },
+  queryClient?: QueryClient,
+): UseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>
+}
 /**
  * @summary Get Pending Applications
  */
 
-export function useGetPendingApplicationsApplicationsAdminPendingGet<TData = Awaited<ReturnType<typeof getPendingApplicationsApplicationsAdminPendingGet>>, TError = unknown>(
-  options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getPendingApplicationsApplicationsAdminPendingGet>>, TError, TData>>, }
- , queryClient?: QueryClient 
- ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+export function useGetPendingApplicationsApplicationsAdminPendingGet<
+  TData = Awaited<
+    ReturnType<typeof getPendingApplicationsApplicationsAdminPendingGet>
+  >,
+  TError = unknown,
+>(
+  options?: {
+    query?: Partial<
+      UseQueryOptions<
+        Awaited<
+          ReturnType<typeof getPendingApplicationsApplicationsAdminPendingGet>
+        >,
+        TError,
+        TData
+      >
+    >
+  },
+  queryClient?: QueryClient,
+): UseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>
+} {
+  const queryOptions =
+    getGetPendingApplicationsApplicationsAdminPendingGetQueryOptions(options)
 
-  const queryOptions = getGetPendingApplicationsApplicationsAdminPendingGetQueryOptions(options)
+  const query = useQuery(queryOptions, queryClient) as UseQueryResult<
+    TData,
+    TError
+  > & { queryKey: DataTag<QueryKey, TData, TError> }
 
-  const query = useQuery(queryOptions, queryClient) as  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
+  query.queryKey = queryOptions.queryKey
 
-  query.queryKey = queryOptions.queryKey ;
-
-  return query;
+  return query
 }
-
-
 
 /**
  * Получить все заявки пользователя (только для админа)
  * @summary Get User Applications
  */
 export const getUserApplicationsApplicationsAdminUserIdApplicationsGet = (
+  userId: number,
+  signal?: AbortSignal,
+) => {
+  return baseApiRequest<ApplicationResponse[]>({
+    url: `/applications/admin/${userId}/applications`,
+    method: 'GET',
+    signal,
+  })
+}
+
+export const getGetUserApplicationsApplicationsAdminUserIdApplicationsGetInfiniteQueryKey =
+  (userId?: number) => {
+    return ['infinate', `/applications/admin/${userId}/applications`] as const
+  }
+
+export const getGetUserApplicationsApplicationsAdminUserIdApplicationsGetQueryKey =
+  (userId?: number) => {
+    return [`/applications/admin/${userId}/applications`] as const
+  }
+
+export const getGetUserApplicationsApplicationsAdminUserIdApplicationsGetInfiniteQueryOptions =
+  <
+    TData = InfiniteData<
+      Awaited<
+        ReturnType<
+          typeof getUserApplicationsApplicationsAdminUserIdApplicationsGet
+        >
+      >
+    >,
+    TError = HTTPValidationError,
+  >(
     userId: number,
- signal?: AbortSignal
-) => {
-      
-      
-      return baseApiRequest<ApplicationResponse[]>(
-      {url: `/applications/admin/${userId}/applications`, method: 'GET', signal
+    options?: {
+      query?: Partial<
+        UseInfiniteQueryOptions<
+          Awaited<
+            ReturnType<
+              typeof getUserApplicationsApplicationsAdminUserIdApplicationsGet
+            >
+          >,
+          TError,
+          TData
+        >
+      >
     },
-      );
-    }
-  
+  ) => {
+    const { query: queryOptions } = options ?? {}
 
+    const queryKey =
+      queryOptions?.queryKey ??
+      getGetUserApplicationsApplicationsAdminUserIdApplicationsGetInfiniteQueryKey(
+        userId,
+      )
 
+    const queryFn: QueryFunction<
+      Awaited<
+        ReturnType<
+          typeof getUserApplicationsApplicationsAdminUserIdApplicationsGet
+        >
+      >
+    > = ({ signal }) =>
+      getUserApplicationsApplicationsAdminUserIdApplicationsGet(userId, signal)
 
-export const getGetUserApplicationsApplicationsAdminUserIdApplicationsGetInfiniteQueryKey = (userId?: number,) => {
-    return [
-    'infinate', `/applications/admin/${userId}/applications`
-    ] as const;
-    }
+    return {
+      queryKey,
+      queryFn,
+      enabled: !!userId,
+      ...queryOptions,
+    } as UseInfiniteQueryOptions<
+      Awaited<
+        ReturnType<
+          typeof getUserApplicationsApplicationsAdminUserIdApplicationsGet
+        >
+      >,
+      TError,
+      TData
+    > & { queryKey: DataTag<QueryKey, TData, TError> }
+  }
 
-export const getGetUserApplicationsApplicationsAdminUserIdApplicationsGetQueryKey = (userId?: number,) => {
-    return [
-    `/applications/admin/${userId}/applications`
-    ] as const;
-    }
+export type GetUserApplicationsApplicationsAdminUserIdApplicationsGetInfiniteQueryResult =
+  NonNullable<
+    Awaited<
+      ReturnType<
+        typeof getUserApplicationsApplicationsAdminUserIdApplicationsGet
+      >
+    >
+  >
+export type GetUserApplicationsApplicationsAdminUserIdApplicationsGetInfiniteQueryError =
+  HTTPValidationError
 
-    
-export const getGetUserApplicationsApplicationsAdminUserIdApplicationsGetInfiniteQueryOptions = <TData = InfiniteData<Awaited<ReturnType<typeof getUserApplicationsApplicationsAdminUserIdApplicationsGet>>>, TError = HTTPValidationError>(userId: number, options?: { query?:Partial<UseInfiniteQueryOptions<Awaited<ReturnType<typeof getUserApplicationsApplicationsAdminUserIdApplicationsGet>>, TError, TData>>, }
-) => {
-
-const {query: queryOptions} = options ?? {};
-
-  const queryKey =  queryOptions?.queryKey ?? getGetUserApplicationsApplicationsAdminUserIdApplicationsGetInfiniteQueryKey(userId);
-
-  
-
-    const queryFn: QueryFunction<Awaited<ReturnType<typeof getUserApplicationsApplicationsAdminUserIdApplicationsGet>>> = ({ signal }) => getUserApplicationsApplicationsAdminUserIdApplicationsGet(userId, signal);
-
-      
-
-      
-
-   return  { queryKey, queryFn, enabled: !!(userId), ...queryOptions} as UseInfiniteQueryOptions<Awaited<ReturnType<typeof getUserApplicationsApplicationsAdminUserIdApplicationsGet>>, TError, TData> & { queryKey: DataTag<QueryKey, TData, TError> }
-}
-
-export type GetUserApplicationsApplicationsAdminUserIdApplicationsGetInfiniteQueryResult = NonNullable<Awaited<ReturnType<typeof getUserApplicationsApplicationsAdminUserIdApplicationsGet>>>
-export type GetUserApplicationsApplicationsAdminUserIdApplicationsGetInfiniteQueryError = HTTPValidationError
-
-
-export function useGetUserApplicationsApplicationsAdminUserIdApplicationsGetInfinite<TData = InfiniteData<Awaited<ReturnType<typeof getUserApplicationsApplicationsAdminUserIdApplicationsGet>>>, TError = HTTPValidationError>(
- userId: number, options: { query:Partial<UseInfiniteQueryOptions<Awaited<ReturnType<typeof getUserApplicationsApplicationsAdminUserIdApplicationsGet>>, TError, TData>> & Pick<
+export function useGetUserApplicationsApplicationsAdminUserIdApplicationsGetInfinite<
+  TData = InfiniteData<
+    Awaited<
+      ReturnType<
+        typeof getUserApplicationsApplicationsAdminUserIdApplicationsGet
+      >
+    >
+  >,
+  TError = HTTPValidationError,
+>(
+  userId: number,
+  options: {
+    query: Partial<
+      UseInfiniteQueryOptions<
+        Awaited<
+          ReturnType<
+            typeof getUserApplicationsApplicationsAdminUserIdApplicationsGet
+          >
+        >,
+        TError,
+        TData
+      >
+    > &
+      Pick<
         DefinedInitialDataOptions<
-          Awaited<ReturnType<typeof getUserApplicationsApplicationsAdminUserIdApplicationsGet>>,
+          Awaited<
+            ReturnType<
+              typeof getUserApplicationsApplicationsAdminUserIdApplicationsGet
+            >
+          >,
           TError,
-          Awaited<ReturnType<typeof getUserApplicationsApplicationsAdminUserIdApplicationsGet>>
-        > , 'initialData'
-      >, }
- , queryClient?: QueryClient
-  ):  DefinedUseInfiniteQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-export function useGetUserApplicationsApplicationsAdminUserIdApplicationsGetInfinite<TData = InfiniteData<Awaited<ReturnType<typeof getUserApplicationsApplicationsAdminUserIdApplicationsGet>>>, TError = HTTPValidationError>(
- userId: number, options?: { query?:Partial<UseInfiniteQueryOptions<Awaited<ReturnType<typeof getUserApplicationsApplicationsAdminUserIdApplicationsGet>>, TError, TData>> & Pick<
+          Awaited<
+            ReturnType<
+              typeof getUserApplicationsApplicationsAdminUserIdApplicationsGet
+            >
+          >
+        >,
+        'initialData'
+      >
+  },
+  queryClient?: QueryClient,
+): DefinedUseInfiniteQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>
+}
+export function useGetUserApplicationsApplicationsAdminUserIdApplicationsGetInfinite<
+  TData = InfiniteData<
+    Awaited<
+      ReturnType<
+        typeof getUserApplicationsApplicationsAdminUserIdApplicationsGet
+      >
+    >
+  >,
+  TError = HTTPValidationError,
+>(
+  userId: number,
+  options?: {
+    query?: Partial<
+      UseInfiniteQueryOptions<
+        Awaited<
+          ReturnType<
+            typeof getUserApplicationsApplicationsAdminUserIdApplicationsGet
+          >
+        >,
+        TError,
+        TData
+      >
+    > &
+      Pick<
         UndefinedInitialDataOptions<
-          Awaited<ReturnType<typeof getUserApplicationsApplicationsAdminUserIdApplicationsGet>>,
+          Awaited<
+            ReturnType<
+              typeof getUserApplicationsApplicationsAdminUserIdApplicationsGet
+            >
+          >,
           TError,
-          Awaited<ReturnType<typeof getUserApplicationsApplicationsAdminUserIdApplicationsGet>>
-        > , 'initialData'
-      >, }
- , queryClient?: QueryClient
-  ):  UseInfiniteQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-export function useGetUserApplicationsApplicationsAdminUserIdApplicationsGetInfinite<TData = InfiniteData<Awaited<ReturnType<typeof getUserApplicationsApplicationsAdminUserIdApplicationsGet>>>, TError = HTTPValidationError>(
- userId: number, options?: { query?:Partial<UseInfiniteQueryOptions<Awaited<ReturnType<typeof getUserApplicationsApplicationsAdminUserIdApplicationsGet>>, TError, TData>>, }
- , queryClient?: QueryClient
-  ):  UseInfiniteQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+          Awaited<
+            ReturnType<
+              typeof getUserApplicationsApplicationsAdminUserIdApplicationsGet
+            >
+          >
+        >,
+        'initialData'
+      >
+  },
+  queryClient?: QueryClient,
+): UseInfiniteQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>
+}
+export function useGetUserApplicationsApplicationsAdminUserIdApplicationsGetInfinite<
+  TData = InfiniteData<
+    Awaited<
+      ReturnType<
+        typeof getUserApplicationsApplicationsAdminUserIdApplicationsGet
+      >
+    >
+  >,
+  TError = HTTPValidationError,
+>(
+  userId: number,
+  options?: {
+    query?: Partial<
+      UseInfiniteQueryOptions<
+        Awaited<
+          ReturnType<
+            typeof getUserApplicationsApplicationsAdminUserIdApplicationsGet
+          >
+        >,
+        TError,
+        TData
+      >
+    >
+  },
+  queryClient?: QueryClient,
+): UseInfiniteQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>
+}
 /**
  * @summary Get User Applications
  */
 
-export function useGetUserApplicationsApplicationsAdminUserIdApplicationsGetInfinite<TData = InfiniteData<Awaited<ReturnType<typeof getUserApplicationsApplicationsAdminUserIdApplicationsGet>>>, TError = HTTPValidationError>(
- userId: number, options?: { query?:Partial<UseInfiniteQueryOptions<Awaited<ReturnType<typeof getUserApplicationsApplicationsAdminUserIdApplicationsGet>>, TError, TData>>, }
- , queryClient?: QueryClient 
- ):  UseInfiniteQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+export function useGetUserApplicationsApplicationsAdminUserIdApplicationsGetInfinite<
+  TData = InfiniteData<
+    Awaited<
+      ReturnType<
+        typeof getUserApplicationsApplicationsAdminUserIdApplicationsGet
+      >
+    >
+  >,
+  TError = HTTPValidationError,
+>(
+  userId: number,
+  options?: {
+    query?: Partial<
+      UseInfiniteQueryOptions<
+        Awaited<
+          ReturnType<
+            typeof getUserApplicationsApplicationsAdminUserIdApplicationsGet
+          >
+        >,
+        TError,
+        TData
+      >
+    >
+  },
+  queryClient?: QueryClient,
+): UseInfiniteQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>
+} {
+  const queryOptions =
+    getGetUserApplicationsApplicationsAdminUserIdApplicationsGetInfiniteQueryOptions(
+      userId,
+      options,
+    )
 
-  const queryOptions = getGetUserApplicationsApplicationsAdminUserIdApplicationsGetInfiniteQueryOptions(userId,options)
+  const query = useInfiniteQuery(
+    queryOptions,
+    queryClient,
+  ) as UseInfiniteQueryResult<TData, TError> & {
+    queryKey: DataTag<QueryKey, TData, TError>
+  }
 
-  const query = useInfiniteQuery(queryOptions, queryClient) as  UseInfiniteQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
+  query.queryKey = queryOptions.queryKey
 
-  query.queryKey = queryOptions.queryKey ;
-
-  return query;
+  return query
 }
 
+export const getGetUserApplicationsApplicationsAdminUserIdApplicationsGetQueryOptions =
+  <
+    TData = Awaited<
+      ReturnType<
+        typeof getUserApplicationsApplicationsAdminUserIdApplicationsGet
+      >
+    >,
+    TError = HTTPValidationError,
+  >(
+    userId: number,
+    options?: {
+      query?: Partial<
+        UseQueryOptions<
+          Awaited<
+            ReturnType<
+              typeof getUserApplicationsApplicationsAdminUserIdApplicationsGet
+            >
+          >,
+          TError,
+          TData
+        >
+      >
+    },
+  ) => {
+    const { query: queryOptions } = options ?? {}
 
+    const queryKey =
+      queryOptions?.queryKey ??
+      getGetUserApplicationsApplicationsAdminUserIdApplicationsGetQueryKey(
+        userId,
+      )
 
-export const getGetUserApplicationsApplicationsAdminUserIdApplicationsGetQueryOptions = <TData = Awaited<ReturnType<typeof getUserApplicationsApplicationsAdminUserIdApplicationsGet>>, TError = HTTPValidationError>(userId: number, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getUserApplicationsApplicationsAdminUserIdApplicationsGet>>, TError, TData>>, }
-) => {
+    const queryFn: QueryFunction<
+      Awaited<
+        ReturnType<
+          typeof getUserApplicationsApplicationsAdminUserIdApplicationsGet
+        >
+      >
+    > = ({ signal }) =>
+      getUserApplicationsApplicationsAdminUserIdApplicationsGet(userId, signal)
 
-const {query: queryOptions} = options ?? {};
+    return {
+      queryKey,
+      queryFn,
+      enabled: !!userId,
+      ...queryOptions,
+    } as UseQueryOptions<
+      Awaited<
+        ReturnType<
+          typeof getUserApplicationsApplicationsAdminUserIdApplicationsGet
+        >
+      >,
+      TError,
+      TData
+    > & { queryKey: DataTag<QueryKey, TData, TError> }
+  }
 
-  const queryKey =  queryOptions?.queryKey ?? getGetUserApplicationsApplicationsAdminUserIdApplicationsGetQueryKey(userId);
+export type GetUserApplicationsApplicationsAdminUserIdApplicationsGetQueryResult =
+  NonNullable<
+    Awaited<
+      ReturnType<
+        typeof getUserApplicationsApplicationsAdminUserIdApplicationsGet
+      >
+    >
+  >
+export type GetUserApplicationsApplicationsAdminUserIdApplicationsGetQueryError =
+  HTTPValidationError
 
-  
-
-    const queryFn: QueryFunction<Awaited<ReturnType<typeof getUserApplicationsApplicationsAdminUserIdApplicationsGet>>> = ({ signal }) => getUserApplicationsApplicationsAdminUserIdApplicationsGet(userId, signal);
-
-      
-
-      
-
-   return  { queryKey, queryFn, enabled: !!(userId), ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof getUserApplicationsApplicationsAdminUserIdApplicationsGet>>, TError, TData> & { queryKey: DataTag<QueryKey, TData, TError> }
-}
-
-export type GetUserApplicationsApplicationsAdminUserIdApplicationsGetQueryResult = NonNullable<Awaited<ReturnType<typeof getUserApplicationsApplicationsAdminUserIdApplicationsGet>>>
-export type GetUserApplicationsApplicationsAdminUserIdApplicationsGetQueryError = HTTPValidationError
-
-
-export function useGetUserApplicationsApplicationsAdminUserIdApplicationsGet<TData = Awaited<ReturnType<typeof getUserApplicationsApplicationsAdminUserIdApplicationsGet>>, TError = HTTPValidationError>(
- userId: number, options: { query:Partial<UseQueryOptions<Awaited<ReturnType<typeof getUserApplicationsApplicationsAdminUserIdApplicationsGet>>, TError, TData>> & Pick<
+export function useGetUserApplicationsApplicationsAdminUserIdApplicationsGet<
+  TData = Awaited<
+    ReturnType<typeof getUserApplicationsApplicationsAdminUserIdApplicationsGet>
+  >,
+  TError = HTTPValidationError,
+>(
+  userId: number,
+  options: {
+    query: Partial<
+      UseQueryOptions<
+        Awaited<
+          ReturnType<
+            typeof getUserApplicationsApplicationsAdminUserIdApplicationsGet
+          >
+        >,
+        TError,
+        TData
+      >
+    > &
+      Pick<
         DefinedInitialDataOptions<
-          Awaited<ReturnType<typeof getUserApplicationsApplicationsAdminUserIdApplicationsGet>>,
+          Awaited<
+            ReturnType<
+              typeof getUserApplicationsApplicationsAdminUserIdApplicationsGet
+            >
+          >,
           TError,
-          Awaited<ReturnType<typeof getUserApplicationsApplicationsAdminUserIdApplicationsGet>>
-        > , 'initialData'
-      >, }
- , queryClient?: QueryClient
-  ):  DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-export function useGetUserApplicationsApplicationsAdminUserIdApplicationsGet<TData = Awaited<ReturnType<typeof getUserApplicationsApplicationsAdminUserIdApplicationsGet>>, TError = HTTPValidationError>(
- userId: number, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getUserApplicationsApplicationsAdminUserIdApplicationsGet>>, TError, TData>> & Pick<
+          Awaited<
+            ReturnType<
+              typeof getUserApplicationsApplicationsAdminUserIdApplicationsGet
+            >
+          >
+        >,
+        'initialData'
+      >
+  },
+  queryClient?: QueryClient,
+): DefinedUseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>
+}
+export function useGetUserApplicationsApplicationsAdminUserIdApplicationsGet<
+  TData = Awaited<
+    ReturnType<typeof getUserApplicationsApplicationsAdminUserIdApplicationsGet>
+  >,
+  TError = HTTPValidationError,
+>(
+  userId: number,
+  options?: {
+    query?: Partial<
+      UseQueryOptions<
+        Awaited<
+          ReturnType<
+            typeof getUserApplicationsApplicationsAdminUserIdApplicationsGet
+          >
+        >,
+        TError,
+        TData
+      >
+    > &
+      Pick<
         UndefinedInitialDataOptions<
-          Awaited<ReturnType<typeof getUserApplicationsApplicationsAdminUserIdApplicationsGet>>,
+          Awaited<
+            ReturnType<
+              typeof getUserApplicationsApplicationsAdminUserIdApplicationsGet
+            >
+          >,
           TError,
-          Awaited<ReturnType<typeof getUserApplicationsApplicationsAdminUserIdApplicationsGet>>
-        > , 'initialData'
-      >, }
- , queryClient?: QueryClient
-  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-export function useGetUserApplicationsApplicationsAdminUserIdApplicationsGet<TData = Awaited<ReturnType<typeof getUserApplicationsApplicationsAdminUserIdApplicationsGet>>, TError = HTTPValidationError>(
- userId: number, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getUserApplicationsApplicationsAdminUserIdApplicationsGet>>, TError, TData>>, }
- , queryClient?: QueryClient
-  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+          Awaited<
+            ReturnType<
+              typeof getUserApplicationsApplicationsAdminUserIdApplicationsGet
+            >
+          >
+        >,
+        'initialData'
+      >
+  },
+  queryClient?: QueryClient,
+): UseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>
+}
+export function useGetUserApplicationsApplicationsAdminUserIdApplicationsGet<
+  TData = Awaited<
+    ReturnType<typeof getUserApplicationsApplicationsAdminUserIdApplicationsGet>
+  >,
+  TError = HTTPValidationError,
+>(
+  userId: number,
+  options?: {
+    query?: Partial<
+      UseQueryOptions<
+        Awaited<
+          ReturnType<
+            typeof getUserApplicationsApplicationsAdminUserIdApplicationsGet
+          >
+        >,
+        TError,
+        TData
+      >
+    >
+  },
+  queryClient?: QueryClient,
+): UseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>
+}
 /**
  * @summary Get User Applications
  */
 
-export function useGetUserApplicationsApplicationsAdminUserIdApplicationsGet<TData = Awaited<ReturnType<typeof getUserApplicationsApplicationsAdminUserIdApplicationsGet>>, TError = HTTPValidationError>(
- userId: number, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getUserApplicationsApplicationsAdminUserIdApplicationsGet>>, TError, TData>>, }
- , queryClient?: QueryClient 
- ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+export function useGetUserApplicationsApplicationsAdminUserIdApplicationsGet<
+  TData = Awaited<
+    ReturnType<typeof getUserApplicationsApplicationsAdminUserIdApplicationsGet>
+  >,
+  TError = HTTPValidationError,
+>(
+  userId: number,
+  options?: {
+    query?: Partial<
+      UseQueryOptions<
+        Awaited<
+          ReturnType<
+            typeof getUserApplicationsApplicationsAdminUserIdApplicationsGet
+          >
+        >,
+        TError,
+        TData
+      >
+    >
+  },
+  queryClient?: QueryClient,
+): UseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>
+} {
+  const queryOptions =
+    getGetUserApplicationsApplicationsAdminUserIdApplicationsGetQueryOptions(
+      userId,
+      options,
+    )
 
-  const queryOptions = getGetUserApplicationsApplicationsAdminUserIdApplicationsGetQueryOptions(userId,options)
+  const query = useQuery(queryOptions, queryClient) as UseQueryResult<
+    TData,
+    TError
+  > & { queryKey: DataTag<QueryKey, TData, TError> }
 
-  const query = useQuery(queryOptions, queryClient) as  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
+  query.queryKey = queryOptions.queryKey
 
-  query.queryKey = queryOptions.queryKey ;
-
-  return query;
+  return query
 }
-
-
 
 /**
  * Получить заявку по ID
  * @summary Get Application
  */
 export const getApplicationApplicationsApplicationIdGet = (
+  applicationId: number,
+  signal?: AbortSignal,
+) => {
+  return baseApiRequest<ApplicationResponse>({
+    url: `/applications/${applicationId}`,
+    method: 'GET',
+    signal,
+  })
+}
+
+export const getGetApplicationApplicationsApplicationIdGetInfiniteQueryKey = (
+  applicationId?: number,
+) => {
+  return ['infinate', `/applications/${applicationId}`] as const
+}
+
+export const getGetApplicationApplicationsApplicationIdGetQueryKey = (
+  applicationId?: number,
+) => {
+  return [`/applications/${applicationId}`] as const
+}
+
+export const getGetApplicationApplicationsApplicationIdGetInfiniteQueryOptions =
+  <
+    TData = InfiniteData<
+      Awaited<ReturnType<typeof getApplicationApplicationsApplicationIdGet>>
+    >,
+    TError = HTTPValidationError,
+  >(
     applicationId: number,
- signal?: AbortSignal
-) => {
-      
-      
-      return baseApiRequest<ApplicationResponse>(
-      {url: `/applications/${applicationId}`, method: 'GET', signal
+    options?: {
+      query?: Partial<
+        UseInfiniteQueryOptions<
+          Awaited<
+            ReturnType<typeof getApplicationApplicationsApplicationIdGet>
+          >,
+          TError,
+          TData
+        >
+      >
     },
-      );
-    }
-  
+  ) => {
+    const { query: queryOptions } = options ?? {}
 
+    const queryKey =
+      queryOptions?.queryKey ??
+      getGetApplicationApplicationsApplicationIdGetInfiniteQueryKey(
+        applicationId,
+      )
 
+    const queryFn: QueryFunction<
+      Awaited<ReturnType<typeof getApplicationApplicationsApplicationIdGet>>
+    > = ({ signal }) =>
+      getApplicationApplicationsApplicationIdGet(applicationId, signal)
 
-export const getGetApplicationApplicationsApplicationIdGetInfiniteQueryKey = (applicationId?: number,) => {
-    return [
-    'infinate', `/applications/${applicationId}`
-    ] as const;
-    }
+    return {
+      queryKey,
+      queryFn,
+      enabled: !!applicationId,
+      ...queryOptions,
+    } as UseInfiniteQueryOptions<
+      Awaited<ReturnType<typeof getApplicationApplicationsApplicationIdGet>>,
+      TError,
+      TData
+    > & { queryKey: DataTag<QueryKey, TData, TError> }
+  }
 
-export const getGetApplicationApplicationsApplicationIdGetQueryKey = (applicationId?: number,) => {
-    return [
-    `/applications/${applicationId}`
-    ] as const;
-    }
+export type GetApplicationApplicationsApplicationIdGetInfiniteQueryResult =
+  NonNullable<
+    Awaited<ReturnType<typeof getApplicationApplicationsApplicationIdGet>>
+  >
+export type GetApplicationApplicationsApplicationIdGetInfiniteQueryError =
+  HTTPValidationError
 
-    
-export const getGetApplicationApplicationsApplicationIdGetInfiniteQueryOptions = <TData = InfiniteData<Awaited<ReturnType<typeof getApplicationApplicationsApplicationIdGet>>>, TError = HTTPValidationError>(applicationId: number, options?: { query?:Partial<UseInfiniteQueryOptions<Awaited<ReturnType<typeof getApplicationApplicationsApplicationIdGet>>, TError, TData>>, }
-) => {
-
-const {query: queryOptions} = options ?? {};
-
-  const queryKey =  queryOptions?.queryKey ?? getGetApplicationApplicationsApplicationIdGetInfiniteQueryKey(applicationId);
-
-  
-
-    const queryFn: QueryFunction<Awaited<ReturnType<typeof getApplicationApplicationsApplicationIdGet>>> = ({ signal }) => getApplicationApplicationsApplicationIdGet(applicationId, signal);
-
-      
-
-      
-
-   return  { queryKey, queryFn, enabled: !!(applicationId), ...queryOptions} as UseInfiniteQueryOptions<Awaited<ReturnType<typeof getApplicationApplicationsApplicationIdGet>>, TError, TData> & { queryKey: DataTag<QueryKey, TData, TError> }
-}
-
-export type GetApplicationApplicationsApplicationIdGetInfiniteQueryResult = NonNullable<Awaited<ReturnType<typeof getApplicationApplicationsApplicationIdGet>>>
-export type GetApplicationApplicationsApplicationIdGetInfiniteQueryError = HTTPValidationError
-
-
-export function useGetApplicationApplicationsApplicationIdGetInfinite<TData = InfiniteData<Awaited<ReturnType<typeof getApplicationApplicationsApplicationIdGet>>>, TError = HTTPValidationError>(
- applicationId: number, options: { query:Partial<UseInfiniteQueryOptions<Awaited<ReturnType<typeof getApplicationApplicationsApplicationIdGet>>, TError, TData>> & Pick<
+export function useGetApplicationApplicationsApplicationIdGetInfinite<
+  TData = InfiniteData<
+    Awaited<ReturnType<typeof getApplicationApplicationsApplicationIdGet>>
+  >,
+  TError = HTTPValidationError,
+>(
+  applicationId: number,
+  options: {
+    query: Partial<
+      UseInfiniteQueryOptions<
+        Awaited<ReturnType<typeof getApplicationApplicationsApplicationIdGet>>,
+        TError,
+        TData
+      >
+    > &
+      Pick<
         DefinedInitialDataOptions<
-          Awaited<ReturnType<typeof getApplicationApplicationsApplicationIdGet>>,
+          Awaited<
+            ReturnType<typeof getApplicationApplicationsApplicationIdGet>
+          >,
           TError,
           Awaited<ReturnType<typeof getApplicationApplicationsApplicationIdGet>>
-        > , 'initialData'
-      >, }
- , queryClient?: QueryClient
-  ):  DefinedUseInfiniteQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-export function useGetApplicationApplicationsApplicationIdGetInfinite<TData = InfiniteData<Awaited<ReturnType<typeof getApplicationApplicationsApplicationIdGet>>>, TError = HTTPValidationError>(
- applicationId: number, options?: { query?:Partial<UseInfiniteQueryOptions<Awaited<ReturnType<typeof getApplicationApplicationsApplicationIdGet>>, TError, TData>> & Pick<
+        >,
+        'initialData'
+      >
+  },
+  queryClient?: QueryClient,
+): DefinedUseInfiniteQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>
+}
+export function useGetApplicationApplicationsApplicationIdGetInfinite<
+  TData = InfiniteData<
+    Awaited<ReturnType<typeof getApplicationApplicationsApplicationIdGet>>
+  >,
+  TError = HTTPValidationError,
+>(
+  applicationId: number,
+  options?: {
+    query?: Partial<
+      UseInfiniteQueryOptions<
+        Awaited<ReturnType<typeof getApplicationApplicationsApplicationIdGet>>,
+        TError,
+        TData
+      >
+    > &
+      Pick<
         UndefinedInitialDataOptions<
-          Awaited<ReturnType<typeof getApplicationApplicationsApplicationIdGet>>,
+          Awaited<
+            ReturnType<typeof getApplicationApplicationsApplicationIdGet>
+          >,
           TError,
           Awaited<ReturnType<typeof getApplicationApplicationsApplicationIdGet>>
-        > , 'initialData'
-      >, }
- , queryClient?: QueryClient
-  ):  UseInfiniteQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-export function useGetApplicationApplicationsApplicationIdGetInfinite<TData = InfiniteData<Awaited<ReturnType<typeof getApplicationApplicationsApplicationIdGet>>>, TError = HTTPValidationError>(
- applicationId: number, options?: { query?:Partial<UseInfiniteQueryOptions<Awaited<ReturnType<typeof getApplicationApplicationsApplicationIdGet>>, TError, TData>>, }
- , queryClient?: QueryClient
-  ):  UseInfiniteQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+        >,
+        'initialData'
+      >
+  },
+  queryClient?: QueryClient,
+): UseInfiniteQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>
+}
+export function useGetApplicationApplicationsApplicationIdGetInfinite<
+  TData = InfiniteData<
+    Awaited<ReturnType<typeof getApplicationApplicationsApplicationIdGet>>
+  >,
+  TError = HTTPValidationError,
+>(
+  applicationId: number,
+  options?: {
+    query?: Partial<
+      UseInfiniteQueryOptions<
+        Awaited<ReturnType<typeof getApplicationApplicationsApplicationIdGet>>,
+        TError,
+        TData
+      >
+    >
+  },
+  queryClient?: QueryClient,
+): UseInfiniteQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>
+}
 /**
  * @summary Get Application
  */
 
-export function useGetApplicationApplicationsApplicationIdGetInfinite<TData = InfiniteData<Awaited<ReturnType<typeof getApplicationApplicationsApplicationIdGet>>>, TError = HTTPValidationError>(
- applicationId: number, options?: { query?:Partial<UseInfiniteQueryOptions<Awaited<ReturnType<typeof getApplicationApplicationsApplicationIdGet>>, TError, TData>>, }
- , queryClient?: QueryClient 
- ):  UseInfiniteQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+export function useGetApplicationApplicationsApplicationIdGetInfinite<
+  TData = InfiniteData<
+    Awaited<ReturnType<typeof getApplicationApplicationsApplicationIdGet>>
+  >,
+  TError = HTTPValidationError,
+>(
+  applicationId: number,
+  options?: {
+    query?: Partial<
+      UseInfiniteQueryOptions<
+        Awaited<ReturnType<typeof getApplicationApplicationsApplicationIdGet>>,
+        TError,
+        TData
+      >
+    >
+  },
+  queryClient?: QueryClient,
+): UseInfiniteQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>
+} {
+  const queryOptions =
+    getGetApplicationApplicationsApplicationIdGetInfiniteQueryOptions(
+      applicationId,
+      options,
+    )
 
-  const queryOptions = getGetApplicationApplicationsApplicationIdGetInfiniteQueryOptions(applicationId,options)
+  const query = useInfiniteQuery(
+    queryOptions,
+    queryClient,
+  ) as UseInfiniteQueryResult<TData, TError> & {
+    queryKey: DataTag<QueryKey, TData, TError>
+  }
 
-  const query = useInfiniteQuery(queryOptions, queryClient) as  UseInfiniteQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
+  query.queryKey = queryOptions.queryKey
 
-  query.queryKey = queryOptions.queryKey ;
-
-  return query;
+  return query
 }
 
-
-
-export const getGetApplicationApplicationsApplicationIdGetQueryOptions = <TData = Awaited<ReturnType<typeof getApplicationApplicationsApplicationIdGet>>, TError = HTTPValidationError>(applicationId: number, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getApplicationApplicationsApplicationIdGet>>, TError, TData>>, }
+export const getGetApplicationApplicationsApplicationIdGetQueryOptions = <
+  TData = Awaited<
+    ReturnType<typeof getApplicationApplicationsApplicationIdGet>
+  >,
+  TError = HTTPValidationError,
+>(
+  applicationId: number,
+  options?: {
+    query?: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof getApplicationApplicationsApplicationIdGet>>,
+        TError,
+        TData
+      >
+    >
+  },
 ) => {
+  const { query: queryOptions } = options ?? {}
 
-const {query: queryOptions} = options ?? {};
+  const queryKey =
+    queryOptions?.queryKey ??
+    getGetApplicationApplicationsApplicationIdGetQueryKey(applicationId)
 
-  const queryKey =  queryOptions?.queryKey ?? getGetApplicationApplicationsApplicationIdGetQueryKey(applicationId);
+  const queryFn: QueryFunction<
+    Awaited<ReturnType<typeof getApplicationApplicationsApplicationIdGet>>
+  > = ({ signal }) =>
+    getApplicationApplicationsApplicationIdGet(applicationId, signal)
 
-  
-
-    const queryFn: QueryFunction<Awaited<ReturnType<typeof getApplicationApplicationsApplicationIdGet>>> = ({ signal }) => getApplicationApplicationsApplicationIdGet(applicationId, signal);
-
-      
-
-      
-
-   return  { queryKey, queryFn, enabled: !!(applicationId), ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof getApplicationApplicationsApplicationIdGet>>, TError, TData> & { queryKey: DataTag<QueryKey, TData, TError> }
+  return {
+    queryKey,
+    queryFn,
+    enabled: !!applicationId,
+    ...queryOptions,
+  } as UseQueryOptions<
+    Awaited<ReturnType<typeof getApplicationApplicationsApplicationIdGet>>,
+    TError,
+    TData
+  > & { queryKey: DataTag<QueryKey, TData, TError> }
 }
 
-export type GetApplicationApplicationsApplicationIdGetQueryResult = NonNullable<Awaited<ReturnType<typeof getApplicationApplicationsApplicationIdGet>>>
-export type GetApplicationApplicationsApplicationIdGetQueryError = HTTPValidationError
+export type GetApplicationApplicationsApplicationIdGetQueryResult = NonNullable<
+  Awaited<ReturnType<typeof getApplicationApplicationsApplicationIdGet>>
+>
+export type GetApplicationApplicationsApplicationIdGetQueryError =
+  HTTPValidationError
 
-
-export function useGetApplicationApplicationsApplicationIdGet<TData = Awaited<ReturnType<typeof getApplicationApplicationsApplicationIdGet>>, TError = HTTPValidationError>(
- applicationId: number, options: { query:Partial<UseQueryOptions<Awaited<ReturnType<typeof getApplicationApplicationsApplicationIdGet>>, TError, TData>> & Pick<
+export function useGetApplicationApplicationsApplicationIdGet<
+  TData = Awaited<
+    ReturnType<typeof getApplicationApplicationsApplicationIdGet>
+  >,
+  TError = HTTPValidationError,
+>(
+  applicationId: number,
+  options: {
+    query: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof getApplicationApplicationsApplicationIdGet>>,
+        TError,
+        TData
+      >
+    > &
+      Pick<
         DefinedInitialDataOptions<
-          Awaited<ReturnType<typeof getApplicationApplicationsApplicationIdGet>>,
+          Awaited<
+            ReturnType<typeof getApplicationApplicationsApplicationIdGet>
+          >,
           TError,
           Awaited<ReturnType<typeof getApplicationApplicationsApplicationIdGet>>
-        > , 'initialData'
-      >, }
- , queryClient?: QueryClient
-  ):  DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-export function useGetApplicationApplicationsApplicationIdGet<TData = Awaited<ReturnType<typeof getApplicationApplicationsApplicationIdGet>>, TError = HTTPValidationError>(
- applicationId: number, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getApplicationApplicationsApplicationIdGet>>, TError, TData>> & Pick<
+        >,
+        'initialData'
+      >
+  },
+  queryClient?: QueryClient,
+): DefinedUseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>
+}
+export function useGetApplicationApplicationsApplicationIdGet<
+  TData = Awaited<
+    ReturnType<typeof getApplicationApplicationsApplicationIdGet>
+  >,
+  TError = HTTPValidationError,
+>(
+  applicationId: number,
+  options?: {
+    query?: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof getApplicationApplicationsApplicationIdGet>>,
+        TError,
+        TData
+      >
+    > &
+      Pick<
         UndefinedInitialDataOptions<
-          Awaited<ReturnType<typeof getApplicationApplicationsApplicationIdGet>>,
+          Awaited<
+            ReturnType<typeof getApplicationApplicationsApplicationIdGet>
+          >,
           TError,
           Awaited<ReturnType<typeof getApplicationApplicationsApplicationIdGet>>
-        > , 'initialData'
-      >, }
- , queryClient?: QueryClient
-  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-export function useGetApplicationApplicationsApplicationIdGet<TData = Awaited<ReturnType<typeof getApplicationApplicationsApplicationIdGet>>, TError = HTTPValidationError>(
- applicationId: number, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getApplicationApplicationsApplicationIdGet>>, TError, TData>>, }
- , queryClient?: QueryClient
-  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+        >,
+        'initialData'
+      >
+  },
+  queryClient?: QueryClient,
+): UseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>
+}
+export function useGetApplicationApplicationsApplicationIdGet<
+  TData = Awaited<
+    ReturnType<typeof getApplicationApplicationsApplicationIdGet>
+  >,
+  TError = HTTPValidationError,
+>(
+  applicationId: number,
+  options?: {
+    query?: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof getApplicationApplicationsApplicationIdGet>>,
+        TError,
+        TData
+      >
+    >
+  },
+  queryClient?: QueryClient,
+): UseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>
+}
 /**
  * @summary Get Application
  */
 
-export function useGetApplicationApplicationsApplicationIdGet<TData = Awaited<ReturnType<typeof getApplicationApplicationsApplicationIdGet>>, TError = HTTPValidationError>(
- applicationId: number, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getApplicationApplicationsApplicationIdGet>>, TError, TData>>, }
- , queryClient?: QueryClient 
- ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+export function useGetApplicationApplicationsApplicationIdGet<
+  TData = Awaited<
+    ReturnType<typeof getApplicationApplicationsApplicationIdGet>
+  >,
+  TError = HTTPValidationError,
+>(
+  applicationId: number,
+  options?: {
+    query?: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof getApplicationApplicationsApplicationIdGet>>,
+        TError,
+        TData
+      >
+    >
+  },
+  queryClient?: QueryClient,
+): UseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>
+} {
+  const queryOptions =
+    getGetApplicationApplicationsApplicationIdGetQueryOptions(
+      applicationId,
+      options,
+    )
 
-  const queryOptions = getGetApplicationApplicationsApplicationIdGetQueryOptions(applicationId,options)
+  const query = useQuery(queryOptions, queryClient) as UseQueryResult<
+    TData,
+    TError
+  > & { queryKey: DataTag<QueryKey, TData, TError> }
 
-  const query = useQuery(queryOptions, queryClient) as  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
+  query.queryKey = queryOptions.queryKey
 
-  query.queryKey = queryOptions.queryKey ;
-
-  return query;
+  return query
 }
-
-
 
 /**
  * Обновить статус заявки (только для админа)
  * @summary Update Application Status
  */
 export const updateApplicationStatusApplicationsApplicationIdPut = (
-    applicationId: number,
-    applicationUpdate: ApplicationUpdate,
- ) => {
-      
-      
-      return baseApiRequest<unknown>(
-      {url: `/applications/${applicationId}`, method: 'PUT',
-      headers: {'Content-Type': 'application/json', },
-      data: applicationUpdate
-    },
-      );
+  applicationId: number,
+  applicationUpdate: ApplicationUpdate,
+) => {
+  return baseApiRequest<unknown>({
+    url: `/applications/${applicationId}`,
+    method: 'PUT',
+    headers: { 'Content-Type': 'application/json' },
+    data: applicationUpdate,
+  })
+}
+
+export const getUpdateApplicationStatusApplicationsApplicationIdPutMutationOptions =
+  <TError = HTTPValidationError, TContext = unknown>(options?: {
+    mutation?: UseMutationOptions<
+      Awaited<
+        ReturnType<typeof updateApplicationStatusApplicationsApplicationIdPut>
+      >,
+      TError,
+      { applicationId: number; data: ApplicationUpdate },
+      TContext
+    >
+  }): UseMutationOptions<
+    Awaited<
+      ReturnType<typeof updateApplicationStatusApplicationsApplicationIdPut>
+    >,
+    TError,
+    { applicationId: number; data: ApplicationUpdate },
+    TContext
+  > => {
+    const mutationKey = ['updateApplicationStatusApplicationsApplicationIdPut']
+    const { mutation: mutationOptions } = options
+      ? options.mutation &&
+        'mutationKey' in options.mutation &&
+        options.mutation.mutationKey
+        ? options
+        : { ...options, mutation: { ...options.mutation, mutationKey } }
+      : { mutation: { mutationKey } }
+
+    const mutationFn: MutationFunction<
+      Awaited<
+        ReturnType<typeof updateApplicationStatusApplicationsApplicationIdPut>
+      >,
+      { applicationId: number; data: ApplicationUpdate }
+    > = props => {
+      const { applicationId, data } = props ?? {}
+
+      return updateApplicationStatusApplicationsApplicationIdPut(
+        applicationId,
+        data,
+      )
     }
-  
 
+    return { mutationFn, ...mutationOptions }
+  }
 
-export const getUpdateApplicationStatusApplicationsApplicationIdPutMutationOptions = <TError = HTTPValidationError,
-    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof updateApplicationStatusApplicationsApplicationIdPut>>, TError,{applicationId: number;data: ApplicationUpdate}, TContext>, }
-): UseMutationOptions<Awaited<ReturnType<typeof updateApplicationStatusApplicationsApplicationIdPut>>, TError,{applicationId: number;data: ApplicationUpdate}, TContext> => {
+export type UpdateApplicationStatusApplicationsApplicationIdPutMutationResult =
+  NonNullable<
+    Awaited<
+      ReturnType<typeof updateApplicationStatusApplicationsApplicationIdPut>
+    >
+  >
+export type UpdateApplicationStatusApplicationsApplicationIdPutMutationBody =
+  ApplicationUpdate
+export type UpdateApplicationStatusApplicationsApplicationIdPutMutationError =
+  HTTPValidationError
 
-const mutationKey = ['updateApplicationStatusApplicationsApplicationIdPut'];
-const {mutation: mutationOptions} = options ?
-      options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
-      options
-      : {...options, mutation: {...options.mutation, mutationKey}}
-      : {mutation: { mutationKey, }};
-
-      
-
-
-      const mutationFn: MutationFunction<Awaited<ReturnType<typeof updateApplicationStatusApplicationsApplicationIdPut>>, {applicationId: number;data: ApplicationUpdate}> = (props) => {
-          const {applicationId,data} = props ?? {};
-
-          return  updateApplicationStatusApplicationsApplicationIdPut(applicationId,data,)
-        }
-
-        
-
-
-  return  { mutationFn, ...mutationOptions }}
-
-    export type UpdateApplicationStatusApplicationsApplicationIdPutMutationResult = NonNullable<Awaited<ReturnType<typeof updateApplicationStatusApplicationsApplicationIdPut>>>
-    export type UpdateApplicationStatusApplicationsApplicationIdPutMutationBody = ApplicationUpdate
-    export type UpdateApplicationStatusApplicationsApplicationIdPutMutationError = HTTPValidationError
-
-    /**
+/**
  * @summary Update Application Status
  */
-export const useUpdateApplicationStatusApplicationsApplicationIdPut = <TError = HTTPValidationError,
-    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof updateApplicationStatusApplicationsApplicationIdPut>>, TError,{applicationId: number;data: ApplicationUpdate}, TContext>, }
- , queryClient?: QueryClient): UseMutationResult<
-        Awaited<ReturnType<typeof updateApplicationStatusApplicationsApplicationIdPut>>,
-        TError,
-        {applicationId: number;data: ApplicationUpdate},
-        TContext
-      > => {
+export const useUpdateApplicationStatusApplicationsApplicationIdPut = <
+  TError = HTTPValidationError,
+  TContext = unknown,
+>(
+  options?: {
+    mutation?: UseMutationOptions<
+      Awaited<
+        ReturnType<typeof updateApplicationStatusApplicationsApplicationIdPut>
+      >,
+      TError,
+      { applicationId: number; data: ApplicationUpdate },
+      TContext
+    >
+  },
+  queryClient?: QueryClient,
+): UseMutationResult<
+  Awaited<
+    ReturnType<typeof updateApplicationStatusApplicationsApplicationIdPut>
+  >,
+  TError,
+  { applicationId: number; data: ApplicationUpdate },
+  TContext
+> => {
+  const mutationOptions =
+    getUpdateApplicationStatusApplicationsApplicationIdPutMutationOptions(
+      options,
+    )
 
-      const mutationOptions = getUpdateApplicationStatusApplicationsApplicationIdPutMutationOptions(options);
-
-      return useMutation(mutationOptions, queryClient);
-    }
-    
+  return useMutation(mutationOptions, queryClient)
+}

@@ -1,0 +1,9 @@
+**/dist
+**/coverage
+**/.nx/cache
+**/.nx/workspace-data
+**/.yarn
+**/*.md
+**/*.lock
+**/public/**/*.json
+**/assets/**/*.json

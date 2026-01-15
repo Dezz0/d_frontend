@@ -5,14 +5,14 @@
  * API для управления умным домом
  * OpenAPI spec version: 1.0.0
  */
-import type { UserCreateFirstName } from './userCreateFirstName';
-import type { UserCreateLastName } from './userCreateLastName';
-import type { UserCreateMiddleName } from './userCreateMiddleName';
+import type { UserCreateFirstName } from './userCreateFirstName'
+import type { UserCreateLastName } from './userCreateLastName'
+import type { UserCreateMiddleName } from './userCreateMiddleName'
 
 export interface UserCreate {
-  login: string;
-  password: string;
-  first_name?: UserCreateFirstName;
-  last_name?: UserCreateLastName;
-  middle_name?: UserCreateMiddleName;
+  login: string
+  password: string
+  first_name?: UserCreateFirstName
+  last_name?: UserCreateLastName
+  middle_name?: UserCreateMiddleName
 }

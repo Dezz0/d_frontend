@@ -94,7 +94,7 @@ export const UserMainScreen: React.FC = () => {
       </View>
     );
   }
-  console.log(rooms);
+
   return (
     <ScrollView style={styles.container} contentContainerStyle={styles.content}>
       <View style={styles.header}>
@@ -130,10 +130,8 @@ export const UserMainScreen: React.FC = () => {
                 </View>
                 <View style={styles.roomArrow}>
                   {isExpanded ? (
-                    // <ChevronUp size={24} color="#666" />
                     <Text>Скрыть</Text>
                   ) : (
-                    // <ChevronDown size={24} color="#666" />
                     <Text>Показать</Text>
                   )}
                 </View>

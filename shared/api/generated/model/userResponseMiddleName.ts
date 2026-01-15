@@ -6,4 +6,4 @@
  * OpenAPI spec version: 1.0.0
  */
 
-export type UserResponseMiddleName = string | null;
+export type UserResponseMiddleName = string | null

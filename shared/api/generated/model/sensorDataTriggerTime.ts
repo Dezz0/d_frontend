@@ -6,8 +6,4 @@
  * OpenAPI spec version: 1.0.0
  */
 
-export interface TemperatureSensorCreate {
-  sensor_id: string;
-  room_name: string;
-  value: number;
-}
+export type SensorDataTriggerTime = string | null

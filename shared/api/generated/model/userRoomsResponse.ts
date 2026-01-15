@@ -5,10 +5,10 @@
  * API для управления умным домом
  * OpenAPI spec version: 1.0.0
  */
-import type { SensorInfo } from './sensorInfo';
+import type { SensorInfo } from './sensorInfo'
 
 export interface UserRoomsResponse {
-  id: number;
-  name: string;
-  sensors?: SensorInfo[];
+  id: number
+  name: string
+  sensors?: SensorInfo[]
 }

@@ -6,9 +6,4 @@
  * OpenAPI spec version: 1.0.0
  */
 
-export interface GasSensorResponse {
-  sensor_id: string;
-  room_name: string;
-  ppm: number;
-  status: string;
-}
+export type SensorDataFanSpeed = number | null

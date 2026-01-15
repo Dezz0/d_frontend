@@ -6,4 +6,4 @@
  * OpenAPI spec version: 1.0.0
  */
 
-export type DictionariesResponseSensors = {[key: string]: string};
+export type DictionariesResponseSensors = { [key: string]: string }

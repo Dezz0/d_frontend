@@ -7,10 +7,10 @@
  */
 
 export interface ProfileStatsResponse {
-  total_applications: number;
-  pending_applications: number;
-  approved_applications: number;
-  rejected_applications: number;
-  total_rooms: number;
-  total_sensors: number;
+  total_applications: number
+  pending_applications: number
+  approved_applications: number
+  rejected_applications: number
+  total_rooms: number
+  total_sensors: number
 }

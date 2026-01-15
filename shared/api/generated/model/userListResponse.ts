@@ -5,17 +5,17 @@
  * API для управления умным домом
  * OpenAPI spec version: 1.0.0
  */
-import type { UserListResponseCreatedAt } from './userListResponseCreatedAt';
+import type { UserListResponseCreatedAt } from './userListResponseCreatedAt'
 
 export interface UserListResponse {
-  id: number;
-  login: string;
-  is_active: boolean;
-  is_admin: boolean;
-  application_submitted: boolean;
-  applications_count: number;
-  pending_applications: number;
-  approved_applications: number;
-  rejected_applications: number;
-  created_at?: UserListResponseCreatedAt;
+  id: number
+  login: string
+  is_active: boolean
+  is_admin: boolean
+  application_submitted: boolean
+  applications_count: number
+  pending_applications: number
+  approved_applications: number
+  rejected_applications: number
+  created_at?: UserListResponseCreatedAt
 }

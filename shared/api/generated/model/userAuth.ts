@@ -7,6 +7,6 @@
  */
 
 export interface UserAuth {
-  login: string;
-  password: string;
+  login: string
+  password: string
 }

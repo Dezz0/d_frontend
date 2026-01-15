@@ -5,8 +5,8 @@
  * API для управления умным домом
  * OpenAPI spec version: 1.0.0
  */
-import type { ValidationError } from './validationError';
+import type { ValidationError } from './validationError'
 
 export interface HTTPValidationError {
-  detail?: ValidationError[];
+  detail?: ValidationError[]
 }

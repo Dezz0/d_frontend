@@ -6,8 +6,4 @@
  * OpenAPI spec version: 1.0.0
  */
 
-export interface HumiditySensorCreate {
-  sensor_id: string;
-  room_name: string;
-  humidity_level: number;
-}
+export type SensorDataHumidityLevel = number | null

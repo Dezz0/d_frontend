@@ -5,9 +5,9 @@
  * API для управления умным домом
  * OpenAPI spec version: 1.0.0
  */
-import type { ApplicationCreateSensors } from './applicationCreateSensors';
+import type { ApplicationCreateSensors } from './applicationCreateSensors'
 
 export interface ApplicationCreate {
-  rooms: number[];
-  sensors: ApplicationCreateSensors;
+  rooms: number[]
+  sensors: ApplicationCreateSensors
 }

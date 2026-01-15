@@ -7,6 +7,6 @@
  */
 
 export interface RoomResponse {
-  name: string;
-  id: number;
+  name: string
+  id: number
 }

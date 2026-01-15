@@ -6,10 +6,13 @@
  * OpenAPI spec version: 1.0.0
  */
 
-export interface SensorInfo {
-  id: number
-  type: string
-  name: string
+/**
+ * Ответ на успешную обработку данных от Arduino
+ */
+export interface ArduinoDataResponse {
   room_id: number
   room_name: string
+  processed_sensors: number
+  success: boolean
+  message: string
 }

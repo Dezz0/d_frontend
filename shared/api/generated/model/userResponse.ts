@@ -5,18 +5,18 @@
  * API для управления умным домом
  * OpenAPI spec version: 1.0.0
  */
-import type { UserResponseFirstName } from './userResponseFirstName';
-import type { UserResponseLastName } from './userResponseLastName';
-import type { UserResponseMiddleName } from './userResponseMiddleName';
+import type { UserResponseFirstName } from './userResponseFirstName'
+import type { UserResponseLastName } from './userResponseLastName'
+import type { UserResponseMiddleName } from './userResponseMiddleName'
 
 export interface UserResponse {
-  login: string;
-  id: number;
-  first_name?: UserResponseFirstName;
-  last_name?: UserResponseLastName;
-  middle_name?: UserResponseMiddleName;
-  is_active: boolean;
-  is_admin: boolean;
-  application_submitted: boolean;
-  has_pending_application: boolean;
+  login: string
+  id: number
+  first_name?: UserResponseFirstName
+  last_name?: UserResponseLastName
+  middle_name?: UserResponseMiddleName
+  is_active: boolean
+  is_admin: boolean
+  application_submitted: boolean
+  has_pending_application: boolean
 }

@@ -6,8 +6,4 @@
  * OpenAPI spec version: 1.0.0
  */
 
-export interface LightSensorResponse {
-  sensor_id: string;
-  room_name: string;
-  is_on: boolean;
-}
+export type SensorDataPpm = number | null

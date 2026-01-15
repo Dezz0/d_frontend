@@ -6,4 +6,4 @@
  * OpenAPI spec version: 1.0.0
  */
 
-export type ApplicationCreateSensors = {[key: string]: number[]};
+export type ApplicationCreateSensors = { [key: string]: number[] }

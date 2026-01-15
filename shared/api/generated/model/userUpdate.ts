@@ -5,12 +5,12 @@
  * API для управления умным домом
  * OpenAPI spec version: 1.0.0
  */
-import type { UserUpdateFirstName } from './userUpdateFirstName';
-import type { UserUpdateLastName } from './userUpdateLastName';
-import type { UserUpdateMiddleName } from './userUpdateMiddleName';
+import type { UserUpdateFirstName } from './userUpdateFirstName'
+import type { UserUpdateLastName } from './userUpdateLastName'
+import type { UserUpdateMiddleName } from './userUpdateMiddleName'
 
 export interface UserUpdate {
-  first_name?: UserUpdateFirstName;
-  last_name?: UserUpdateLastName;
-  middle_name?: UserUpdateMiddleName;
+  first_name?: UserUpdateFirstName
+  last_name?: UserUpdateLastName
+  middle_name?: UserUpdateMiddleName
 }

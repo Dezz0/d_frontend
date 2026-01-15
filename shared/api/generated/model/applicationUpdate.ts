@@ -5,9 +5,9 @@
  * API для управления умным домом
  * OpenAPI spec version: 1.0.0
  */
-import type { ApplicationUpdateRejectionComment } from './applicationUpdateRejectionComment';
+import type { ApplicationUpdateRejectionComment } from './applicationUpdateRejectionComment'
 
 export interface ApplicationUpdate {
-  status: string;
-  rejection_comment?: ApplicationUpdateRejectionComment;
+  status: string
+  rejection_comment?: ApplicationUpdateRejectionComment
 }

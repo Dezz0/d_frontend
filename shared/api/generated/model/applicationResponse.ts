@@ -5,17 +5,17 @@
  * API для управления умным домом
  * OpenAPI spec version: 1.0.0
  */
-import type { ApplicationResponseSensors } from './applicationResponseSensors';
-import type { ApplicationResponseRejectionComment } from './applicationResponseRejectionComment';
+import type { ApplicationResponseSensors } from './applicationResponseSensors'
+import type { ApplicationResponseRejectionComment } from './applicationResponseRejectionComment'
 
 export interface ApplicationResponse {
-  rooms: number[];
-  sensors: ApplicationResponseSensors;
-  id: number;
-  user_id: number;
-  status: string;
-  rejection_comment?: ApplicationResponseRejectionComment;
-  created_at: string;
-  updated_at: string;
-  user_login: string;
+  rooms: number[]
+  sensors: ApplicationResponseSensors
+  id: number
+  user_id: number
+  status: string
+  rejection_comment?: ApplicationResponseRejectionComment
+  created_at: string
+  updated_at: string
+  user_login: string
 }

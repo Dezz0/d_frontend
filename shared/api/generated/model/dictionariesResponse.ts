@@ -5,10 +5,10 @@
  * API для управления умным домом
  * OpenAPI spec version: 1.0.0
  */
-import type { DictionariesResponseRooms } from './dictionariesResponseRooms';
-import type { DictionariesResponseSensors } from './dictionariesResponseSensors';
+import type { DictionariesResponseRooms } from './dictionariesResponseRooms'
+import type { DictionariesResponseSensors } from './dictionariesResponseSensors'
 
 export interface DictionariesResponse {
-  rooms: DictionariesResponseRooms;
-  sensors: DictionariesResponseSensors;
+  rooms: DictionariesResponseRooms
+  sensors: DictionariesResponseSensors
 }

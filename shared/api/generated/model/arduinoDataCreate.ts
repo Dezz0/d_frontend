@@ -5,11 +5,13 @@
  * API для управления умным домом
  * OpenAPI spec version: 1.0.0
  */
+import type { SensorData } from './sensorData'
 
-export interface SensorInfo {
-  id: number
-  type: string
-  name: string
+/**
+ * Данные от Arduino для всех датчиков в комнате
+ */
+export interface ArduinoDataCreate {
   room_id: number
   room_name: string
+  sensors: SensorData[]
 }

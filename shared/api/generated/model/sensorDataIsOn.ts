@@ -6,9 +6,4 @@
  * OpenAPI spec version: 1.0.0
  */
 
-export interface VentilationSensorCreate {
-  sensor_id: string;
-  room_name: string;
-  fan_speed: number;
-  is_on: boolean;
-}
+export type SensorDataIsOn = boolean | null

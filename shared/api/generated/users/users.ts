@@ -5,10 +5,7 @@
  * API для управления умным домом
  * OpenAPI spec version: 1.0.0
  */
-import {
-  useInfiniteQuery,
-  useQuery
-} from '@tanstack/react-query';
+import { useInfiniteQuery, useQuery } from '@tanstack/react-query'
 import type {
   DataTag,
   DefinedInitialDataOptions,
@@ -22,179 +19,308 @@ import type {
   UseInfiniteQueryOptions,
   UseInfiniteQueryResult,
   UseQueryOptions,
-  UseQueryResult
-} from '@tanstack/react-query';
+  UseQueryResult,
+} from '@tanstack/react-query'
 
-import type {
-  UserListResponse
-} from '.././model';
+import type { UserListResponse } from '.././model'
 
-import { baseApiRequest } from '../../baseApiRequest';
-
-
-
+import { baseApiRequest } from '../../baseApiRequest'
 
 /**
  * Получить всех пользователей (только для админа)
  * @summary Get All Users
  */
-export const getAllUsersUsersAdminListGet = (
-    
- signal?: AbortSignal
-) => {
-      
-      
-      return baseApiRequest<UserListResponse[]>(
-      {url: `/users/admin/list`, method: 'GET', signal
-    },
-      );
-    }
-  
-
-
+export const getAllUsersUsersAdminListGet = (signal?: AbortSignal) => {
+  return baseApiRequest<UserListResponse[]>({
+    url: `/users/admin/list`,
+    method: 'GET',
+    signal,
+  })
+}
 
 export const getGetAllUsersUsersAdminListGetInfiniteQueryKey = () => {
-    return [
-    'infinate', `/users/admin/list`
-    ] as const;
-    }
+  return ['infinate', `/users/admin/list`] as const
+}
 
 export const getGetAllUsersUsersAdminListGetQueryKey = () => {
-    return [
-    `/users/admin/list`
-    ] as const;
-    }
-
-    
-export const getGetAllUsersUsersAdminListGetInfiniteQueryOptions = <TData = InfiniteData<Awaited<ReturnType<typeof getAllUsersUsersAdminListGet>>>, TError = unknown>( options?: { query?:Partial<UseInfiniteQueryOptions<Awaited<ReturnType<typeof getAllUsersUsersAdminListGet>>, TError, TData>>, }
-) => {
-
-const {query: queryOptions} = options ?? {};
-
-  const queryKey =  queryOptions?.queryKey ?? getGetAllUsersUsersAdminListGetInfiniteQueryKey();
-
-  
-
-    const queryFn: QueryFunction<Awaited<ReturnType<typeof getAllUsersUsersAdminListGet>>> = ({ signal }) => getAllUsersUsersAdminListGet(signal);
-
-      
-
-      
-
-   return  { queryKey, queryFn, ...queryOptions} as UseInfiniteQueryOptions<Awaited<ReturnType<typeof getAllUsersUsersAdminListGet>>, TError, TData> & { queryKey: DataTag<QueryKey, TData, TError> }
+  return [`/users/admin/list`] as const
 }
 
-export type GetAllUsersUsersAdminListGetInfiniteQueryResult = NonNullable<Awaited<ReturnType<typeof getAllUsersUsersAdminListGet>>>
+export const getGetAllUsersUsersAdminListGetInfiniteQueryOptions = <
+  TData = InfiniteData<
+    Awaited<ReturnType<typeof getAllUsersUsersAdminListGet>>
+  >,
+  TError = unknown,
+>(options?: {
+  query?: Partial<
+    UseInfiniteQueryOptions<
+      Awaited<ReturnType<typeof getAllUsersUsersAdminListGet>>,
+      TError,
+      TData
+    >
+  >
+}) => {
+  const { query: queryOptions } = options ?? {}
+
+  const queryKey =
+    queryOptions?.queryKey ?? getGetAllUsersUsersAdminListGetInfiniteQueryKey()
+
+  const queryFn: QueryFunction<
+    Awaited<ReturnType<typeof getAllUsersUsersAdminListGet>>
+  > = ({ signal }) => getAllUsersUsersAdminListGet(signal)
+
+  return { queryKey, queryFn, ...queryOptions } as UseInfiniteQueryOptions<
+    Awaited<ReturnType<typeof getAllUsersUsersAdminListGet>>,
+    TError,
+    TData
+  > & { queryKey: DataTag<QueryKey, TData, TError> }
+}
+
+export type GetAllUsersUsersAdminListGetInfiniteQueryResult = NonNullable<
+  Awaited<ReturnType<typeof getAllUsersUsersAdminListGet>>
+>
 export type GetAllUsersUsersAdminListGetInfiniteQueryError = unknown
 
-
-export function useGetAllUsersUsersAdminListGetInfinite<TData = InfiniteData<Awaited<ReturnType<typeof getAllUsersUsersAdminListGet>>>, TError = unknown>(
-  options: { query:Partial<UseInfiniteQueryOptions<Awaited<ReturnType<typeof getAllUsersUsersAdminListGet>>, TError, TData>> & Pick<
+export function useGetAllUsersUsersAdminListGetInfinite<
+  TData = InfiniteData<
+    Awaited<ReturnType<typeof getAllUsersUsersAdminListGet>>
+  >,
+  TError = unknown,
+>(
+  options: {
+    query: Partial<
+      UseInfiniteQueryOptions<
+        Awaited<ReturnType<typeof getAllUsersUsersAdminListGet>>,
+        TError,
+        TData
+      >
+    > &
+      Pick<
         DefinedInitialDataOptions<
           Awaited<ReturnType<typeof getAllUsersUsersAdminListGet>>,
           TError,
           Awaited<ReturnType<typeof getAllUsersUsersAdminListGet>>
-        > , 'initialData'
-      >, }
- , queryClient?: QueryClient
-  ):  DefinedUseInfiniteQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-export function useGetAllUsersUsersAdminListGetInfinite<TData = InfiniteData<Awaited<ReturnType<typeof getAllUsersUsersAdminListGet>>>, TError = unknown>(
-  options?: { query?:Partial<UseInfiniteQueryOptions<Awaited<ReturnType<typeof getAllUsersUsersAdminListGet>>, TError, TData>> & Pick<
+        >,
+        'initialData'
+      >
+  },
+  queryClient?: QueryClient,
+): DefinedUseInfiniteQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>
+}
+export function useGetAllUsersUsersAdminListGetInfinite<
+  TData = InfiniteData<
+    Awaited<ReturnType<typeof getAllUsersUsersAdminListGet>>
+  >,
+  TError = unknown,
+>(
+  options?: {
+    query?: Partial<
+      UseInfiniteQueryOptions<
+        Awaited<ReturnType<typeof getAllUsersUsersAdminListGet>>,
+        TError,
+        TData
+      >
+    > &
+      Pick<
         UndefinedInitialDataOptions<
           Awaited<ReturnType<typeof getAllUsersUsersAdminListGet>>,
           TError,
           Awaited<ReturnType<typeof getAllUsersUsersAdminListGet>>
-        > , 'initialData'
-      >, }
- , queryClient?: QueryClient
-  ):  UseInfiniteQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-export function useGetAllUsersUsersAdminListGetInfinite<TData = InfiniteData<Awaited<ReturnType<typeof getAllUsersUsersAdminListGet>>>, TError = unknown>(
-  options?: { query?:Partial<UseInfiniteQueryOptions<Awaited<ReturnType<typeof getAllUsersUsersAdminListGet>>, TError, TData>>, }
- , queryClient?: QueryClient
-  ):  UseInfiniteQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+        >,
+        'initialData'
+      >
+  },
+  queryClient?: QueryClient,
+): UseInfiniteQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>
+}
+export function useGetAllUsersUsersAdminListGetInfinite<
+  TData = InfiniteData<
+    Awaited<ReturnType<typeof getAllUsersUsersAdminListGet>>
+  >,
+  TError = unknown,
+>(
+  options?: {
+    query?: Partial<
+      UseInfiniteQueryOptions<
+        Awaited<ReturnType<typeof getAllUsersUsersAdminListGet>>,
+        TError,
+        TData
+      >
+    >
+  },
+  queryClient?: QueryClient,
+): UseInfiniteQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>
+}
 /**
  * @summary Get All Users
  */
 
-export function useGetAllUsersUsersAdminListGetInfinite<TData = InfiniteData<Awaited<ReturnType<typeof getAllUsersUsersAdminListGet>>>, TError = unknown>(
-  options?: { query?:Partial<UseInfiniteQueryOptions<Awaited<ReturnType<typeof getAllUsersUsersAdminListGet>>, TError, TData>>, }
- , queryClient?: QueryClient 
- ):  UseInfiniteQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+export function useGetAllUsersUsersAdminListGetInfinite<
+  TData = InfiniteData<
+    Awaited<ReturnType<typeof getAllUsersUsersAdminListGet>>
+  >,
+  TError = unknown,
+>(
+  options?: {
+    query?: Partial<
+      UseInfiniteQueryOptions<
+        Awaited<ReturnType<typeof getAllUsersUsersAdminListGet>>,
+        TError,
+        TData
+      >
+    >
+  },
+  queryClient?: QueryClient,
+): UseInfiniteQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>
+} {
+  const queryOptions =
+    getGetAllUsersUsersAdminListGetInfiniteQueryOptions(options)
 
-  const queryOptions = getGetAllUsersUsersAdminListGetInfiniteQueryOptions(options)
+  const query = useInfiniteQuery(
+    queryOptions,
+    queryClient,
+  ) as UseInfiniteQueryResult<TData, TError> & {
+    queryKey: DataTag<QueryKey, TData, TError>
+  }
 
-  const query = useInfiniteQuery(queryOptions, queryClient) as  UseInfiniteQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
+  query.queryKey = queryOptions.queryKey
 
-  query.queryKey = queryOptions.queryKey ;
-
-  return query;
+  return query
 }
 
+export const getGetAllUsersUsersAdminListGetQueryOptions = <
+  TData = Awaited<ReturnType<typeof getAllUsersUsersAdminListGet>>,
+  TError = unknown,
+>(options?: {
+  query?: Partial<
+    UseQueryOptions<
+      Awaited<ReturnType<typeof getAllUsersUsersAdminListGet>>,
+      TError,
+      TData
+    >
+  >
+}) => {
+  const { query: queryOptions } = options ?? {}
 
+  const queryKey =
+    queryOptions?.queryKey ?? getGetAllUsersUsersAdminListGetQueryKey()
 
-export const getGetAllUsersUsersAdminListGetQueryOptions = <TData = Awaited<ReturnType<typeof getAllUsersUsersAdminListGet>>, TError = unknown>( options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getAllUsersUsersAdminListGet>>, TError, TData>>, }
-) => {
+  const queryFn: QueryFunction<
+    Awaited<ReturnType<typeof getAllUsersUsersAdminListGet>>
+  > = ({ signal }) => getAllUsersUsersAdminListGet(signal)
 
-const {query: queryOptions} = options ?? {};
-
-  const queryKey =  queryOptions?.queryKey ?? getGetAllUsersUsersAdminListGetQueryKey();
-
-  
-
-    const queryFn: QueryFunction<Awaited<ReturnType<typeof getAllUsersUsersAdminListGet>>> = ({ signal }) => getAllUsersUsersAdminListGet(signal);
-
-      
-
-      
-
-   return  { queryKey, queryFn, ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof getAllUsersUsersAdminListGet>>, TError, TData> & { queryKey: DataTag<QueryKey, TData, TError> }
+  return { queryKey, queryFn, ...queryOptions } as UseQueryOptions<
+    Awaited<ReturnType<typeof getAllUsersUsersAdminListGet>>,
+    TError,
+    TData
+  > & { queryKey: DataTag<QueryKey, TData, TError> }
 }
 
-export type GetAllUsersUsersAdminListGetQueryResult = NonNullable<Awaited<ReturnType<typeof getAllUsersUsersAdminListGet>>>
+export type GetAllUsersUsersAdminListGetQueryResult = NonNullable<
+  Awaited<ReturnType<typeof getAllUsersUsersAdminListGet>>
+>
 export type GetAllUsersUsersAdminListGetQueryError = unknown
 
-
-export function useGetAllUsersUsersAdminListGet<TData = Awaited<ReturnType<typeof getAllUsersUsersAdminListGet>>, TError = unknown>(
-  options: { query:Partial<UseQueryOptions<Awaited<ReturnType<typeof getAllUsersUsersAdminListGet>>, TError, TData>> & Pick<
+export function useGetAllUsersUsersAdminListGet<
+  TData = Awaited<ReturnType<typeof getAllUsersUsersAdminListGet>>,
+  TError = unknown,
+>(
+  options: {
+    query: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof getAllUsersUsersAdminListGet>>,
+        TError,
+        TData
+      >
+    > &
+      Pick<
         DefinedInitialDataOptions<
           Awaited<ReturnType<typeof getAllUsersUsersAdminListGet>>,
           TError,
           Awaited<ReturnType<typeof getAllUsersUsersAdminListGet>>
-        > , 'initialData'
-      >, }
- , queryClient?: QueryClient
-  ):  DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-export function useGetAllUsersUsersAdminListGet<TData = Awaited<ReturnType<typeof getAllUsersUsersAdminListGet>>, TError = unknown>(
-  options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getAllUsersUsersAdminListGet>>, TError, TData>> & Pick<
+        >,
+        'initialData'
+      >
+  },
+  queryClient?: QueryClient,
+): DefinedUseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>
+}
+export function useGetAllUsersUsersAdminListGet<
+  TData = Awaited<ReturnType<typeof getAllUsersUsersAdminListGet>>,
+  TError = unknown,
+>(
+  options?: {
+    query?: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof getAllUsersUsersAdminListGet>>,
+        TError,
+        TData
+      >
+    > &
+      Pick<
         UndefinedInitialDataOptions<
           Awaited<ReturnType<typeof getAllUsersUsersAdminListGet>>,
           TError,
           Awaited<ReturnType<typeof getAllUsersUsersAdminListGet>>
-        > , 'initialData'
-      >, }
- , queryClient?: QueryClient
-  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-export function useGetAllUsersUsersAdminListGet<TData = Awaited<ReturnType<typeof getAllUsersUsersAdminListGet>>, TError = unknown>(
-  options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getAllUsersUsersAdminListGet>>, TError, TData>>, }
- , queryClient?: QueryClient
-  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+        >,
+        'initialData'
+      >
+  },
+  queryClient?: QueryClient,
+): UseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>
+}
+export function useGetAllUsersUsersAdminListGet<
+  TData = Awaited<ReturnType<typeof getAllUsersUsersAdminListGet>>,
+  TError = unknown,
+>(
+  options?: {
+    query?: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof getAllUsersUsersAdminListGet>>,
+        TError,
+        TData
+      >
+    >
+  },
+  queryClient?: QueryClient,
+): UseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>
+}
 /**
  * @summary Get All Users
  */
 
-export function useGetAllUsersUsersAdminListGet<TData = Awaited<ReturnType<typeof getAllUsersUsersAdminListGet>>, TError = unknown>(
-  options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getAllUsersUsersAdminListGet>>, TError, TData>>, }
- , queryClient?: QueryClient 
- ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
-
+export function useGetAllUsersUsersAdminListGet<
+  TData = Awaited<ReturnType<typeof getAllUsersUsersAdminListGet>>,
+  TError = unknown,
+>(
+  options?: {
+    query?: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof getAllUsersUsersAdminListGet>>,
+        TError,
+        TData
+      >
+    >
+  },
+  queryClient?: QueryClient,
+): UseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>
+} {
   const queryOptions = getGetAllUsersUsersAdminListGetQueryOptions(options)
 
-  const query = useQuery(queryOptions, queryClient) as  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
+  const query = useQuery(queryOptions, queryClient) as UseQueryResult<
+    TData,
+    TError
+  > & { queryKey: DataTag<QueryKey, TData, TError> }
 
-  query.queryKey = queryOptions.queryKey ;
+  query.queryKey = queryOptions.queryKey
 
-  return query;
+  return query
 }
-
-
-

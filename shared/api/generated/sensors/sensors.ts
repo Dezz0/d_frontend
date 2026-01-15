@@ -5,10 +5,7 @@
  * API для управления умным домом
  * OpenAPI spec version: 1.0.0
  */
-import {
-  useInfiniteQuery,
-  useQuery
-} from '@tanstack/react-query';
+import { useInfiniteQuery, useQuery } from '@tanstack/react-query'
 import type {
   DataTag,
   DefinedInitialDataOptions,
@@ -22,355 +19,706 @@ import type {
   UseInfiniteQueryOptions,
   UseInfiniteQueryResult,
   UseQueryOptions,
-  UseQueryResult
-} from '@tanstack/react-query';
+  UseQueryResult,
+} from '@tanstack/react-query'
 
-import type {
-  HTTPValidationError
-} from '.././model';
+import type { HTTPValidationError } from '.././model'
 
-import { baseApiRequest } from '../../baseApiRequest';
-
-
-
+import { baseApiRequest } from '../../baseApiRequest'
 
 /**
  * Получить все датчики в конкретной комнате
  * @summary Get Room Sensors
  */
 export const getRoomSensorsSensorsRoomRoomIdGet = (
-    roomId: number,
- signal?: AbortSignal
+  roomId: number,
+  signal?: AbortSignal,
 ) => {
-      
-      
-      return baseApiRequest<unknown>(
-      {url: `/sensors/room/${roomId}`, method: 'GET', signal
-    },
-      );
-    }
-  
-
-
-
-export const getGetRoomSensorsSensorsRoomRoomIdGetInfiniteQueryKey = (roomId?: number,) => {
-    return [
-    'infinate', `/sensors/room/${roomId}`
-    ] as const;
-    }
-
-export const getGetRoomSensorsSensorsRoomRoomIdGetQueryKey = (roomId?: number,) => {
-    return [
-    `/sensors/room/${roomId}`
-    ] as const;
-    }
-
-    
-export const getGetRoomSensorsSensorsRoomRoomIdGetInfiniteQueryOptions = <TData = InfiniteData<Awaited<ReturnType<typeof getRoomSensorsSensorsRoomRoomIdGet>>>, TError = HTTPValidationError>(roomId: number, options?: { query?:Partial<UseInfiniteQueryOptions<Awaited<ReturnType<typeof getRoomSensorsSensorsRoomRoomIdGet>>, TError, TData>>, }
-) => {
-
-const {query: queryOptions} = options ?? {};
-
-  const queryKey =  queryOptions?.queryKey ?? getGetRoomSensorsSensorsRoomRoomIdGetInfiniteQueryKey(roomId);
-
-  
-
-    const queryFn: QueryFunction<Awaited<ReturnType<typeof getRoomSensorsSensorsRoomRoomIdGet>>> = ({ signal }) => getRoomSensorsSensorsRoomRoomIdGet(roomId, signal);
-
-      
-
-      
-
-   return  { queryKey, queryFn, enabled: !!(roomId), ...queryOptions} as UseInfiniteQueryOptions<Awaited<ReturnType<typeof getRoomSensorsSensorsRoomRoomIdGet>>, TError, TData> & { queryKey: DataTag<QueryKey, TData, TError> }
+  return baseApiRequest<unknown>({
+    url: `/sensors/room/${roomId}`,
+    method: 'GET',
+    signal,
+  })
 }
 
-export type GetRoomSensorsSensorsRoomRoomIdGetInfiniteQueryResult = NonNullable<Awaited<ReturnType<typeof getRoomSensorsSensorsRoomRoomIdGet>>>
-export type GetRoomSensorsSensorsRoomRoomIdGetInfiniteQueryError = HTTPValidationError
+export const getGetRoomSensorsSensorsRoomRoomIdGetInfiniteQueryKey = (
+  roomId?: number,
+) => {
+  return ['infinate', `/sensors/room/${roomId}`] as const
+}
 
+export const getGetRoomSensorsSensorsRoomRoomIdGetQueryKey = (
+  roomId?: number,
+) => {
+  return [`/sensors/room/${roomId}`] as const
+}
 
-export function useGetRoomSensorsSensorsRoomRoomIdGetInfinite<TData = InfiniteData<Awaited<ReturnType<typeof getRoomSensorsSensorsRoomRoomIdGet>>>, TError = HTTPValidationError>(
- roomId: number, options: { query:Partial<UseInfiniteQueryOptions<Awaited<ReturnType<typeof getRoomSensorsSensorsRoomRoomIdGet>>, TError, TData>> & Pick<
+export const getGetRoomSensorsSensorsRoomRoomIdGetInfiniteQueryOptions = <
+  TData = InfiniteData<
+    Awaited<ReturnType<typeof getRoomSensorsSensorsRoomRoomIdGet>>
+  >,
+  TError = HTTPValidationError,
+>(
+  roomId: number,
+  options?: {
+    query?: Partial<
+      UseInfiniteQueryOptions<
+        Awaited<ReturnType<typeof getRoomSensorsSensorsRoomRoomIdGet>>,
+        TError,
+        TData
+      >
+    >
+  },
+) => {
+  const { query: queryOptions } = options ?? {}
+
+  const queryKey =
+    queryOptions?.queryKey ??
+    getGetRoomSensorsSensorsRoomRoomIdGetInfiniteQueryKey(roomId)
+
+  const queryFn: QueryFunction<
+    Awaited<ReturnType<typeof getRoomSensorsSensorsRoomRoomIdGet>>
+  > = ({ signal }) => getRoomSensorsSensorsRoomRoomIdGet(roomId, signal)
+
+  return {
+    queryKey,
+    queryFn,
+    enabled: !!roomId,
+    ...queryOptions,
+  } as UseInfiniteQueryOptions<
+    Awaited<ReturnType<typeof getRoomSensorsSensorsRoomRoomIdGet>>,
+    TError,
+    TData
+  > & { queryKey: DataTag<QueryKey, TData, TError> }
+}
+
+export type GetRoomSensorsSensorsRoomRoomIdGetInfiniteQueryResult = NonNullable<
+  Awaited<ReturnType<typeof getRoomSensorsSensorsRoomRoomIdGet>>
+>
+export type GetRoomSensorsSensorsRoomRoomIdGetInfiniteQueryError =
+  HTTPValidationError
+
+export function useGetRoomSensorsSensorsRoomRoomIdGetInfinite<
+  TData = InfiniteData<
+    Awaited<ReturnType<typeof getRoomSensorsSensorsRoomRoomIdGet>>
+  >,
+  TError = HTTPValidationError,
+>(
+  roomId: number,
+  options: {
+    query: Partial<
+      UseInfiniteQueryOptions<
+        Awaited<ReturnType<typeof getRoomSensorsSensorsRoomRoomIdGet>>,
+        TError,
+        TData
+      >
+    > &
+      Pick<
         DefinedInitialDataOptions<
           Awaited<ReturnType<typeof getRoomSensorsSensorsRoomRoomIdGet>>,
           TError,
           Awaited<ReturnType<typeof getRoomSensorsSensorsRoomRoomIdGet>>
-        > , 'initialData'
-      >, }
- , queryClient?: QueryClient
-  ):  DefinedUseInfiniteQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-export function useGetRoomSensorsSensorsRoomRoomIdGetInfinite<TData = InfiniteData<Awaited<ReturnType<typeof getRoomSensorsSensorsRoomRoomIdGet>>>, TError = HTTPValidationError>(
- roomId: number, options?: { query?:Partial<UseInfiniteQueryOptions<Awaited<ReturnType<typeof getRoomSensorsSensorsRoomRoomIdGet>>, TError, TData>> & Pick<
+        >,
+        'initialData'
+      >
+  },
+  queryClient?: QueryClient,
+): DefinedUseInfiniteQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>
+}
+export function useGetRoomSensorsSensorsRoomRoomIdGetInfinite<
+  TData = InfiniteData<
+    Awaited<ReturnType<typeof getRoomSensorsSensorsRoomRoomIdGet>>
+  >,
+  TError = HTTPValidationError,
+>(
+  roomId: number,
+  options?: {
+    query?: Partial<
+      UseInfiniteQueryOptions<
+        Awaited<ReturnType<typeof getRoomSensorsSensorsRoomRoomIdGet>>,
+        TError,
+        TData
+      >
+    > &
+      Pick<
         UndefinedInitialDataOptions<
           Awaited<ReturnType<typeof getRoomSensorsSensorsRoomRoomIdGet>>,
           TError,
           Awaited<ReturnType<typeof getRoomSensorsSensorsRoomRoomIdGet>>
-        > , 'initialData'
-      >, }
- , queryClient?: QueryClient
-  ):  UseInfiniteQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-export function useGetRoomSensorsSensorsRoomRoomIdGetInfinite<TData = InfiniteData<Awaited<ReturnType<typeof getRoomSensorsSensorsRoomRoomIdGet>>>, TError = HTTPValidationError>(
- roomId: number, options?: { query?:Partial<UseInfiniteQueryOptions<Awaited<ReturnType<typeof getRoomSensorsSensorsRoomRoomIdGet>>, TError, TData>>, }
- , queryClient?: QueryClient
-  ):  UseInfiniteQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+        >,
+        'initialData'
+      >
+  },
+  queryClient?: QueryClient,
+): UseInfiniteQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>
+}
+export function useGetRoomSensorsSensorsRoomRoomIdGetInfinite<
+  TData = InfiniteData<
+    Awaited<ReturnType<typeof getRoomSensorsSensorsRoomRoomIdGet>>
+  >,
+  TError = HTTPValidationError,
+>(
+  roomId: number,
+  options?: {
+    query?: Partial<
+      UseInfiniteQueryOptions<
+        Awaited<ReturnType<typeof getRoomSensorsSensorsRoomRoomIdGet>>,
+        TError,
+        TData
+      >
+    >
+  },
+  queryClient?: QueryClient,
+): UseInfiniteQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>
+}
 /**
  * @summary Get Room Sensors
  */
 
-export function useGetRoomSensorsSensorsRoomRoomIdGetInfinite<TData = InfiniteData<Awaited<ReturnType<typeof getRoomSensorsSensorsRoomRoomIdGet>>>, TError = HTTPValidationError>(
- roomId: number, options?: { query?:Partial<UseInfiniteQueryOptions<Awaited<ReturnType<typeof getRoomSensorsSensorsRoomRoomIdGet>>, TError, TData>>, }
- , queryClient?: QueryClient 
- ):  UseInfiniteQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+export function useGetRoomSensorsSensorsRoomRoomIdGetInfinite<
+  TData = InfiniteData<
+    Awaited<ReturnType<typeof getRoomSensorsSensorsRoomRoomIdGet>>
+  >,
+  TError = HTTPValidationError,
+>(
+  roomId: number,
+  options?: {
+    query?: Partial<
+      UseInfiniteQueryOptions<
+        Awaited<ReturnType<typeof getRoomSensorsSensorsRoomRoomIdGet>>,
+        TError,
+        TData
+      >
+    >
+  },
+  queryClient?: QueryClient,
+): UseInfiniteQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>
+} {
+  const queryOptions =
+    getGetRoomSensorsSensorsRoomRoomIdGetInfiniteQueryOptions(roomId, options)
 
-  const queryOptions = getGetRoomSensorsSensorsRoomRoomIdGetInfiniteQueryOptions(roomId,options)
+  const query = useInfiniteQuery(
+    queryOptions,
+    queryClient,
+  ) as UseInfiniteQueryResult<TData, TError> & {
+    queryKey: DataTag<QueryKey, TData, TError>
+  }
 
-  const query = useInfiniteQuery(queryOptions, queryClient) as  UseInfiniteQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
+  query.queryKey = queryOptions.queryKey
 
-  query.queryKey = queryOptions.queryKey ;
-
-  return query;
+  return query
 }
 
-
-
-export const getGetRoomSensorsSensorsRoomRoomIdGetQueryOptions = <TData = Awaited<ReturnType<typeof getRoomSensorsSensorsRoomRoomIdGet>>, TError = HTTPValidationError>(roomId: number, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getRoomSensorsSensorsRoomRoomIdGet>>, TError, TData>>, }
+export const getGetRoomSensorsSensorsRoomRoomIdGetQueryOptions = <
+  TData = Awaited<ReturnType<typeof getRoomSensorsSensorsRoomRoomIdGet>>,
+  TError = HTTPValidationError,
+>(
+  roomId: number,
+  options?: {
+    query?: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof getRoomSensorsSensorsRoomRoomIdGet>>,
+        TError,
+        TData
+      >
+    >
+  },
 ) => {
+  const { query: queryOptions } = options ?? {}
 
-const {query: queryOptions} = options ?? {};
+  const queryKey =
+    queryOptions?.queryKey ??
+    getGetRoomSensorsSensorsRoomRoomIdGetQueryKey(roomId)
 
-  const queryKey =  queryOptions?.queryKey ?? getGetRoomSensorsSensorsRoomRoomIdGetQueryKey(roomId);
+  const queryFn: QueryFunction<
+    Awaited<ReturnType<typeof getRoomSensorsSensorsRoomRoomIdGet>>
+  > = ({ signal }) => getRoomSensorsSensorsRoomRoomIdGet(roomId, signal)
 
-  
-
-    const queryFn: QueryFunction<Awaited<ReturnType<typeof getRoomSensorsSensorsRoomRoomIdGet>>> = ({ signal }) => getRoomSensorsSensorsRoomRoomIdGet(roomId, signal);
-
-      
-
-      
-
-   return  { queryKey, queryFn, enabled: !!(roomId), ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof getRoomSensorsSensorsRoomRoomIdGet>>, TError, TData> & { queryKey: DataTag<QueryKey, TData, TError> }
+  return {
+    queryKey,
+    queryFn,
+    enabled: !!roomId,
+    ...queryOptions,
+  } as UseQueryOptions<
+    Awaited<ReturnType<typeof getRoomSensorsSensorsRoomRoomIdGet>>,
+    TError,
+    TData
+  > & { queryKey: DataTag<QueryKey, TData, TError> }
 }
 
-export type GetRoomSensorsSensorsRoomRoomIdGetQueryResult = NonNullable<Awaited<ReturnType<typeof getRoomSensorsSensorsRoomRoomIdGet>>>
+export type GetRoomSensorsSensorsRoomRoomIdGetQueryResult = NonNullable<
+  Awaited<ReturnType<typeof getRoomSensorsSensorsRoomRoomIdGet>>
+>
 export type GetRoomSensorsSensorsRoomRoomIdGetQueryError = HTTPValidationError
 
-
-export function useGetRoomSensorsSensorsRoomRoomIdGet<TData = Awaited<ReturnType<typeof getRoomSensorsSensorsRoomRoomIdGet>>, TError = HTTPValidationError>(
- roomId: number, options: { query:Partial<UseQueryOptions<Awaited<ReturnType<typeof getRoomSensorsSensorsRoomRoomIdGet>>, TError, TData>> & Pick<
+export function useGetRoomSensorsSensorsRoomRoomIdGet<
+  TData = Awaited<ReturnType<typeof getRoomSensorsSensorsRoomRoomIdGet>>,
+  TError = HTTPValidationError,
+>(
+  roomId: number,
+  options: {
+    query: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof getRoomSensorsSensorsRoomRoomIdGet>>,
+        TError,
+        TData
+      >
+    > &
+      Pick<
         DefinedInitialDataOptions<
           Awaited<ReturnType<typeof getRoomSensorsSensorsRoomRoomIdGet>>,
           TError,
           Awaited<ReturnType<typeof getRoomSensorsSensorsRoomRoomIdGet>>
-        > , 'initialData'
-      >, }
- , queryClient?: QueryClient
-  ):  DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-export function useGetRoomSensorsSensorsRoomRoomIdGet<TData = Awaited<ReturnType<typeof getRoomSensorsSensorsRoomRoomIdGet>>, TError = HTTPValidationError>(
- roomId: number, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getRoomSensorsSensorsRoomRoomIdGet>>, TError, TData>> & Pick<
+        >,
+        'initialData'
+      >
+  },
+  queryClient?: QueryClient,
+): DefinedUseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>
+}
+export function useGetRoomSensorsSensorsRoomRoomIdGet<
+  TData = Awaited<ReturnType<typeof getRoomSensorsSensorsRoomRoomIdGet>>,
+  TError = HTTPValidationError,
+>(
+  roomId: number,
+  options?: {
+    query?: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof getRoomSensorsSensorsRoomRoomIdGet>>,
+        TError,
+        TData
+      >
+    > &
+      Pick<
         UndefinedInitialDataOptions<
           Awaited<ReturnType<typeof getRoomSensorsSensorsRoomRoomIdGet>>,
           TError,
           Awaited<ReturnType<typeof getRoomSensorsSensorsRoomRoomIdGet>>
-        > , 'initialData'
-      >, }
- , queryClient?: QueryClient
-  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-export function useGetRoomSensorsSensorsRoomRoomIdGet<TData = Awaited<ReturnType<typeof getRoomSensorsSensorsRoomRoomIdGet>>, TError = HTTPValidationError>(
- roomId: number, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getRoomSensorsSensorsRoomRoomIdGet>>, TError, TData>>, }
- , queryClient?: QueryClient
-  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+        >,
+        'initialData'
+      >
+  },
+  queryClient?: QueryClient,
+): UseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>
+}
+export function useGetRoomSensorsSensorsRoomRoomIdGet<
+  TData = Awaited<ReturnType<typeof getRoomSensorsSensorsRoomRoomIdGet>>,
+  TError = HTTPValidationError,
+>(
+  roomId: number,
+  options?: {
+    query?: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof getRoomSensorsSensorsRoomRoomIdGet>>,
+        TError,
+        TData
+      >
+    >
+  },
+  queryClient?: QueryClient,
+): UseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>
+}
 /**
  * @summary Get Room Sensors
  */
 
-export function useGetRoomSensorsSensorsRoomRoomIdGet<TData = Awaited<ReturnType<typeof getRoomSensorsSensorsRoomRoomIdGet>>, TError = HTTPValidationError>(
- roomId: number, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getRoomSensorsSensorsRoomRoomIdGet>>, TError, TData>>, }
- , queryClient?: QueryClient 
- ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+export function useGetRoomSensorsSensorsRoomRoomIdGet<
+  TData = Awaited<ReturnType<typeof getRoomSensorsSensorsRoomRoomIdGet>>,
+  TError = HTTPValidationError,
+>(
+  roomId: number,
+  options?: {
+    query?: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof getRoomSensorsSensorsRoomRoomIdGet>>,
+        TError,
+        TData
+      >
+    >
+  },
+  queryClient?: QueryClient,
+): UseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>
+} {
+  const queryOptions = getGetRoomSensorsSensorsRoomRoomIdGetQueryOptions(
+    roomId,
+    options,
+  )
 
-  const queryOptions = getGetRoomSensorsSensorsRoomRoomIdGetQueryOptions(roomId,options)
+  const query = useQuery(queryOptions, queryClient) as UseQueryResult<
+    TData,
+    TError
+  > & { queryKey: DataTag<QueryKey, TData, TError> }
 
-  const query = useQuery(queryOptions, queryClient) as  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
+  query.queryKey = queryOptions.queryKey
 
-  query.queryKey = queryOptions.queryKey ;
-
-  return query;
+  return query
 }
-
-
 
 /**
  * @summary Get Sensor Info
  */
 export const getSensorInfoSensorsSensorTypeSensorIdGet = (
+  sensorType: string,
+  sensorId: string,
+  signal?: AbortSignal,
+) => {
+  return baseApiRequest<unknown>({
+    url: `/sensors/${sensorType}/${sensorId}`,
+    method: 'GET',
+    signal,
+  })
+}
+
+export const getGetSensorInfoSensorsSensorTypeSensorIdGetInfiniteQueryKey = (
+  sensorType?: string,
+  sensorId?: string,
+) => {
+  return ['infinate', `/sensors/${sensorType}/${sensorId}`] as const
+}
+
+export const getGetSensorInfoSensorsSensorTypeSensorIdGetQueryKey = (
+  sensorType?: string,
+  sensorId?: string,
+) => {
+  return [`/sensors/${sensorType}/${sensorId}`] as const
+}
+
+export const getGetSensorInfoSensorsSensorTypeSensorIdGetInfiniteQueryOptions =
+  <
+    TData = InfiniteData<
+      Awaited<ReturnType<typeof getSensorInfoSensorsSensorTypeSensorIdGet>>
+    >,
+    TError = HTTPValidationError,
+  >(
     sensorType: string,
     sensorId: string,
- signal?: AbortSignal
-) => {
-      
-      
-      return baseApiRequest<unknown>(
-      {url: `/sensors/${sensorType}/${sensorId}`, method: 'GET', signal
+    options?: {
+      query?: Partial<
+        UseInfiniteQueryOptions<
+          Awaited<ReturnType<typeof getSensorInfoSensorsSensorTypeSensorIdGet>>,
+          TError,
+          TData
+        >
+      >
     },
-      );
-    }
-  
+  ) => {
+    const { query: queryOptions } = options ?? {}
 
+    const queryKey =
+      queryOptions?.queryKey ??
+      getGetSensorInfoSensorsSensorTypeSensorIdGetInfiniteQueryKey(
+        sensorType,
+        sensorId,
+      )
 
+    const queryFn: QueryFunction<
+      Awaited<ReturnType<typeof getSensorInfoSensorsSensorTypeSensorIdGet>>
+    > = ({ signal }) =>
+      getSensorInfoSensorsSensorTypeSensorIdGet(sensorType, sensorId, signal)
 
-export const getGetSensorInfoSensorsSensorTypeSensorIdGetInfiniteQueryKey = (sensorType?: string,
-    sensorId?: string,) => {
-    return [
-    'infinate', `/sensors/${sensorType}/${sensorId}`
-    ] as const;
-    }
+    return {
+      queryKey,
+      queryFn,
+      enabled: !!(sensorType && sensorId),
+      ...queryOptions,
+    } as UseInfiniteQueryOptions<
+      Awaited<ReturnType<typeof getSensorInfoSensorsSensorTypeSensorIdGet>>,
+      TError,
+      TData
+    > & { queryKey: DataTag<QueryKey, TData, TError> }
+  }
 
-export const getGetSensorInfoSensorsSensorTypeSensorIdGetQueryKey = (sensorType?: string,
-    sensorId?: string,) => {
-    return [
-    `/sensors/${sensorType}/${sensorId}`
-    ] as const;
-    }
+export type GetSensorInfoSensorsSensorTypeSensorIdGetInfiniteQueryResult =
+  NonNullable<
+    Awaited<ReturnType<typeof getSensorInfoSensorsSensorTypeSensorIdGet>>
+  >
+export type GetSensorInfoSensorsSensorTypeSensorIdGetInfiniteQueryError =
+  HTTPValidationError
 
-    
-export const getGetSensorInfoSensorsSensorTypeSensorIdGetInfiniteQueryOptions = <TData = InfiniteData<Awaited<ReturnType<typeof getSensorInfoSensorsSensorTypeSensorIdGet>>>, TError = HTTPValidationError>(sensorType: string,
-    sensorId: string, options?: { query?:Partial<UseInfiniteQueryOptions<Awaited<ReturnType<typeof getSensorInfoSensorsSensorTypeSensorIdGet>>, TError, TData>>, }
-) => {
-
-const {query: queryOptions} = options ?? {};
-
-  const queryKey =  queryOptions?.queryKey ?? getGetSensorInfoSensorsSensorTypeSensorIdGetInfiniteQueryKey(sensorType,sensorId);
-
-  
-
-    const queryFn: QueryFunction<Awaited<ReturnType<typeof getSensorInfoSensorsSensorTypeSensorIdGet>>> = ({ signal }) => getSensorInfoSensorsSensorTypeSensorIdGet(sensorType,sensorId, signal);
-
-      
-
-      
-
-   return  { queryKey, queryFn, enabled: !!(sensorType && sensorId), ...queryOptions} as UseInfiniteQueryOptions<Awaited<ReturnType<typeof getSensorInfoSensorsSensorTypeSensorIdGet>>, TError, TData> & { queryKey: DataTag<QueryKey, TData, TError> }
-}
-
-export type GetSensorInfoSensorsSensorTypeSensorIdGetInfiniteQueryResult = NonNullable<Awaited<ReturnType<typeof getSensorInfoSensorsSensorTypeSensorIdGet>>>
-export type GetSensorInfoSensorsSensorTypeSensorIdGetInfiniteQueryError = HTTPValidationError
-
-
-export function useGetSensorInfoSensorsSensorTypeSensorIdGetInfinite<TData = InfiniteData<Awaited<ReturnType<typeof getSensorInfoSensorsSensorTypeSensorIdGet>>>, TError = HTTPValidationError>(
- sensorType: string,
-    sensorId: string, options: { query:Partial<UseInfiniteQueryOptions<Awaited<ReturnType<typeof getSensorInfoSensorsSensorTypeSensorIdGet>>, TError, TData>> & Pick<
+export function useGetSensorInfoSensorsSensorTypeSensorIdGetInfinite<
+  TData = InfiniteData<
+    Awaited<ReturnType<typeof getSensorInfoSensorsSensorTypeSensorIdGet>>
+  >,
+  TError = HTTPValidationError,
+>(
+  sensorType: string,
+  sensorId: string,
+  options: {
+    query: Partial<
+      UseInfiniteQueryOptions<
+        Awaited<ReturnType<typeof getSensorInfoSensorsSensorTypeSensorIdGet>>,
+        TError,
+        TData
+      >
+    > &
+      Pick<
         DefinedInitialDataOptions<
           Awaited<ReturnType<typeof getSensorInfoSensorsSensorTypeSensorIdGet>>,
           TError,
           Awaited<ReturnType<typeof getSensorInfoSensorsSensorTypeSensorIdGet>>
-        > , 'initialData'
-      >, }
- , queryClient?: QueryClient
-  ):  DefinedUseInfiniteQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-export function useGetSensorInfoSensorsSensorTypeSensorIdGetInfinite<TData = InfiniteData<Awaited<ReturnType<typeof getSensorInfoSensorsSensorTypeSensorIdGet>>>, TError = HTTPValidationError>(
- sensorType: string,
-    sensorId: string, options?: { query?:Partial<UseInfiniteQueryOptions<Awaited<ReturnType<typeof getSensorInfoSensorsSensorTypeSensorIdGet>>, TError, TData>> & Pick<
+        >,
+        'initialData'
+      >
+  },
+  queryClient?: QueryClient,
+): DefinedUseInfiniteQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>
+}
+export function useGetSensorInfoSensorsSensorTypeSensorIdGetInfinite<
+  TData = InfiniteData<
+    Awaited<ReturnType<typeof getSensorInfoSensorsSensorTypeSensorIdGet>>
+  >,
+  TError = HTTPValidationError,
+>(
+  sensorType: string,
+  sensorId: string,
+  options?: {
+    query?: Partial<
+      UseInfiniteQueryOptions<
+        Awaited<ReturnType<typeof getSensorInfoSensorsSensorTypeSensorIdGet>>,
+        TError,
+        TData
+      >
+    > &
+      Pick<
         UndefinedInitialDataOptions<
           Awaited<ReturnType<typeof getSensorInfoSensorsSensorTypeSensorIdGet>>,
           TError,
           Awaited<ReturnType<typeof getSensorInfoSensorsSensorTypeSensorIdGet>>
-        > , 'initialData'
-      >, }
- , queryClient?: QueryClient
-  ):  UseInfiniteQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-export function useGetSensorInfoSensorsSensorTypeSensorIdGetInfinite<TData = InfiniteData<Awaited<ReturnType<typeof getSensorInfoSensorsSensorTypeSensorIdGet>>>, TError = HTTPValidationError>(
- sensorType: string,
-    sensorId: string, options?: { query?:Partial<UseInfiniteQueryOptions<Awaited<ReturnType<typeof getSensorInfoSensorsSensorTypeSensorIdGet>>, TError, TData>>, }
- , queryClient?: QueryClient
-  ):  UseInfiniteQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+        >,
+        'initialData'
+      >
+  },
+  queryClient?: QueryClient,
+): UseInfiniteQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>
+}
+export function useGetSensorInfoSensorsSensorTypeSensorIdGetInfinite<
+  TData = InfiniteData<
+    Awaited<ReturnType<typeof getSensorInfoSensorsSensorTypeSensorIdGet>>
+  >,
+  TError = HTTPValidationError,
+>(
+  sensorType: string,
+  sensorId: string,
+  options?: {
+    query?: Partial<
+      UseInfiniteQueryOptions<
+        Awaited<ReturnType<typeof getSensorInfoSensorsSensorTypeSensorIdGet>>,
+        TError,
+        TData
+      >
+    >
+  },
+  queryClient?: QueryClient,
+): UseInfiniteQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>
+}
 /**
  * @summary Get Sensor Info
  */
 
-export function useGetSensorInfoSensorsSensorTypeSensorIdGetInfinite<TData = InfiniteData<Awaited<ReturnType<typeof getSensorInfoSensorsSensorTypeSensorIdGet>>>, TError = HTTPValidationError>(
- sensorType: string,
-    sensorId: string, options?: { query?:Partial<UseInfiniteQueryOptions<Awaited<ReturnType<typeof getSensorInfoSensorsSensorTypeSensorIdGet>>, TError, TData>>, }
- , queryClient?: QueryClient 
- ):  UseInfiniteQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+export function useGetSensorInfoSensorsSensorTypeSensorIdGetInfinite<
+  TData = InfiniteData<
+    Awaited<ReturnType<typeof getSensorInfoSensorsSensorTypeSensorIdGet>>
+  >,
+  TError = HTTPValidationError,
+>(
+  sensorType: string,
+  sensorId: string,
+  options?: {
+    query?: Partial<
+      UseInfiniteQueryOptions<
+        Awaited<ReturnType<typeof getSensorInfoSensorsSensorTypeSensorIdGet>>,
+        TError,
+        TData
+      >
+    >
+  },
+  queryClient?: QueryClient,
+): UseInfiniteQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>
+} {
+  const queryOptions =
+    getGetSensorInfoSensorsSensorTypeSensorIdGetInfiniteQueryOptions(
+      sensorType,
+      sensorId,
+      options,
+    )
 
-  const queryOptions = getGetSensorInfoSensorsSensorTypeSensorIdGetInfiniteQueryOptions(sensorType,sensorId,options)
+  const query = useInfiniteQuery(
+    queryOptions,
+    queryClient,
+  ) as UseInfiniteQueryResult<TData, TError> & {
+    queryKey: DataTag<QueryKey, TData, TError>
+  }
 
-  const query = useInfiniteQuery(queryOptions, queryClient) as  UseInfiniteQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
+  query.queryKey = queryOptions.queryKey
 
-  query.queryKey = queryOptions.queryKey ;
-
-  return query;
+  return query
 }
 
-
-
-export const getGetSensorInfoSensorsSensorTypeSensorIdGetQueryOptions = <TData = Awaited<ReturnType<typeof getSensorInfoSensorsSensorTypeSensorIdGet>>, TError = HTTPValidationError>(sensorType: string,
-    sensorId: string, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getSensorInfoSensorsSensorTypeSensorIdGet>>, TError, TData>>, }
+export const getGetSensorInfoSensorsSensorTypeSensorIdGetQueryOptions = <
+  TData = Awaited<ReturnType<typeof getSensorInfoSensorsSensorTypeSensorIdGet>>,
+  TError = HTTPValidationError,
+>(
+  sensorType: string,
+  sensorId: string,
+  options?: {
+    query?: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof getSensorInfoSensorsSensorTypeSensorIdGet>>,
+        TError,
+        TData
+      >
+    >
+  },
 ) => {
+  const { query: queryOptions } = options ?? {}
 
-const {query: queryOptions} = options ?? {};
+  const queryKey =
+    queryOptions?.queryKey ??
+    getGetSensorInfoSensorsSensorTypeSensorIdGetQueryKey(sensorType, sensorId)
 
-  const queryKey =  queryOptions?.queryKey ?? getGetSensorInfoSensorsSensorTypeSensorIdGetQueryKey(sensorType,sensorId);
+  const queryFn: QueryFunction<
+    Awaited<ReturnType<typeof getSensorInfoSensorsSensorTypeSensorIdGet>>
+  > = ({ signal }) =>
+    getSensorInfoSensorsSensorTypeSensorIdGet(sensorType, sensorId, signal)
 
-  
-
-    const queryFn: QueryFunction<Awaited<ReturnType<typeof getSensorInfoSensorsSensorTypeSensorIdGet>>> = ({ signal }) => getSensorInfoSensorsSensorTypeSensorIdGet(sensorType,sensorId, signal);
-
-      
-
-      
-
-   return  { queryKey, queryFn, enabled: !!(sensorType && sensorId), ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof getSensorInfoSensorsSensorTypeSensorIdGet>>, TError, TData> & { queryKey: DataTag<QueryKey, TData, TError> }
+  return {
+    queryKey,
+    queryFn,
+    enabled: !!(sensorType && sensorId),
+    ...queryOptions,
+  } as UseQueryOptions<
+    Awaited<ReturnType<typeof getSensorInfoSensorsSensorTypeSensorIdGet>>,
+    TError,
+    TData
+  > & { queryKey: DataTag<QueryKey, TData, TError> }
 }
 
-export type GetSensorInfoSensorsSensorTypeSensorIdGetQueryResult = NonNullable<Awaited<ReturnType<typeof getSensorInfoSensorsSensorTypeSensorIdGet>>>
-export type GetSensorInfoSensorsSensorTypeSensorIdGetQueryError = HTTPValidationError
+export type GetSensorInfoSensorsSensorTypeSensorIdGetQueryResult = NonNullable<
+  Awaited<ReturnType<typeof getSensorInfoSensorsSensorTypeSensorIdGet>>
+>
+export type GetSensorInfoSensorsSensorTypeSensorIdGetQueryError =
+  HTTPValidationError
 
-
-export function useGetSensorInfoSensorsSensorTypeSensorIdGet<TData = Awaited<ReturnType<typeof getSensorInfoSensorsSensorTypeSensorIdGet>>, TError = HTTPValidationError>(
- sensorType: string,
-    sensorId: string, options: { query:Partial<UseQueryOptions<Awaited<ReturnType<typeof getSensorInfoSensorsSensorTypeSensorIdGet>>, TError, TData>> & Pick<
+export function useGetSensorInfoSensorsSensorTypeSensorIdGet<
+  TData = Awaited<ReturnType<typeof getSensorInfoSensorsSensorTypeSensorIdGet>>,
+  TError = HTTPValidationError,
+>(
+  sensorType: string,
+  sensorId: string,
+  options: {
+    query: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof getSensorInfoSensorsSensorTypeSensorIdGet>>,
+        TError,
+        TData
+      >
+    > &
+      Pick<
         DefinedInitialDataOptions<
           Awaited<ReturnType<typeof getSensorInfoSensorsSensorTypeSensorIdGet>>,
           TError,
           Awaited<ReturnType<typeof getSensorInfoSensorsSensorTypeSensorIdGet>>
-        > , 'initialData'
-      >, }
- , queryClient?: QueryClient
-  ):  DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-export function useGetSensorInfoSensorsSensorTypeSensorIdGet<TData = Awaited<ReturnType<typeof getSensorInfoSensorsSensorTypeSensorIdGet>>, TError = HTTPValidationError>(
- sensorType: string,
-    sensorId: string, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getSensorInfoSensorsSensorTypeSensorIdGet>>, TError, TData>> & Pick<
+        >,
+        'initialData'
+      >
+  },
+  queryClient?: QueryClient,
+): DefinedUseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>
+}
+export function useGetSensorInfoSensorsSensorTypeSensorIdGet<
+  TData = Awaited<ReturnType<typeof getSensorInfoSensorsSensorTypeSensorIdGet>>,
+  TError = HTTPValidationError,
+>(
+  sensorType: string,
+  sensorId: string,
+  options?: {
+    query?: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof getSensorInfoSensorsSensorTypeSensorIdGet>>,
+        TError,
+        TData
+      >
+    > &
+      Pick<
         UndefinedInitialDataOptions<
           Awaited<ReturnType<typeof getSensorInfoSensorsSensorTypeSensorIdGet>>,
           TError,
           Awaited<ReturnType<typeof getSensorInfoSensorsSensorTypeSensorIdGet>>
-        > , 'initialData'
-      >, }
- , queryClient?: QueryClient
-  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-export function useGetSensorInfoSensorsSensorTypeSensorIdGet<TData = Awaited<ReturnType<typeof getSensorInfoSensorsSensorTypeSensorIdGet>>, TError = HTTPValidationError>(
- sensorType: string,
-    sensorId: string, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getSensorInfoSensorsSensorTypeSensorIdGet>>, TError, TData>>, }
- , queryClient?: QueryClient
-  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+        >,
+        'initialData'
+      >
+  },
+  queryClient?: QueryClient,
+): UseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>
+}
+export function useGetSensorInfoSensorsSensorTypeSensorIdGet<
+  TData = Awaited<ReturnType<typeof getSensorInfoSensorsSensorTypeSensorIdGet>>,
+  TError = HTTPValidationError,
+>(
+  sensorType: string,
+  sensorId: string,
+  options?: {
+    query?: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof getSensorInfoSensorsSensorTypeSensorIdGet>>,
+        TError,
+        TData
+      >
+    >
+  },
+  queryClient?: QueryClient,
+): UseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>
+}
 /**
  * @summary Get Sensor Info
  */
 
-export function useGetSensorInfoSensorsSensorTypeSensorIdGet<TData = Awaited<ReturnType<typeof getSensorInfoSensorsSensorTypeSensorIdGet>>, TError = HTTPValidationError>(
- sensorType: string,
-    sensorId: string, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getSensorInfoSensorsSensorTypeSensorIdGet>>, TError, TData>>, }
- , queryClient?: QueryClient 
- ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+export function useGetSensorInfoSensorsSensorTypeSensorIdGet<
+  TData = Awaited<ReturnType<typeof getSensorInfoSensorsSensorTypeSensorIdGet>>,
+  TError = HTTPValidationError,
+>(
+  sensorType: string,
+  sensorId: string,
+  options?: {
+    query?: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof getSensorInfoSensorsSensorTypeSensorIdGet>>,
+        TError,
+        TData
+      >
+    >
+  },
+  queryClient?: QueryClient,
+): UseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>
+} {
+  const queryOptions = getGetSensorInfoSensorsSensorTypeSensorIdGetQueryOptions(
+    sensorType,
+    sensorId,
+    options,
+  )
 
-  const queryOptions = getGetSensorInfoSensorsSensorTypeSensorIdGetQueryOptions(sensorType,sensorId,options)
+  const query = useQuery(queryOptions, queryClient) as UseQueryResult<
+    TData,
+    TError
+  > & { queryKey: DataTag<QueryKey, TData, TError> }
 
-  const query = useQuery(queryOptions, queryClient) as  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
+  query.queryKey = queryOptions.queryKey
 
-  query.queryKey = queryOptions.queryKey ;
-
-  return query;
+  return query
 }
-
-
-
