@@ -1,7 +1,15 @@
-import React from 'react';
-import { ActivityIndicator, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
-import { useRegister } from './hooks/useRegister';
-import { router } from 'expo-router';
+import React from 'react'
+import {
+  ActivityIndicator,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  View,
+} from 'react-native'
+import { useRegister } from './hooks/useRegister'
+import { router } from 'expo-router'
 
 export default function RegisterScreen() {
   const {
@@ -12,12 +20,12 @@ export default function RegisterScreen() {
     confirmPassword,
     setConfirmPassword,
     handleRegister,
-    isLoading
-  } = useRegister();
+    isLoading,
+  } = useRegister()
 
   const handleGoToLogin = () => {
-    router.replace('/login');
-  };
+    router.replace('/login')
+  }
 
   return (
     <ScrollView
@@ -37,10 +45,7 @@ export default function RegisterScreen() {
               placeholder="Введите ваш логин"
               autoCapitalize="none"
               editable={!isLoading}
-              style={[
-                styles.input,
-                isLoading && styles.inputDisabled
-              ]}
+              style={[styles.input, isLoading && styles.inputDisabled]}
               placeholderTextColor="#999"
             />
           </View>
@@ -53,10 +58,7 @@ export default function RegisterScreen() {
               placeholder="Введите пароль"
               secureTextEntry
               editable={!isLoading}
-              style={[
-                styles.input,
-                isLoading && styles.inputDisabled
-              ]}
+              style={[styles.input, isLoading && styles.inputDisabled]}
               placeholderTextColor="#999"
             />
             <Text style={styles.hint}>Минимум 6 символов</Text>
@@ -70,10 +72,7 @@ export default function RegisterScreen() {
               placeholder="Повторите пароль"
               secureTextEntry
               editable={!isLoading}
-              style={[
-                styles.input,
-                isLoading && styles.inputDisabled
-              ]}
+              style={[styles.input, isLoading && styles.inputDisabled]}
               placeholderTextColor="#999"
             />
           </View>
@@ -81,10 +80,7 @@ export default function RegisterScreen() {
           <TouchableOpacity
             onPress={handleRegister}
             disabled={isLoading}
-            style={[
-              styles.registerButton,
-              isLoading && styles.buttonDisabled
-            ]}
+            style={[styles.registerButton, isLoading && styles.buttonDisabled]}
           >
             {isLoading ? (
               <ActivityIndicator color="white" />
@@ -105,43 +101,43 @@ export default function RegisterScreen() {
         </View>
       </View>
     </ScrollView>
-  );
+  )
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: 'white'
+    backgroundColor: 'white',
   },
   scrollContent: {
     flexGrow: 1,
-    justifyContent: 'center'
+    justifyContent: 'center',
   },
   content: {
-    padding: 24
+    padding: 24,
   },
   title: {
     fontSize: 28,
     fontWeight: 'bold',
     textAlign: 'center',
     color: '#007AFF',
-    marginBottom: 32
+    marginBottom: 32,
   },
   form: {
-    gap: 20
+    gap: 20,
   },
   inputContainer: {
-    gap: 8
+    gap: 8,
   },
   label: {
     fontSize: 16,
     fontWeight: '600',
-    color: '#000'
+    color: '#000',
   },
   hint: {
     fontSize: 12,
     color: '#6B7280',
-    fontStyle: 'italic'
+    fontStyle: 'italic',
   },
   input: {
     borderWidth: 1,
@@ -150,11 +146,11 @@ const styles = StyleSheet.create({
     paddingHorizontal: 12,
     paddingVertical: 12,
     fontSize: 16,
-    backgroundColor: 'white'
+    backgroundColor: 'white',
   },
   inputDisabled: {
     opacity: 0.6,
-    backgroundColor: '#F5F5F5'
+    backgroundColor: '#F5F5F5',
   },
   registerButton: {
     backgroundColor: '#007AFF',
@@ -162,26 +158,26 @@ const styles = StyleSheet.create({
     paddingVertical: 16,
     alignItems: 'center',
     justifyContent: 'center',
-    marginTop: 8
+    marginTop: 8,
   },
   buttonDisabled: {
-    opacity: 0.6
+    opacity: 0.6,
   },
   buttonText: {
     color: 'white',
     fontSize: 18,
-    fontWeight: '600'
+    fontWeight: '600',
   },
   loginLink: {
     alignItems: 'center',
-    paddingVertical: 16
+    paddingVertical: 16,
   },
   loginLinkText: {
     fontSize: 16,
-    color: '#6B7280'
+    color: '#6B7280',
   },
   loginLinkBold: {
     fontWeight: '600',
-    color: '#007AFF'
-  }
-});
+    color: '#007AFF',
+  },
+})

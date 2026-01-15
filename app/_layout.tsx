@@ -1,41 +1,42 @@
-import { router, Stack, usePathname } from 'expo-router';
-import { useEffect, useState } from 'react';
-import { useAuthStore } from '@/store/authStore';
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { router, Stack, usePathname } from 'expo-router'
+import { useEffect, useState } from 'react'
+import { useAuthStore } from '@/store/authStore'
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
       retry: 1,
       staleTime: 0,
-      gcTime: 0
+      gcTime: 0,
     },
     mutations: {
-      retry: 1
-    }
-  }
-});
+      retry: 1,
+    },
+  },
+})
 
 export default function RootLayout() {
-  const isAuthenticated = useAuthStore((state) => state.isAuthenticated);
-  const pathname = usePathname();
-  const [isReady, setIsReady] = useState(false);
+  const isAuthenticated = useAuthStore(state => state.isAuthenticated)
+  const pathname = usePathname()
+  const [isReady, setIsReady] = useState(false)
 
   useEffect(() => {
-    setIsReady(true);
-  }, []);
+    setIsReady(true)
+  }, [])
 
   useEffect(() => {
-    if (!isReady) return;
+    if (!isReady) return
 
-    const isAuthPage = pathname.includes('/login') || pathname.includes('/register');
+    const isAuthPage =
+      pathname.includes('/login') || pathname.includes('/register')
 
     if (!isAuthenticated && !isAuthPage) {
-      router.replace('/login');
+      router.replace('/login')
     } else if (isAuthenticated && isAuthPage) {
-      router.replace('/(tabs)');
+      router.replace('/(tabs)')
     }
-  }, [isAuthenticated, pathname, isReady]);
+  }, [isAuthenticated, pathname, isReady])
 
   return (
     <QueryClientProvider client={queryClient}>
@@ -45,5 +46,5 @@ export default function RootLayout() {
         <Stack.Screen name="(tabs)" />
       </Stack>
     </QueryClientProvider>
-  );
+  )
 }

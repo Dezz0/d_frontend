@@ -1,7 +1,13 @@
-import React from 'react';
-import { ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
-import { FormGroup, PickerInput } from '../../components/form-components';
-import { useCreateApplication } from './use-create-application';
+import React from 'react'
+import {
+  ScrollView,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from 'react-native'
+import { FormGroup, PickerInput } from '../../components/form-components'
+import { useCreateApplication } from './use-create-application'
 
 export const ApplicationFormScreen: React.FC = () => {
   const {
@@ -17,15 +23,15 @@ export const ApplicationFormScreen: React.FC = () => {
     handleAddSensor,
     handleAddRoom,
     handleSubmit,
-    createApplicationMutation
-  } = useCreateApplication();
-  
+    createApplicationMutation,
+  } = useCreateApplication()
+
   if (isLoadingDictionaries) {
     return (
       <View style={styles.loadingContainer}>
         <Text>Загрузка словарей...</Text>
       </View>
-    );
+    )
   }
 
   return (
@@ -52,7 +58,9 @@ export const ApplicationFormScreen: React.FC = () => {
           <FormGroup label="Комната:">
             <PickerInput
               value={room.selectedRoomId?.toString() || ''}
-              onValueChange={(value) => handleRoomChange(roomIndex, parseInt(value))}
+              onValueChange={value =>
+                handleRoomChange(roomIndex, parseInt(value))
+              }
               items={roomOptions}
               placeholder="Выберите комнату"
               disabled={isLoading}
@@ -67,7 +75,13 @@ export const ApplicationFormScreen: React.FC = () => {
                 <View style={styles.sensorInputContainer}>
                   <PickerInput
                     value={sensorId === -1 ? '' : sensorId.toString()}
-                    onValueChange={(value) => handleSensorChange(roomIndex, sensorIndex, parseInt(value))}
+                    onValueChange={value =>
+                      handleSensorChange(
+                        roomIndex,
+                        sensorIndex,
+                        parseInt(value),
+                      )
+                    }
                     items={sensorOptions}
                     placeholder="Выберите датчик"
                     disabled={isLoading || !room.selectedRoomId}
@@ -87,7 +101,7 @@ export const ApplicationFormScreen: React.FC = () => {
             <TouchableOpacity
               style={[
                 styles.addSensorButton,
-                (!room.selectedRoomId || isLoading) && styles.buttonDisabled
+                (!room.selectedRoomId || isLoading) && styles.buttonDisabled,
               ]}
               onPress={() => handleAddSensor(roomIndex)}
               disabled={!room.selectedRoomId || isLoading}
@@ -107,37 +121,36 @@ export const ApplicationFormScreen: React.FC = () => {
       </TouchableOpacity>
 
       <TouchableOpacity
-        style={[
-          styles.submitButton,
-          isLoading && styles.buttonDisabled
-        ]}
+        style={[styles.submitButton, isLoading && styles.buttonDisabled]}
         onPress={handleSubmit}
         disabled={isLoading}
       >
         <Text style={styles.submitButtonText}>
-          {createApplicationMutation.isPending ? 'Отправка...' : 'Отправить заявку'}
+          {createApplicationMutation.isPending
+            ? 'Отправка...'
+            : 'Отправить заявку'}
         </Text>
       </TouchableOpacity>
     </ScrollView>
-  );
-};
+  )
+}
 
 const styles = StyleSheet.create({
   loadingContainer: {
     flex: 1,
     justifyContent: 'center',
-    alignItems: 'center'
+    alignItems: 'center',
   },
   formTitle: {
     fontSize: 22,
     fontWeight: 'bold',
     color: '#1F2937',
-    marginBottom: 8
+    marginBottom: 8,
   },
   formDescription: {
     fontSize: 14,
     color: '#6B7280',
-    marginBottom: 20
+    marginBottom: 20,
   },
   roomContainer: {
     backgroundColor: '#f9f9f9',
@@ -145,18 +158,18 @@ const styles = StyleSheet.create({
     padding: 16,
     marginBottom: 16,
     borderWidth: 1,
-    borderColor: '#E5E5E5'
+    borderColor: '#E5E5E5',
   },
   roomHeader: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    marginBottom: 12
+    marginBottom: 12,
   },
   roomTitle: {
     fontSize: 18,
     fontWeight: '600',
-    color: '#374151'
+    color: '#374151',
   },
   removeRoomButton: {
     width: 32,
@@ -164,31 +177,31 @@ const styles = StyleSheet.create({
     borderRadius: 16,
     backgroundColor: '#EF4444',
     justifyContent: 'center',
-    alignItems: 'center'
+    alignItems: 'center',
   },
   removeRoomButtonText: {
     color: 'white',
     fontSize: 20,
     fontWeight: 'bold',
-    lineHeight: 20
+    lineHeight: 20,
   },
   sensorsContainer: {
-    marginTop: 12
+    marginTop: 12,
   },
   sensorsTitle: {
     fontSize: 16,
     fontWeight: '600',
     color: '#374151',
-    marginBottom: 8
+    marginBottom: 8,
   },
   sensorRow: {
     flexDirection: 'row',
     alignItems: 'center',
-    marginBottom: 8
+    marginBottom: 8,
   },
   sensorInputContainer: {
     flex: 1,
-    marginRight: 8
+    marginRight: 8,
   },
   removeSensorButton: {
     paddingHorizontal: 12,
@@ -196,11 +209,11 @@ const styles = StyleSheet.create({
     backgroundColor: '#F3F4F6',
     borderRadius: 6,
     borderWidth: 1,
-    borderColor: '#D1D5DB'
+    borderColor: '#D1D5DB',
   },
   removeSensorButtonText: {
     color: '#6B7280',
-    fontSize: 14
+    fontSize: 14,
   },
   addSensorButton: {
     paddingVertical: 10,
@@ -210,12 +223,12 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: '#D1D5DB',
     alignItems: 'center',
-    marginTop: 4
+    marginTop: 4,
   },
   addSensorButtonText: {
     color: '#374151',
     fontSize: 14,
-    fontWeight: '500'
+    fontWeight: '500',
   },
   addRoomButton: {
     paddingVertical: 14,
@@ -225,26 +238,26 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: '#60A5FA',
     alignItems: 'center',
-    marginBottom: 20
+    marginBottom: 20,
   },
   addRoomButtonText: {
     color: '#2563EB',
     fontSize: 16,
-    fontWeight: '600'
+    fontWeight: '600',
   },
   submitButton: {
     backgroundColor: '#007AFF',
     borderRadius: 8,
     paddingVertical: 16,
     alignItems: 'center',
-    marginTop: 8
+    marginTop: 8,
   },
   submitButtonText: {
     color: 'white',
     fontSize: 16,
-    fontWeight: '600'
+    fontWeight: '600',
   },
   buttonDisabled: {
-    opacity: 0.6
-  }
-});
+    opacity: 0.6,
+  },
+})

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState } from 'react'
 import {
   Alert,
   KeyboardAvoidingView,
@@ -8,60 +8,67 @@ import {
   Text,
   TextInput,
   TouchableOpacity,
-  View
-} from 'react-native';
+  View,
+} from 'react-native'
 
 interface ChangePasswordModalProps {
-  visible: boolean;
-  onClose: () => void;
-  onSubmit: (oldPassword: string, newPassword: string) => void;
-  isLoading?: boolean;
+  visible: boolean
+  onClose: () => void
+  onSubmit: (oldPassword: string, newPassword: string) => void
+  isLoading?: boolean
 }
 
 export const ChangePasswordModal: React.FC<ChangePasswordModalProps> = ({
-                                                                          visible,
-                                                                          onClose,
-                                                                          onSubmit,
-                                                                          isLoading = false
-                                                                        }) => {
+  visible,
+  onClose,
+  onSubmit,
+  isLoading = false,
+}) => {
   const [formData, setFormData] = useState({
     oldPassword: '',
     newPassword: '',
-    confirmPassword: ''
-  });
+    confirmPassword: '',
+  })
 
   const handleSubmit = () => {
     // Валидация
-    if (!formData.oldPassword || !formData.newPassword || !formData.confirmPassword) {
-      Alert.alert('Внимание', 'Заполните все поля');
-      return;
+    if (
+      !formData.oldPassword ||
+      !formData.newPassword ||
+      !formData.confirmPassword
+    ) {
+      Alert.alert('Внимание', 'Заполните все поля')
+      return
     }
 
     if (formData.newPassword.length < 6) {
-      Alert.alert('Внимание', 'Новый пароль должен содержать минимум 6 символов');
-      return;
+      Alert.alert(
+        'Внимание',
+        'Новый пароль должен содержать минимум 6 символов',
+      )
+      return
     }
 
     if (formData.newPassword !== formData.confirmPassword) {
-      Alert.alert('Внимание', 'Новые пароли не совпадают');
-      return;
+      Alert.alert('Внимание', 'Новые пароли не совпадают')
+      return
     }
 
     if (formData.oldPassword === formData.newPassword) {
-      Alert.alert('Внимание', 'Новый пароль должен отличаться от старого');
-      return;
+      Alert.alert('Внимание', 'Новый пароль должен отличаться от старого')
+      return
     }
 
-    onSubmit(formData.oldPassword, formData.newPassword);
+    onSubmit(formData.oldPassword, formData.newPassword)
 
     // Сброс формы
     setFormData({
       oldPassword: '',
       newPassword: '',
-      confirmPassword: ''
-    });
-    onClose();
-  };
+      confirmPassword: '',
+    })
+    onClose()
+  }
 
   return (
     <Modal
@@ -86,7 +93,9 @@ export const ChangePasswordModal: React.FC<ChangePasswordModalProps> = ({
                 <TextInput
                   style={styles.input}
                   value={formData.oldPassword}
-                  onChangeText={(text) => setFormData({ ...formData, oldPassword: text })}
+                  onChangeText={text =>
+                    setFormData({ ...formData, oldPassword: text })
+                  }
                   placeholder="Введите старый пароль"
                   secureTextEntry
                   editable={!isLoading}
@@ -98,7 +107,9 @@ export const ChangePasswordModal: React.FC<ChangePasswordModalProps> = ({
                 <TextInput
                   style={styles.input}
                   value={formData.newPassword}
-                  onChangeText={(text) => setFormData({ ...formData, newPassword: text })}
+                  onChangeText={text =>
+                    setFormData({ ...formData, newPassword: text })
+                  }
                   placeholder="Введите новый пароль"
                   secureTextEntry
                   editable={!isLoading}
@@ -111,7 +122,9 @@ export const ChangePasswordModal: React.FC<ChangePasswordModalProps> = ({
                 <TextInput
                   style={styles.input}
                   value={formData.confirmPassword}
-                  onChangeText={(text) => setFormData({ ...formData, confirmPassword: text })}
+                  onChangeText={text =>
+                    setFormData({ ...formData, confirmPassword: text })
+                  }
                   placeholder="Повторите новый пароль"
                   secureTextEntry
                   editable={!isLoading}
@@ -142,45 +155,45 @@ export const ChangePasswordModal: React.FC<ChangePasswordModalProps> = ({
         </View>
       </KeyboardAvoidingView>
     </Modal>
-  );
-};
+  )
+}
 
 const styles = StyleSheet.create({
   modalContainer: {
-    flex: 1
+    flex: 1,
   },
   modalOverlay: {
     flex: 1,
     backgroundColor: 'rgba(0, 0, 0, 0.5)',
-    justifyContent: 'flex-end'
+    justifyContent: 'flex-end',
   },
   modalContent: {
     backgroundColor: 'white',
     borderTopLeftRadius: 20,
-    borderTopRightRadius: 20
+    borderTopRightRadius: 20,
   },
   modalHeader: {
     padding: 20,
     borderBottomWidth: 1,
-    borderBottomColor: '#E5E7EB'
+    borderBottomColor: '#E5E7EB',
   },
   modalTitle: {
     fontSize: 18,
     fontWeight: '600',
     color: '#1F2937',
-    textAlign: 'center'
+    textAlign: 'center',
   },
   form: {
-    padding: 20
+    padding: 20,
   },
   inputGroup: {
-    marginBottom: 16
+    marginBottom: 16,
   },
   label: {
     fontSize: 14,
     fontWeight: '500',
     color: '#374151',
-    marginBottom: 6
+    marginBottom: 6,
   },
   input: {
     borderWidth: 1,
@@ -189,43 +202,43 @@ const styles = StyleSheet.create({
     paddingHorizontal: 12,
     paddingVertical: 10,
     fontSize: 16,
-    backgroundColor: 'white'
+    backgroundColor: 'white',
   },
   hint: {
     fontSize: 12,
     color: '#6B7280',
     marginTop: 4,
-    fontStyle: 'italic'
+    fontStyle: 'italic',
   },
   modalFooter: {
     flexDirection: 'row',
     padding: 20,
     borderTopWidth: 1,
     borderTopColor: '#E5E7EB',
-    gap: 12
+    gap: 12,
   },
   button: {
     flex: 1,
     borderRadius: 8,
     paddingVertical: 14,
-    alignItems: 'center'
+    alignItems: 'center',
   },
   cancelButton: {
     backgroundColor: '#F3F4F6',
     borderWidth: 1,
-    borderColor: '#D1D5DB'
+    borderColor: '#D1D5DB',
   },
   submitButton: {
-    backgroundColor: '#007AFF'
+    backgroundColor: '#007AFF',
   },
   cancelButtonText: {
     color: '#374151',
     fontSize: 16,
-    fontWeight: '600'
+    fontWeight: '600',
   },
   submitButtonText: {
     color: 'white',
     fontSize: 16,
-    fontWeight: '600'
-  }
-});
+    fontWeight: '600',
+  },
+})

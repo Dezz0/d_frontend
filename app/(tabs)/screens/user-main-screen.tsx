@@ -1,61 +1,74 @@
-import React, { useState } from 'react';
-import { ActivityIndicator, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
-import { router } from 'expo-router';
-import { useGetUserRoomsRoomsUserRoomsGet } from '@/shared/api/generated/rooms/rooms';
+import React, { useState } from 'react'
+import {
+  ActivityIndicator,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from 'react-native'
+import { router } from 'expo-router'
+import { useGetUserRoomsRoomsUserRoomsGet } from '@/shared/api/generated/rooms/rooms'
 
 export const UserMainScreen: React.FC = () => {
-  const { data: rooms, isLoading, error } = useGetUserRoomsRoomsUserRoomsGet();
-  const [expandedRooms, setExpandedRooms] = useState<number[]>([]);
+  const { data: rooms, isLoading, error } = useGetUserRoomsRoomsUserRoomsGet()
+  const [expandedRooms, setExpandedRooms] = useState<number[]>([])
 
   const toggleRoom = (roomId: number) => {
     setExpandedRooms(prev =>
       prev.includes(roomId)
         ? prev.filter(id => id !== roomId)
-        : [...prev, roomId]
-    );
-  };
+        : [...prev, roomId],
+    )
+  }
 
-  const handleSensorPress = (sensorType: string, sensorId: string, roomName: string) => {
-    router.push(`/sensor/${sensorType}/${sensorId}?room=${encodeURIComponent(roomName)}`);
-  };
+  const handleSensorPress = (
+    sensorType: string,
+    sensorId: string,
+    roomName: string,
+  ) => {
+    router.push(
+      `/sensor/${sensorType}/${sensorId}?room=${encodeURIComponent(roomName)}`,
+    )
+  }
 
   const getSensorIcon = (type: string) => {
     switch (type) {
       case 'temperature':
-        return '🌡️';
+        return '🌡️'
       case 'light':
-        return '💡';
+        return '💡'
       case 'gas':
-        return '⚠️';
+        return '⚠️'
       case 'humidity':
-        return '💧';
+        return '💧'
       case 'ventilation':
-        return '🌬️';
+        return '🌬️'
       case 'motion':
-        return '👣';
+        return '👣'
       default:
-        return '📱';
+        return '📱'
     }
-  };
+  }
 
   const getSensorDisplayName = (type: string) => {
     switch (type) {
       case 'temperature':
-        return 'Температура';
+        return 'Температура'
       case 'light':
-        return 'Освещение';
+        return 'Освещение'
       case 'gas':
-        return 'Газ';
+        return 'Газ'
       case 'humidity':
-        return 'Влажность';
+        return 'Влажность'
       case 'ventilation':
-        return 'Вентиляция';
+        return 'Вентиляция'
       case 'motion':
-        return 'Движение';
+        return 'Движение'
       default:
-        return 'Датчик';
+        return 'Датчик'
     }
-  };
+  }
 
   if (isLoading) {
     return (
@@ -63,7 +76,7 @@ export const UserMainScreen: React.FC = () => {
         <ActivityIndicator size="large" color="#007AFF" />
         <Text style={styles.loadingText}>Загрузка данных...</Text>
       </View>
-    );
+    )
   }
 
   if (error) {
@@ -77,7 +90,7 @@ export const UserMainScreen: React.FC = () => {
           Проверьте подключение к интернету или попробуйте позже.
         </Text>
       </View>
-    );
+    )
   }
 
   if (!rooms || rooms.length === 0) {
@@ -92,16 +105,14 @@ export const UserMainScreen: React.FC = () => {
           После одобрения заявки ваши комнаты и датчики появятся здесь.
         </Text>
       </View>
-    );
+    )
   }
 
   return (
     <ScrollView style={styles.container} contentContainerStyle={styles.content}>
       <View style={styles.header}>
         <Text style={styles.title}>Мой умный дом</Text>
-        <Text style={styles.subtitle}>
-          Управление комнатами и датчиками
-        </Text>
+        <Text style={styles.subtitle}>Управление комнатами и датчиками</Text>
       </View>
 
       <View style={styles.roomsSection}>
@@ -110,9 +121,9 @@ export const UserMainScreen: React.FC = () => {
           Нажмите на комнату, чтобы увидеть датчики
         </Text>
 
-        {rooms.map((room) => {
-          const isExpanded = expandedRooms.includes(room.id);
-          const sensorsCount = room.sensors?.length || 0;
+        {rooms.map(room => {
+          const isExpanded = expandedRooms.includes(room.id)
+          const sensorsCount = room.sensors?.length || 0
 
           return (
             <View key={room.id} style={styles.roomCard}>
@@ -124,16 +135,16 @@ export const UserMainScreen: React.FC = () => {
                 <View style={styles.roomInfo}>
                   <Text style={styles.roomName}>{room.name}</Text>
                   <Text style={styles.sensorsCount}>
-                    {sensorsCount} {sensorsCount === 1 ? 'датчик' :
-                    sensorsCount >= 2 && sensorsCount <= 4 ? 'датчика' : 'датчиков'}
+                    {sensorsCount}{' '}
+                    {sensorsCount === 1
+                      ? 'датчик'
+                      : sensorsCount >= 2 && sensorsCount <= 4
+                        ? 'датчика'
+                        : 'датчиков'}
                   </Text>
                 </View>
                 <View style={styles.roomArrow}>
-                  {isExpanded ? (
-                    <Text>Скрыть</Text>
-                  ) : (
-                    <Text>Показать</Text>
-                  )}
+                  {isExpanded ? <Text>Скрыть</Text> : <Text>Показать</Text>}
                 </View>
               </TouchableOpacity>
 
@@ -143,7 +154,9 @@ export const UserMainScreen: React.FC = () => {
                     <TouchableOpacity
                       key={`${sensor.id}-${index}`}
                       style={styles.sensorItem}
-                      onPress={() => handleSensorPress(sensor.type, sensor.id, room.name)}
+                      onPress={() =>
+                        handleSensorPress(sensor.type, sensor.id, room.name)
+                      }
                       activeOpacity={0.6}
                     >
                       <View style={styles.sensorIcon}>
@@ -172,7 +185,7 @@ export const UserMainScreen: React.FC = () => {
                 </View>
               )}
             </View>
-          );
+          )
         })}
       </View>
 
@@ -189,105 +202,105 @@ export const UserMainScreen: React.FC = () => {
         </Text>
       </View>
     </ScrollView>
-  );
-};
+  )
+}
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#f5f5f5'
+    backgroundColor: '#f5f5f5',
   },
   content: {
     padding: 16,
-    paddingBottom: 32
+    paddingBottom: 32,
   },
   loadingContainer: {
     flex: 1,
     justifyContent: 'center',
-    alignItems: 'center'
+    alignItems: 'center',
   },
   loadingText: {
     marginTop: 12,
     fontSize: 16,
-    color: '#666'
+    color: '#666',
   },
   errorContainer: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    padding: 20
+    padding: 20,
   },
   errorTitle: {
     fontSize: 18,
     fontWeight: 'bold',
     color: '#FF3B30',
-    marginBottom: 8
+    marginBottom: 8,
   },
   errorText: {
     fontSize: 14,
     color: '#666',
     textAlign: 'center',
-    marginBottom: 4
+    marginBottom: 4,
   },
   errorSubtext: {
     fontSize: 12,
     color: '#999',
-    textAlign: 'center'
+    textAlign: 'center',
   },
   emptyContainer: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    padding: 40
+    padding: 40,
   },
   emptyIcon: {
     fontSize: 64,
-    marginBottom: 16
+    marginBottom: 16,
   },
   emptyTitle: {
     fontSize: 20,
     fontWeight: 'bold',
     color: '#333',
     marginBottom: 8,
-    textAlign: 'center'
+    textAlign: 'center',
   },
   emptyText: {
     fontSize: 14,
     color: '#666',
     textAlign: 'center',
-    marginBottom: 4
+    marginBottom: 4,
   },
   emptySubtext: {
     fontSize: 12,
     color: '#999',
-    textAlign: 'center'
+    textAlign: 'center',
   },
   header: {
-    marginBottom: 24
+    marginBottom: 24,
   },
   title: {
     fontSize: 28,
     fontWeight: 'bold',
     color: '#1F2937',
-    marginBottom: 4
+    marginBottom: 4,
   },
   subtitle: {
     fontSize: 16,
-    color: '#6B7280'
+    color: '#6B7280',
   },
   roomsSection: {
-    marginBottom: 24
+    marginBottom: 24,
   },
   sectionTitle: {
     fontSize: 20,
     fontWeight: '600',
     color: '#374151',
-    marginBottom: 8
+    marginBottom: 8,
   },
   sectionDescription: {
     fontSize: 14,
     color: '#6B7280',
-    marginBottom: 16
+    marginBottom: 16,
   },
   roomCard: {
     backgroundColor: 'white',
@@ -298,42 +311,42 @@ const styles = StyleSheet.create({
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.1,
     shadowRadius: 4,
-    elevation: 3
+    elevation: 3,
   },
   roomHeader: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
     padding: 16,
-    backgroundColor: '#FFFFFF'
+    backgroundColor: '#FFFFFF',
   },
   roomInfo: {
-    flex: 1
+    flex: 1,
   },
   roomName: {
     fontSize: 18,
     fontWeight: '600',
     color: '#1F2937',
-    marginBottom: 4
+    marginBottom: 4,
   },
   sensorsCount: {
     fontSize: 14,
-    color: '#6B7280'
+    color: '#6B7280',
   },
   roomArrow: {
-    marginLeft: 12
+    marginLeft: 12,
   },
   sensorsList: {
     backgroundColor: '#F9FAFB',
     borderTopWidth: 1,
-    borderTopColor: '#E5E7EB'
+    borderTopColor: '#E5E7EB',
   },
   sensorItem: {
     flexDirection: 'row',
     alignItems: 'center',
     padding: 12,
     borderBottomWidth: 1,
-    borderBottomColor: '#F3F4F6'
+    borderBottomColor: '#F3F4F6',
   },
   sensorIcon: {
     width: 40,
@@ -342,58 +355,58 @@ const styles = StyleSheet.create({
     backgroundColor: '#EFF6FF',
     justifyContent: 'center',
     alignItems: 'center',
-    marginRight: 12
+    marginRight: 12,
   },
   sensorIconText: {
-    fontSize: 20
+    fontSize: 20,
   },
   sensorInfo: {
-    flex: 1
+    flex: 1,
   },
   sensorName: {
     fontSize: 16,
     fontWeight: '500',
     color: '#374151',
-    marginBottom: 2
+    marginBottom: 2,
   },
   sensorId: {
     fontSize: 12,
-    color: '#6B7280'
+    color: '#6B7280',
   },
   sensorArrow: {
-    marginLeft: 8
+    marginLeft: 8,
   },
   sensorArrowText: {
     fontSize: 18,
-    color: '#9CA3AF'
+    color: '#9CA3AF',
   },
   noSensorsContainer: {
     padding: 16,
     backgroundColor: '#F9FAFB',
     borderTopWidth: 1,
     borderTopColor: '#E5E7EB',
-    alignItems: 'center'
+    alignItems: 'center',
   },
   noSensorsText: {
     fontSize: 14,
     color: '#9CA3AF',
-    fontStyle: 'italic'
+    fontStyle: 'italic',
   },
   infoSection: {
     backgroundColor: '#EFF6FF',
     borderRadius: 12,
-    padding: 16
+    padding: 16,
   },
   infoTitle: {
     fontSize: 16,
     fontWeight: '600',
     color: '#2563EB',
-    marginBottom: 8
+    marginBottom: 8,
   },
   infoText: {
     fontSize: 14,
     color: '#3B82F6',
     marginBottom: 4,
-    lineHeight: 20
-  }
-});
+    lineHeight: 20,
+  },
+})

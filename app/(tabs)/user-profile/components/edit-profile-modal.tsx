@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState } from 'react'
 import {
   Alert,
   KeyboardAvoidingView,
@@ -9,57 +9,57 @@ import {
   Text,
   TextInput,
   TouchableOpacity,
-  View
-} from 'react-native';
+  View,
+} from 'react-native'
 import type {
   UserProfileResponseFirstName,
   UserProfileResponseLastName,
-  UserProfileResponseMiddleName
-} from '@/shared/api/generated/model';
+  UserProfileResponseMiddleName,
+} from '@/shared/api/generated/model'
 
 interface EditProfileModalProps {
-  visible: boolean;
-  onClose: () => void;
+  visible: boolean
+  onClose: () => void
   onSubmit: (data: {
-    first_name?: string;
-    last_name?: string;
-    middle_name?: string;
-  }) => void;
+    first_name?: string
+    last_name?: string
+    middle_name?: string
+  }) => void
   initialData?: {
-    first_name?: UserProfileResponseFirstName;
-    last_name?: UserProfileResponseLastName;
-    middle_name?: UserProfileResponseMiddleName;
-  };
-  isLoading?: boolean;
+    first_name?: UserProfileResponseFirstName
+    last_name?: UserProfileResponseLastName
+    middle_name?: UserProfileResponseMiddleName
+  }
+  isLoading?: boolean
 }
 
 export const EditProfileModal: React.FC<EditProfileModalProps> = ({
-                                                                    visible,
-                                                                    onClose,
-                                                                    onSubmit,
-                                                                    initialData,
-                                                                    isLoading = false
-                                                                  }) => {
+  visible,
+  onClose,
+  onSubmit,
+  initialData,
+  isLoading = false,
+}) => {
   const [formData, setFormData] = useState({
     first_name: initialData?.first_name || '',
     last_name: initialData?.last_name || '',
-    middle_name: initialData?.middle_name || ''
-  });
+    middle_name: initialData?.middle_name || '',
+  })
 
   const handleSubmit = () => {
     if (!formData.first_name && !formData.last_name && !formData.middle_name) {
-      Alert.alert('Внимание', 'Заполните хотя бы одно поле');
-      return;
+      Alert.alert('Внимание', 'Заполните хотя бы одно поле')
+      return
     }
 
     onSubmit({
       first_name: formData.first_name || undefined,
       last_name: formData.last_name || undefined,
-      middle_name: formData.middle_name || undefined
-    });
+      middle_name: formData.middle_name || undefined,
+    })
 
-    onClose();
-  };
+    onClose()
+  }
 
   return (
     <Modal
@@ -84,7 +84,9 @@ export const EditProfileModal: React.FC<EditProfileModalProps> = ({
                 <TextInput
                   style={styles.input}
                   value={formData.last_name}
-                  onChangeText={(text) => setFormData({ ...formData, last_name: text })}
+                  onChangeText={text =>
+                    setFormData({ ...formData, last_name: text })
+                  }
                   placeholder="Введите фамилию"
                   editable={!isLoading}
                 />
@@ -95,7 +97,9 @@ export const EditProfileModal: React.FC<EditProfileModalProps> = ({
                 <TextInput
                   style={styles.input}
                   value={formData.first_name}
-                  onChangeText={(text) => setFormData({ ...formData, first_name: text })}
+                  onChangeText={text =>
+                    setFormData({ ...formData, first_name: text })
+                  }
                   placeholder="Введите имя"
                   editable={!isLoading}
                 />
@@ -106,7 +110,9 @@ export const EditProfileModal: React.FC<EditProfileModalProps> = ({
                 <TextInput
                   style={styles.input}
                   value={formData.middle_name}
-                  onChangeText={(text) => setFormData({ ...formData, middle_name: text })}
+                  onChangeText={text =>
+                    setFormData({ ...formData, middle_name: text })
+                  }
                   placeholder="Введите отчество (необязательно)"
                   editable={!isLoading}
                 />
@@ -136,46 +142,46 @@ export const EditProfileModal: React.FC<EditProfileModalProps> = ({
         </View>
       </KeyboardAvoidingView>
     </Modal>
-  );
-};
+  )
+}
 
 const styles = StyleSheet.create({
   modalContainer: {
-    flex: 1
+    flex: 1,
   },
   modalOverlay: {
     flex: 1,
     backgroundColor: 'rgba(0, 0, 0, 0.5)',
-    justifyContent: 'flex-end'
+    justifyContent: 'flex-end',
   },
   modalContent: {
     backgroundColor: 'white',
     borderTopLeftRadius: 20,
     borderTopRightRadius: 20,
-    maxHeight: '80%'
+    maxHeight: '80%',
   },
   modalHeader: {
     padding: 20,
     borderBottomWidth: 1,
-    borderBottomColor: '#E5E7EB'
+    borderBottomColor: '#E5E7EB',
   },
   modalTitle: {
     fontSize: 18,
     fontWeight: '600',
     color: '#1F2937',
-    textAlign: 'center'
+    textAlign: 'center',
   },
   form: {
-    padding: 20
+    padding: 20,
   },
   inputGroup: {
-    marginBottom: 16
+    marginBottom: 16,
   },
   label: {
     fontSize: 14,
     fontWeight: '500',
     color: '#374151',
-    marginBottom: 6
+    marginBottom: 6,
   },
   input: {
     borderWidth: 1,
@@ -184,37 +190,37 @@ const styles = StyleSheet.create({
     paddingHorizontal: 12,
     paddingVertical: 10,
     fontSize: 16,
-    backgroundColor: 'white'
+    backgroundColor: 'white',
   },
   modalFooter: {
     flexDirection: 'row',
     padding: 20,
     borderTopWidth: 1,
     borderTopColor: '#E5E7EB',
-    gap: 12
+    gap: 12,
   },
   button: {
     flex: 1,
     borderRadius: 8,
     paddingVertical: 14,
-    alignItems: 'center'
+    alignItems: 'center',
   },
   cancelButton: {
     backgroundColor: '#F3F4F6',
     borderWidth: 1,
-    borderColor: '#D1D5DB'
+    borderColor: '#D1D5DB',
   },
   submitButton: {
-    backgroundColor: '#007AFF'
+    backgroundColor: '#007AFF',
   },
   cancelButtonText: {
     color: '#374151',
     fontSize: 16,
-    fontWeight: '600'
+    fontWeight: '600',
   },
   submitButtonText: {
     color: 'white',
     fontSize: 16,
-    fontWeight: '600'
-  }
-});
+    fontWeight: '600',
+  },
+})

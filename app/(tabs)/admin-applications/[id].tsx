@@ -1,12 +1,20 @@
-import React from 'react';
-import { ActivityIndicator, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { Header } from '@/app/(tabs)/components/header';
-import { formatDate } from '@/shared/utils/format-date';
-import { useProcessApplication } from './hooks/use-process-application';
+import React from 'react'
+import {
+  ActivityIndicator,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  View,
+} from 'react-native'
+import { useSafeAreaInsets } from 'react-native-safe-area-context'
+import { Header } from '@/app/(tabs)/components/header'
+import { formatDate } from '@/shared/utils/format-date'
+import { useProcessApplication } from './hooks/use-process-application'
 
 export default function ApplicationDetailScreen() {
-  const insets = useSafeAreaInsets();
+  const insets = useSafeAreaInsets()
 
   const {
     handleApprove,
@@ -20,34 +28,34 @@ export default function ApplicationDetailScreen() {
     applicationData,
     showCommentInput,
     setComment,
-    updatingStatus
-  } = useProcessApplication();
+    updatingStatus,
+  } = useProcessApplication()
 
   const getStatusColor = (status: string) => {
     switch (status) {
       case 'pending':
-        return '#FFCC00';
+        return '#FFCC00'
       case 'approved':
-        return '#4CD964';
+        return '#4CD964'
       case 'rejected':
-        return '#FF3B30';
+        return '#FF3B30'
       default:
-        return '#999';
+        return '#999'
     }
-  };
+  }
 
   const getStatusText = (status: string) => {
     switch (status) {
       case 'pending':
-        return 'Ожидает рассмотрения';
+        return 'Ожидает рассмотрения'
       case 'approved':
-        return 'Одобрена';
+        return 'Одобрена'
       case 'rejected':
-        return 'Отклонена';
+        return 'Отклонена'
       default:
-        return 'Неизвестно';
+        return 'Неизвестно'
     }
-  };
+  }
 
   if (loading) {
     return (
@@ -57,7 +65,7 @@ export default function ApplicationDetailScreen() {
           <Text style={styles.loadingText}>Загрузка заявки...</Text>
         </View>
       </View>
-    );
+    )
   }
 
   if (!applicationData) {
@@ -70,31 +78,32 @@ export default function ApplicationDetailScreen() {
           </TouchableOpacity>
         </View>
       </View>
-    );
+    )
   }
 
   // Подсчитываем общее количество датчиков
-  const totalSensors = Object.values(applicationData.sensors)
-  .reduce((sum, sensorArray) => sum + sensorArray.length, 0);
+  const totalSensors = Object.values(applicationData.sensors).reduce(
+    (sum, sensorArray) => sum + sensorArray.length,
+    0,
+  )
 
   return (
-    <View style={[
-      styles.container,
-      {
-        paddingTop: insets.top,
-        paddingBottom: insets.bottom,
-        paddingLeft: insets.left,
-        paddingRight: insets.right
-      }
-    ]}>
+    <View
+      style={[
+        styles.container,
+        {
+          paddingTop: insets.top,
+          paddingBottom: insets.bottom,
+          paddingLeft: insets.left,
+          paddingRight: insets.right,
+        },
+      ]}
+    >
       <ScrollView
         contentContainerStyle={styles.content}
         keyboardShouldPersistTaps="handled"
       >
-        <Header
-          title={`Заявка #${applicationData.id}`}
-          showLogout={false}
-        />
+        <Header title={`Заявка #${applicationData.id}`} showLogout={false} />
 
         <TouchableOpacity style={styles.backButton} onPress={handleBack}>
           <Text style={styles.backButtonText}>← Назад к списку</Text>
@@ -102,10 +111,12 @@ export default function ApplicationDetailScreen() {
 
         <View style={styles.statusSection}>
           <Text style={styles.sectionTitle}>Статус заявки</Text>
-          <View style={[
-            styles.statusBadge,
-            { backgroundColor: getStatusColor(applicationData.status) }
-          ]}>
+          <View
+            style={[
+              styles.statusBadge,
+              { backgroundColor: getStatusColor(applicationData.status) },
+            ]}
+          >
             <Text style={styles.statusText}>
               {getStatusText(applicationData.status)}
             </Text>
@@ -124,11 +135,15 @@ export default function ApplicationDetailScreen() {
           </View>
           <View style={styles.infoItem}>
             <Text style={styles.infoLabel}>Дата подачи:</Text>
-            <Text style={styles.infoValue}>{formatDate(applicationData.created_at)}</Text>
+            <Text style={styles.infoValue}>
+              {formatDate(applicationData.created_at)}
+            </Text>
           </View>
           <View style={styles.infoItem}>
             <Text style={styles.infoLabel}>Дата обновления:</Text>
-            <Text style={styles.infoValue}>{formatDate(applicationData.updated_at)}</Text>
+            <Text style={styles.infoValue}>
+              {formatDate(applicationData.updated_at)}
+            </Text>
           </View>
         </View>
 
@@ -145,13 +160,11 @@ export default function ApplicationDetailScreen() {
 
           <Text style={styles.roomsTitle}>Комнаты:</Text>
           {applicationData.rooms.map((roomId, index) => {
-            const sensorIds = applicationData.sensors[roomId.toString()] || [];
+            const sensorIds = applicationData.sensors[roomId.toString()] || []
 
             return (
               <View key={roomId} style={styles.roomCard}>
-                <Text style={styles.roomTitle}>
-                  {getRoomName(roomId)}
-                </Text>
+                <Text style={styles.roomTitle}>{getRoomName(roomId)}</Text>
 
                 {sensorIds.length > 0 ? (
                   <>
@@ -170,7 +183,7 @@ export default function ApplicationDetailScreen() {
                   Всего датчиков в комнате: {sensorIds.length} шт.
                 </Text>
               </View>
-            );
+            )
           })}
         </View>
 
@@ -180,7 +193,9 @@ export default function ApplicationDetailScreen() {
 
             {showCommentInput && (
               <View style={styles.commentContainer}>
-                <Text style={styles.commentLabel}>Комментарий к отклонению (опционально):</Text>
+                <Text style={styles.commentLabel}>
+                  Комментарий к отклонению (опционально):
+                </Text>
                 <TextInput
                   style={styles.commentInput}
                   value={comment}
@@ -220,7 +235,9 @@ export default function ApplicationDetailScreen() {
                 {updatingStatus ? (
                   <ActivityIndicator color="white" size="small" />
                 ) : showCommentInput ? (
-                  <Text style={styles.rejectButtonText}>Подтвердить отклонение</Text>
+                  <Text style={styles.rejectButtonText}>
+                    Подтвердить отклонение
+                  </Text>
                 ) : (
                   <Text style={styles.rejectButtonText}>Отклонить заявку</Text>
                 )}
@@ -234,8 +251,8 @@ export default function ApplicationDetailScreen() {
             <Text style={styles.successIcon}>✅</Text>
             <Text style={styles.successTitle}>Заявка одобрена</Text>
             <Text style={styles.successText}>
-              Заявка была одобрена и передана в отдел реализации.
-              Пользователь уведомлен о решении.
+              Заявка была одобрена и передана в отдел реализации. Пользователь
+              уведомлен о решении.
             </Text>
           </View>
         )}
@@ -251,47 +268,47 @@ export default function ApplicationDetailScreen() {
         )}
       </ScrollView>
     </View>
-  );
+  )
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#f5f5f5'
+    backgroundColor: '#f5f5f5',
   },
   content: {
     padding: 20,
-    paddingBottom: 40
+    paddingBottom: 40,
   },
   loadingContainer: {
     flex: 1,
     justifyContent: 'center',
-    alignItems: 'center'
+    alignItems: 'center',
   },
   loadingText: {
     marginTop: 12,
     fontSize: 16,
-    color: '#666'
+    color: '#666',
   },
   errorContainer: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    padding: 20
+    padding: 20,
   },
   errorText: {
     fontSize: 18,
     fontWeight: '600',
     color: '#FF3B30',
-    marginBottom: 20
+    marginBottom: 20,
   },
   backButton: {
-    marginBottom: 20
+    marginBottom: 20,
   },
   backButtonText: {
     fontSize: 16,
     color: '#007AFF',
-    fontWeight: '500'
+    fontWeight: '500',
   },
   section: {
     backgroundColor: 'white',
@@ -302,7 +319,7 @@ const styles = StyleSheet.create({
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.1,
     shadowRadius: 4,
-    elevation: 3
+    elevation: 3,
   },
   statusSection: {
     backgroundColor: 'white',
@@ -314,35 +331,35 @@ const styles = StyleSheet.create({
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.1,
     shadowRadius: 4,
-    elevation: 3
+    elevation: 3,
   },
   sectionTitle: {
     fontSize: 18,
     fontWeight: '600',
     color: '#333',
-    marginBottom: 15
+    marginBottom: 15,
   },
   statusBadge: {
     paddingHorizontal: 20,
     paddingVertical: 8,
-    borderRadius: 20
+    borderRadius: 20,
   },
   statusText: {
     color: 'white',
     fontSize: 16,
-    fontWeight: '600'
+    fontWeight: '600',
   },
   infoItem: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     paddingVertical: 10,
     borderBottomWidth: 1,
-    borderBottomColor: '#f0f0f0'
+    borderBottomColor: '#f0f0f0',
   },
   infoLabel: {
     fontSize: 14,
     color: '#666',
-    fontWeight: '500'
+    fontWeight: '500',
   },
   infoValue: {
     fontSize: 14,
@@ -350,52 +367,52 @@ const styles = StyleSheet.create({
     fontWeight: '500',
     textAlign: 'right',
     flex: 1,
-    marginLeft: 10
+    marginLeft: 10,
   },
   summary: {
-    marginBottom: 15
+    marginBottom: 15,
   },
   summaryItem: {
     fontSize: 14,
     color: '#333',
-    marginBottom: 6
+    marginBottom: 6,
   },
   roomsTitle: {
     fontSize: 16,
     fontWeight: '600',
     color: '#333',
-    marginBottom: 10
+    marginBottom: 10,
   },
   roomCard: {
     backgroundColor: '#F9FAFB',
     borderRadius: 8,
     padding: 15,
-    marginBottom: 10
+    marginBottom: 10,
   },
   roomTitle: {
     fontSize: 16,
     fontWeight: '600',
     color: '#333',
-    marginBottom: 8
+    marginBottom: 8,
   },
   sensorsTitle: {
     fontSize: 14,
     fontWeight: '500',
     color: '#666',
     marginBottom: 6,
-    marginTop: 8
+    marginTop: 8,
   },
   sensorItem: {
     fontSize: 14,
     color: '#666',
     marginLeft: 10,
-    marginBottom: 4
+    marginBottom: 4,
   },
   noSensorsText: {
     fontSize: 14,
     color: '#999',
     fontStyle: 'italic',
-    marginTop: 8
+    marginTop: 8,
   },
   roomTotal: {
     fontSize: 14,
@@ -404,7 +421,7 @@ const styles = StyleSheet.create({
     marginTop: 10,
     paddingTop: 10,
     borderTopWidth: 1,
-    borderTopColor: '#e0e0e0'
+    borderTopColor: '#e0e0e0',
   },
   actionsSection: {
     backgroundColor: 'white',
@@ -415,15 +432,15 @@ const styles = StyleSheet.create({
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.1,
     shadowRadius: 4,
-    elevation: 3
+    elevation: 3,
   },
   commentContainer: {
-    marginBottom: 20
+    marginBottom: 20,
   },
   commentLabel: {
     fontSize: 14,
     color: '#666',
-    marginBottom: 8
+    marginBottom: 8,
   },
   commentInput: {
     borderWidth: 1,
@@ -433,41 +450,41 @@ const styles = StyleSheet.create({
     fontSize: 14,
     backgroundColor: 'white',
     minHeight: 80,
-    textAlignVertical: 'top'
+    textAlignVertical: 'top',
   },
   cancelCommentButton: {
     marginTop: 10,
-    alignSelf: 'flex-start'
+    alignSelf: 'flex-start',
   },
   cancelCommentButtonText: {
     fontSize: 14,
     color: '#666',
-    textDecorationLine: 'underline'
+    textDecorationLine: 'underline',
   },
   actionButtons: {
-    gap: 10
+    gap: 10,
   },
   approveButton: {
     backgroundColor: '#4CD964',
     borderRadius: 8,
     paddingVertical: 16,
-    alignItems: 'center'
+    alignItems: 'center',
   },
   approveButtonText: {
     color: 'white',
     fontSize: 16,
-    fontWeight: '600'
+    fontWeight: '600',
   },
   rejectButton: {
     backgroundColor: '#FF3B30',
     borderRadius: 8,
     paddingVertical: 16,
-    alignItems: 'center'
+    alignItems: 'center',
   },
   rejectButtonText: {
     color: 'white',
     fontSize: 16,
-    fontWeight: '600'
+    fontWeight: '600',
   },
   successSection: {
     backgroundColor: '#F6FFED',
@@ -476,24 +493,24 @@ const styles = StyleSheet.create({
     marginBottom: 20,
     alignItems: 'center',
     borderWidth: 1,
-    borderColor: '#B7EB8F'
+    borderColor: '#B7EB8F',
   },
   successIcon: {
     fontSize: 48,
-    marginBottom: 16
+    marginBottom: 16,
   },
   successTitle: {
     fontSize: 18,
     fontWeight: 'bold',
     color: '#52C41A',
     marginBottom: 8,
-    textAlign: 'center'
+    textAlign: 'center',
   },
   successText: {
     fontSize: 14,
     color: '#52C41A',
     textAlign: 'center',
-    lineHeight: 20
+    lineHeight: 20,
   },
   rejectedSection: {
     backgroundColor: '#FFF1F0',
@@ -502,23 +519,23 @@ const styles = StyleSheet.create({
     marginBottom: 20,
     alignItems: 'center',
     borderWidth: 1,
-    borderColor: '#FFA39E'
+    borderColor: '#FFA39E',
   },
   rejectedIcon: {
     fontSize: 48,
-    marginBottom: 16
+    marginBottom: 16,
   },
   rejectedTitle: {
     fontSize: 18,
     fontWeight: 'bold',
     color: '#FF4D4F',
     marginBottom: 8,
-    textAlign: 'center'
+    textAlign: 'center',
   },
   rejectedText: {
     fontSize: 14,
     color: '#FF4D4F',
     textAlign: 'center',
-    lineHeight: 20
-  }
-});
+    lineHeight: 20,
+  },
+})

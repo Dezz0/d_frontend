@@ -1,10 +1,10 @@
-import React from 'react';
-import { Platform, StyleSheet, Text, TextInput, View } from 'react-native';
-import { Picker } from '@react-native-picker/picker';
+import React from 'react'
+import { Platform, StyleSheet, Text, TextInput, View } from 'react-native'
+import { Picker } from '@react-native-picker/picker'
 
 interface FormGroupProps {
-  label: string;
-  children: React.ReactNode;
+  label: string
+  children: React.ReactNode
 }
 
 export const FormGroup: React.FC<FormGroupProps> = ({ label, children }) => (
@@ -12,26 +12,26 @@ export const FormGroup: React.FC<FormGroupProps> = ({ label, children }) => (
     <Text style={styles.label}>{label}</Text>
     {children}
   </View>
-);
+)
 
 interface PickerInputProps {
-  value: string;
-  onValueChange: (value: string) => void;
+  value: string
+  onValueChange: (value: string) => void
   items: Array<{
-    label: string;
+    label: string
     value: string | number
-  }>;
-  disabled?: boolean;
-  placeholder?: string;
+  }>
+  disabled?: boolean
+  placeholder?: string
 }
 
 export const PickerInput: React.FC<PickerInputProps> = ({
-                                                          value,
-                                                          onValueChange,
-                                                          items,
-                                                          disabled = false,
-                                                          placeholder = 'Выберите...'
-                                                        }) => (
+  value,
+  onValueChange,
+  items,
+  disabled = false,
+  placeholder = 'Выберите...',
+}) => (
   <View style={[styles.pickerContainer, disabled && styles.disabled]}>
     <Picker
       selectedValue={value}
@@ -40,44 +40,37 @@ export const PickerInput: React.FC<PickerInputProps> = ({
       enabled={!disabled}
     >
       {placeholder && (
-        <Picker.Item
-          label={disabled ? placeholder : placeholder}
-          value=""
-        />
+        <Picker.Item label={disabled ? placeholder : placeholder} value="" />
       )}
-      {items.map((item) => (
-        <Picker.Item
-          key={item.value}
-          label={item.label}
-          value={item.value}
-        />
+      {items.map(item => (
+        <Picker.Item key={item.value} label={item.label} value={item.value} />
       ))}
     </Picker>
   </View>
-);
+)
 
 interface TextInputFieldProps {
-  value: string;
-  onChangeText: (text: string) => void;
-  placeholder?: string;
-  keyboardType?: 'default' | 'numeric' | 'email-address';
-  multiline?: boolean;
-  numberOfLines?: number;
+  value: string
+  onChangeText: (text: string) => void
+  placeholder?: string
+  keyboardType?: 'default' | 'numeric' | 'email-address'
+  multiline?: boolean
+  numberOfLines?: number
 }
 
 export const TextInputField: React.FC<TextInputFieldProps> = ({
-                                                                value,
-                                                                onChangeText,
-                                                                placeholder,
-                                                                keyboardType = 'default',
-                                                                multiline = false,
-                                                                numberOfLines = 1
-                                                              }) => (
+  value,
+  onChangeText,
+  placeholder,
+  keyboardType = 'default',
+  multiline = false,
+  numberOfLines = 1,
+}) => (
   <TextInput
     style={[
       styles.input,
       multiline && styles.textArea,
-      { height: multiline ? numberOfLines * 24 : 44 }
+      { height: multiline ? numberOfLines * 24 : 44 },
     ]}
     value={value}
     onChangeText={onChangeText}
@@ -87,30 +80,30 @@ export const TextInputField: React.FC<TextInputFieldProps> = ({
     numberOfLines={numberOfLines}
     textAlignVertical={multiline ? 'top' : 'center'}
   />
-);
+)
 
 const styles = StyleSheet.create({
   formGroup: {
-    marginBottom: 16
+    marginBottom: 16,
   },
   label: {
     fontSize: 14,
     fontWeight: '500',
     color: '#374151',
-    marginBottom: 8
+    marginBottom: 8,
   },
   pickerContainer: {
     borderWidth: 1,
     borderColor: '#D1D5DB',
     borderRadius: 8,
-    overflow: 'hidden'
+    overflow: 'hidden',
   },
   picker: {
-    height: Platform.OS === 'ios' ? 150 : 50
+    height: Platform.OS === 'ios' ? 150 : 50,
   },
   disabled: {
     opacity: 0.5,
-    backgroundColor: '#F5F5F5'
+    backgroundColor: '#F5F5F5',
   },
   input: {
     borderWidth: 1,
@@ -118,11 +111,11 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     paddingHorizontal: 12,
     fontSize: 16,
-    backgroundColor: 'white'
+    backgroundColor: 'white',
   },
   textArea: {
     textAlignVertical: 'top',
     paddingTop: 10,
-    paddingBottom: 10
-  }
-});
+    paddingBottom: 10,
+  },
+})

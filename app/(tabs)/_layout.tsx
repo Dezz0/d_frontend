@@ -1,10 +1,10 @@
-import { Tabs } from 'expo-router';
-import { Ionicons, MaterialIcons } from '@expo/vector-icons';
-import { useAuthStore } from '@/store/authStore';
+import { Tabs } from 'expo-router'
+import { Ionicons, MaterialIcons } from '@expo/vector-icons'
+import { useAuthStore } from '@/store/authStore'
 
 export default function TabLayout() {
-  const { user } = useAuthStore();
-  const isAdmin = user?.is_admin;
+  const { user } = useAuthStore()
+  const isAdmin = user?.is_admin
 
   return (
     <Tabs screenOptions={{ headerShown: false }}>
@@ -15,7 +15,7 @@ export default function TabLayout() {
           title: 'Главная',
           tabBarIcon: ({ color, size }) => (
             <Ionicons name="home" size={size} color={color} />
-          )
+          ),
         }}
       />
 
@@ -27,7 +27,7 @@ export default function TabLayout() {
           tabBarIcon: ({ color, size }) => (
             <Ionicons name="person" size={size} color={color} />
           ),
-          href: !isAdmin ? undefined : null
+          href: !isAdmin ? undefined : null,
         }}
       />
 
@@ -39,7 +39,7 @@ export default function TabLayout() {
           tabBarIcon: ({ color, size }) => (
             <MaterialIcons name="assignment" size={size} color={color} />
           ),
-          href: isAdmin ? undefined : null
+          href: isAdmin ? undefined : null,
         }}
       />
       <Tabs.Screen
@@ -49,7 +49,7 @@ export default function TabLayout() {
           tabBarIcon: ({ color, size }) => (
             <Ionicons name="people" size={size} color={color} />
           ),
-          href: isAdmin ? undefined : null
+          href: isAdmin ? undefined : null,
         }}
       />
 
@@ -57,21 +57,21 @@ export default function TabLayout() {
       <Tabs.Screen
         name="admin-applications/[id]"
         options={{
-          href: null
+          href: null,
         }}
       />
       <Tabs.Screen
         name="admin-users/[id]"
         options={{
-          href: null
+          href: null,
         }}
       />
       <Tabs.Screen
         name="sensor/[type]/[id]"
         options={{
-          href: null
+          href: null,
         }}
       />
     </Tabs>
-  );
+  )
 }

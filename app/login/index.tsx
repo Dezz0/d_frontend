@@ -1,21 +1,22 @@
-import React from 'react';
-import { ActivityIndicator, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
-import { useAuth } from './hooks/useAuth';
-import { router } from 'expo-router';
+import React from 'react'
+import {
+  ActivityIndicator,
+  StyleSheet,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  View,
+} from 'react-native'
+import { useAuth } from './hooks/useAuth'
+import { router } from 'expo-router'
 
 export default function LoginScreen() {
-  const {
-    email,
-    setEmail,
-    password,
-    setPassword,
-    handleLogin,
-    isLoading
-  } = useAuth();
+  const { email, setEmail, password, setPassword, handleLogin, isLoading } =
+    useAuth()
 
   const handleGoToRegister = () => {
-    router.push('/register');
-  };
+    router.push('/register')
+  }
 
   return (
     <View style={styles.container}>
@@ -31,10 +32,7 @@ export default function LoginScreen() {
               placeholder="Введите ваш логин"
               autoCapitalize="none"
               editable={!isLoading}
-              style={[
-                styles.input,
-                isLoading && styles.inputDisabled
-              ]}
+              style={[styles.input, isLoading && styles.inputDisabled]}
               placeholderTextColor="#999"
             />
           </View>
@@ -47,10 +45,7 @@ export default function LoginScreen() {
               placeholder="Введите ваш пароль"
               secureTextEntry
               editable={!isLoading}
-              style={[
-                styles.input,
-                isLoading && styles.inputDisabled
-              ]}
+              style={[styles.input, isLoading && styles.inputDisabled]}
               placeholderTextColor="#999"
             />
           </View>
@@ -58,10 +53,7 @@ export default function LoginScreen() {
           <TouchableOpacity
             onPress={handleLogin}
             disabled={isLoading}
-            style={[
-              styles.button,
-              isLoading && styles.buttonDisabled
-            ]}
+            style={[styles.button, isLoading && styles.buttonDisabled]}
           >
             {isLoading ? (
               <ActivityIndicator color="white" />
@@ -76,13 +68,14 @@ export default function LoginScreen() {
             style={styles.registerLink}
           >
             <Text style={styles.registerLinkText}>
-              Нет аккаунта? <Text style={styles.registerLinkBold}>Зарегистрироваться</Text>
+              Нет аккаунта?{' '}
+              <Text style={styles.registerLinkBold}>Зарегистрироваться</Text>
             </Text>
           </TouchableOpacity>
         </View>
       </View>
     </View>
-  );
+  )
 }
 
 const styles = StyleSheet.create({
@@ -90,28 +83,28 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     backgroundColor: 'white',
-    paddingHorizontal: 24
+    paddingHorizontal: 24,
   },
   content: {
-    width: '100%'
+    width: '100%',
   },
   title: {
     fontSize: 28,
     fontWeight: 'bold',
     textAlign: 'center',
     color: '#007AFF',
-    marginBottom: 32
+    marginBottom: 32,
   },
   form: {
-    gap: 20
+    gap: 20,
   },
   inputContainer: {
-    gap: 8
+    gap: 8,
   },
   label: {
     fontSize: 16,
     fontWeight: '600',
-    color: '#000'
+    color: '#000',
   },
   input: {
     borderWidth: 1,
@@ -120,37 +113,37 @@ const styles = StyleSheet.create({
     paddingHorizontal: 12,
     paddingVertical: 12,
     fontSize: 16,
-    backgroundColor: 'white'
+    backgroundColor: 'white',
   },
   inputDisabled: {
     opacity: 0.6,
-    backgroundColor: '#F5F5F5'
+    backgroundColor: '#F5F5F5',
   },
   button: {
     backgroundColor: '#007AFF',
     borderRadius: 8,
     paddingVertical: 16,
     alignItems: 'center',
-    justifyContent: 'center'
+    justifyContent: 'center',
   },
   buttonDisabled: {
-    opacity: 0.6
+    opacity: 0.6,
   },
   buttonText: {
     color: 'white',
     fontSize: 18,
-    fontWeight: '600'
+    fontWeight: '600',
   },
   registerLink: {
     alignItems: 'center',
-    paddingVertical: 16
+    paddingVertical: 16,
   },
   registerLinkText: {
     fontSize: 16,
-    color: '#6B7280'
+    color: '#6B7280',
   },
   registerLinkBold: {
     fontWeight: '600',
-    color: '#007AFF'
-  }
-});
+    color: '#007AFF',
+  },
+})

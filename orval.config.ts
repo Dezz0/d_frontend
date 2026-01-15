@@ -1,4 +1,4 @@
-import { defineConfig } from 'orval';
+import { defineConfig } from 'orval'
 
 export default defineConfig({
   main: {
@@ -14,13 +14,13 @@ export default defineConfig({
         query: {
           useQuery: true,
           useInfinite: true,
-          useInfiniteQueryParam: 'offset'
+          useInfiniteQueryParam: 'offset',
         },
         mutator: {
           path: 'shared/api/baseApiRequest.ts',
-          name: 'baseApiRequest'
-        }
-      }
-    }
-  }
-});
+          name: 'baseApiRequest',
+        },
+      },
+    },
+  },
+})
