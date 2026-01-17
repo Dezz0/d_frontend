@@ -24,7 +24,7 @@ export const UserMainScreen: React.FC = () => {
 
   const handleSensorPress = (
     sensorType: string,
-    sensorId: string,
+    sensorId: number,
     roomName: string,
   ) => {
     router.push(
