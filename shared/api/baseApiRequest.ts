@@ -32,6 +32,9 @@ const createApiClient = () => {
       const token = await getAccessToken()
       if (token) {
         config.headers.Authorization = `Bearer ${token}`
+
+          console.log('TOKEN:', token)
+
       }
       return config
     },
