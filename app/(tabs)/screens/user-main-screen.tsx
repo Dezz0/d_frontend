@@ -9,9 +9,23 @@ import {
 } from 'react-native'
 import { router } from 'expo-router'
 import { useGetUserRoomsRoomsUserRoomsGet } from '@/shared/api/generated/rooms/rooms'
+import { useGetLatestOutdoorTemperatureOutdoorTemperatureLatestGet } from '@/shared/api/generated/outdoor-temperature/outdoor-temperature'
 
 export const UserMainScreen: React.FC = () => {
-  const { data: rooms, isLoading, error } = useGetUserRoomsRoomsUserRoomsGet()
+  const {
+    data: rooms,
+    isLoading: roomsLoading,
+    error: roomError,
+  } = useGetUserRoomsRoomsUserRoomsGet()
+
+  const {
+    data: outdoorTemp,
+    isLoading: tempLoading,
+    error: tempError,
+  } = useGetLatestOutdoorTemperatureOutdoorTemperatureLatestGet({
+    query: { refetchInterval: 10000 },
+  })
+
   const [expandedRooms, setExpandedRooms] = useState<number[]>([])
 
   const toggleRoom = (roomId: number) => {
@@ -24,7 +38,7 @@ export const UserMainScreen: React.FC = () => {
 
   const handleSensorPress = (
     sensorType: string,
-    sensorId: string,
+    sensorId: number,
     roomName: string,
   ) => {
     router.push(
@@ -44,8 +58,6 @@ export const UserMainScreen: React.FC = () => {
         return '💧'
       case 'ventilation':
         return '🌬️'
-      case 'motion':
-        return '👣'
       default:
         return '📱'
     }
@@ -63,14 +75,12 @@ export const UserMainScreen: React.FC = () => {
         return 'Влажность'
       case 'ventilation':
         return 'Вентиляция'
-      case 'motion':
-        return 'Движение'
       default:
         return 'Датчик'
     }
   }
 
-  if (isLoading) {
+  if (roomsLoading || tempLoading) {
     return (
       <View style={styles.loadingContainer}>
         <ActivityIndicator size="large" color="#007AFF" />
@@ -79,15 +89,12 @@ export const UserMainScreen: React.FC = () => {
     )
   }
 
-  if (error) {
+  if (roomError || tempError) {
     return (
       <View style={styles.errorContainer}>
         <Text style={styles.errorTitle}>Ошибка загрузки</Text>
         <Text style={styles.errorText}>
-          Не удалось загрузить данные о комнатах и датчиках.
-        </Text>
-        <Text style={styles.errorSubtext}>
-          Проверьте подключение к интернету или попробуйте позже.
+          Не удалось загрузить данные о комнатах или температуре.
         </Text>
       </View>
     )
@@ -110,13 +117,30 @@ export const UserMainScreen: React.FC = () => {
 
   return (
     <ScrollView style={styles.container} contentContainerStyle={styles.content}>
-      <View style={styles.header}>
-        <Text style={styles.title}>Мой умный дом</Text>
-        <Text style={styles.subtitle}>Управление комнатами и датчиками</Text>
-      </View>
-
+      {/* ------------------- Внешняя температура ------------------- */}
+      {outdoorTemp && (
+        <View style={styles.infoSection}>
+          <Text style={styles.infoTitle}>Температура вокруг дома</Text>
+          <Text style={styles.infoText}>
+            Минимальная: {outdoorTemp.min_temperature}°C
+          </Text>
+          <Text style={styles.infoText}>
+            Максимальная: {outdoorTemp.max_temperature}°C
+          </Text>
+          {outdoorTemp.temperatures.length > 0 && (
+            <View style={{ marginTop: 8 }}>
+              {outdoorTemp.temperatures.map(item => (
+                <Text key={item.side} style={styles.infoText}>
+                  {item.side}: {item.value}°C
+                </Text>
+              ))}
+            </View>
+          )}
+        </View>
+      )}
+      {/* ------------------- Комнаты и датчики ------------------- */}
       <View style={styles.roomsSection}>
-        <Text style={styles.sectionTitle}>Комнаты и датчики</Text>
+        <Text style={styles.title}>Комнаты и датчики</Text>
         <Text style={styles.sectionDescription}>
           Нажмите на комнату, чтобы увидеть датчики
         </Text>
@@ -188,19 +212,6 @@ export const UserMainScreen: React.FC = () => {
           )
         })}
       </View>
-
-      <View style={styles.infoSection}>
-        <Text style={styles.infoTitle}>Информация</Text>
-        <Text style={styles.infoText}>
-          • Данные обновляются автоматически каждые 30 секунд
-        </Text>
-        <Text style={styles.infoText}>
-          • Нажмите на датчик для просмотра детальной информации
-        </Text>
-        <Text style={styles.infoText}>
-          • Все датчики работают в реальном времени
-        </Text>
-      </View>
     </ScrollView>
   )
 }
@@ -208,11 +219,11 @@ export const UserMainScreen: React.FC = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#f5f5f5',
+    paddingBottom: 32,
+    borderRadius: 10,
   },
   content: {
-    padding: 16,
-    paddingBottom: 32,
+    padding: 2,
   },
   loadingContainer: {
     flex: 1,
@@ -242,11 +253,6 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     marginBottom: 4,
   },
-  errorSubtext: {
-    fontSize: 12,
-    color: '#999',
-    textAlign: 'center',
-  },
   emptyContainer: {
     flex: 1,
     justifyContent: 'center',
@@ -275,27 +281,14 @@ const styles = StyleSheet.create({
     color: '#999',
     textAlign: 'center',
   },
-  header: {
-    marginBottom: 24,
-  },
   title: {
     fontSize: 28,
     fontWeight: 'bold',
     color: '#1F2937',
     marginBottom: 4,
   },
-  subtitle: {
-    fontSize: 16,
-    color: '#6B7280',
-  },
   roomsSection: {
     marginBottom: 24,
-  },
-  sectionTitle: {
-    fontSize: 20,
-    fontWeight: '600',
-    color: '#374151',
-    marginBottom: 8,
   },
   sectionDescription: {
     fontSize: 14,
@@ -395,7 +388,8 @@ const styles = StyleSheet.create({
   infoSection: {
     backgroundColor: '#EFF6FF',
     borderRadius: 12,
-    padding: 16,
+    padding: 12,
+    marginBottom: 16,
   },
   infoTitle: {
     fontSize: 16,

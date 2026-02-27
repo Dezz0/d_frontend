@@ -25,6 +25,7 @@ import type {
 import type {
   HTTPValidationError,
   ProfileStatsResponse,
+  RoomDevicesResponse,
   RoomResponse,
   UserRoomsResponse,
 } from '.././model'
@@ -1212,6 +1213,340 @@ export function useGetUserRoomsRoomsUserRoomsGet<
   queryKey: DataTag<QueryKey, TData, TError>
 } {
   const queryOptions = getGetUserRoomsRoomsUserRoomsGetQueryOptions(options)
+
+  const query = useQuery(queryOptions, queryClient) as UseQueryResult<
+    TData,
+    TError
+  > & { queryKey: DataTag<QueryKey, TData, TError> }
+
+  query.queryKey = queryOptions.queryKey
+
+  return query
+}
+
+/**
+ * @summary Get Room Devices
+ */
+export const getRoomDevicesRoomsRoomIdDevicesGet = (
+  roomId: number,
+  signal?: AbortSignal,
+) => {
+  return baseApiRequest<RoomDevicesResponse>({
+    url: `/rooms/${roomId}/devices`,
+    method: 'GET',
+    signal,
+  })
+}
+
+export const getGetRoomDevicesRoomsRoomIdDevicesGetInfiniteQueryKey = (
+  roomId?: number,
+) => {
+  return ['infinate', `/rooms/${roomId}/devices`] as const
+}
+
+export const getGetRoomDevicesRoomsRoomIdDevicesGetQueryKey = (
+  roomId?: number,
+) => {
+  return [`/rooms/${roomId}/devices`] as const
+}
+
+export const getGetRoomDevicesRoomsRoomIdDevicesGetInfiniteQueryOptions = <
+  TData = InfiniteData<
+    Awaited<ReturnType<typeof getRoomDevicesRoomsRoomIdDevicesGet>>
+  >,
+  TError = HTTPValidationError,
+>(
+  roomId: number,
+  options?: {
+    query?: Partial<
+      UseInfiniteQueryOptions<
+        Awaited<ReturnType<typeof getRoomDevicesRoomsRoomIdDevicesGet>>,
+        TError,
+        TData
+      >
+    >
+  },
+) => {
+  const { query: queryOptions } = options ?? {}
+
+  const queryKey =
+    queryOptions?.queryKey ??
+    getGetRoomDevicesRoomsRoomIdDevicesGetInfiniteQueryKey(roomId)
+
+  const queryFn: QueryFunction<
+    Awaited<ReturnType<typeof getRoomDevicesRoomsRoomIdDevicesGet>>
+  > = ({ signal }) => getRoomDevicesRoomsRoomIdDevicesGet(roomId, signal)
+
+  return {
+    queryKey,
+    queryFn,
+    enabled: !!roomId,
+    ...queryOptions,
+  } as UseInfiniteQueryOptions<
+    Awaited<ReturnType<typeof getRoomDevicesRoomsRoomIdDevicesGet>>,
+    TError,
+    TData
+  > & { queryKey: DataTag<QueryKey, TData, TError> }
+}
+
+export type GetRoomDevicesRoomsRoomIdDevicesGetInfiniteQueryResult =
+  NonNullable<Awaited<ReturnType<typeof getRoomDevicesRoomsRoomIdDevicesGet>>>
+export type GetRoomDevicesRoomsRoomIdDevicesGetInfiniteQueryError =
+  HTTPValidationError
+
+export function useGetRoomDevicesRoomsRoomIdDevicesGetInfinite<
+  TData = InfiniteData<
+    Awaited<ReturnType<typeof getRoomDevicesRoomsRoomIdDevicesGet>>
+  >,
+  TError = HTTPValidationError,
+>(
+  roomId: number,
+  options: {
+    query: Partial<
+      UseInfiniteQueryOptions<
+        Awaited<ReturnType<typeof getRoomDevicesRoomsRoomIdDevicesGet>>,
+        TError,
+        TData
+      >
+    > &
+      Pick<
+        DefinedInitialDataOptions<
+          Awaited<ReturnType<typeof getRoomDevicesRoomsRoomIdDevicesGet>>,
+          TError,
+          Awaited<ReturnType<typeof getRoomDevicesRoomsRoomIdDevicesGet>>
+        >,
+        'initialData'
+      >
+  },
+  queryClient?: QueryClient,
+): DefinedUseInfiniteQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>
+}
+export function useGetRoomDevicesRoomsRoomIdDevicesGetInfinite<
+  TData = InfiniteData<
+    Awaited<ReturnType<typeof getRoomDevicesRoomsRoomIdDevicesGet>>
+  >,
+  TError = HTTPValidationError,
+>(
+  roomId: number,
+  options?: {
+    query?: Partial<
+      UseInfiniteQueryOptions<
+        Awaited<ReturnType<typeof getRoomDevicesRoomsRoomIdDevicesGet>>,
+        TError,
+        TData
+      >
+    > &
+      Pick<
+        UndefinedInitialDataOptions<
+          Awaited<ReturnType<typeof getRoomDevicesRoomsRoomIdDevicesGet>>,
+          TError,
+          Awaited<ReturnType<typeof getRoomDevicesRoomsRoomIdDevicesGet>>
+        >,
+        'initialData'
+      >
+  },
+  queryClient?: QueryClient,
+): UseInfiniteQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>
+}
+export function useGetRoomDevicesRoomsRoomIdDevicesGetInfinite<
+  TData = InfiniteData<
+    Awaited<ReturnType<typeof getRoomDevicesRoomsRoomIdDevicesGet>>
+  >,
+  TError = HTTPValidationError,
+>(
+  roomId: number,
+  options?: {
+    query?: Partial<
+      UseInfiniteQueryOptions<
+        Awaited<ReturnType<typeof getRoomDevicesRoomsRoomIdDevicesGet>>,
+        TError,
+        TData
+      >
+    >
+  },
+  queryClient?: QueryClient,
+): UseInfiniteQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>
+}
+/**
+ * @summary Get Room Devices
+ */
+
+export function useGetRoomDevicesRoomsRoomIdDevicesGetInfinite<
+  TData = InfiniteData<
+    Awaited<ReturnType<typeof getRoomDevicesRoomsRoomIdDevicesGet>>
+  >,
+  TError = HTTPValidationError,
+>(
+  roomId: number,
+  options?: {
+    query?: Partial<
+      UseInfiniteQueryOptions<
+        Awaited<ReturnType<typeof getRoomDevicesRoomsRoomIdDevicesGet>>,
+        TError,
+        TData
+      >
+    >
+  },
+  queryClient?: QueryClient,
+): UseInfiniteQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>
+} {
+  const queryOptions =
+    getGetRoomDevicesRoomsRoomIdDevicesGetInfiniteQueryOptions(roomId, options)
+
+  const query = useInfiniteQuery(
+    queryOptions,
+    queryClient,
+  ) as UseInfiniteQueryResult<TData, TError> & {
+    queryKey: DataTag<QueryKey, TData, TError>
+  }
+
+  query.queryKey = queryOptions.queryKey
+
+  return query
+}
+
+export const getGetRoomDevicesRoomsRoomIdDevicesGetQueryOptions = <
+  TData = Awaited<ReturnType<typeof getRoomDevicesRoomsRoomIdDevicesGet>>,
+  TError = HTTPValidationError,
+>(
+  roomId: number,
+  options?: {
+    query?: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof getRoomDevicesRoomsRoomIdDevicesGet>>,
+        TError,
+        TData
+      >
+    >
+  },
+) => {
+  const { query: queryOptions } = options ?? {}
+
+  const queryKey =
+    queryOptions?.queryKey ??
+    getGetRoomDevicesRoomsRoomIdDevicesGetQueryKey(roomId)
+
+  const queryFn: QueryFunction<
+    Awaited<ReturnType<typeof getRoomDevicesRoomsRoomIdDevicesGet>>
+  > = ({ signal }) => getRoomDevicesRoomsRoomIdDevicesGet(roomId, signal)
+
+  return {
+    queryKey,
+    queryFn,
+    enabled: !!roomId,
+    ...queryOptions,
+  } as UseQueryOptions<
+    Awaited<ReturnType<typeof getRoomDevicesRoomsRoomIdDevicesGet>>,
+    TError,
+    TData
+  > & { queryKey: DataTag<QueryKey, TData, TError> }
+}
+
+export type GetRoomDevicesRoomsRoomIdDevicesGetQueryResult = NonNullable<
+  Awaited<ReturnType<typeof getRoomDevicesRoomsRoomIdDevicesGet>>
+>
+export type GetRoomDevicesRoomsRoomIdDevicesGetQueryError = HTTPValidationError
+
+export function useGetRoomDevicesRoomsRoomIdDevicesGet<
+  TData = Awaited<ReturnType<typeof getRoomDevicesRoomsRoomIdDevicesGet>>,
+  TError = HTTPValidationError,
+>(
+  roomId: number,
+  options: {
+    query: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof getRoomDevicesRoomsRoomIdDevicesGet>>,
+        TError,
+        TData
+      >
+    > &
+      Pick<
+        DefinedInitialDataOptions<
+          Awaited<ReturnType<typeof getRoomDevicesRoomsRoomIdDevicesGet>>,
+          TError,
+          Awaited<ReturnType<typeof getRoomDevicesRoomsRoomIdDevicesGet>>
+        >,
+        'initialData'
+      >
+  },
+  queryClient?: QueryClient,
+): DefinedUseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>
+}
+export function useGetRoomDevicesRoomsRoomIdDevicesGet<
+  TData = Awaited<ReturnType<typeof getRoomDevicesRoomsRoomIdDevicesGet>>,
+  TError = HTTPValidationError,
+>(
+  roomId: number,
+  options?: {
+    query?: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof getRoomDevicesRoomsRoomIdDevicesGet>>,
+        TError,
+        TData
+      >
+    > &
+      Pick<
+        UndefinedInitialDataOptions<
+          Awaited<ReturnType<typeof getRoomDevicesRoomsRoomIdDevicesGet>>,
+          TError,
+          Awaited<ReturnType<typeof getRoomDevicesRoomsRoomIdDevicesGet>>
+        >,
+        'initialData'
+      >
+  },
+  queryClient?: QueryClient,
+): UseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>
+}
+export function useGetRoomDevicesRoomsRoomIdDevicesGet<
+  TData = Awaited<ReturnType<typeof getRoomDevicesRoomsRoomIdDevicesGet>>,
+  TError = HTTPValidationError,
+>(
+  roomId: number,
+  options?: {
+    query?: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof getRoomDevicesRoomsRoomIdDevicesGet>>,
+        TError,
+        TData
+      >
+    >
+  },
+  queryClient?: QueryClient,
+): UseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>
+}
+/**
+ * @summary Get Room Devices
+ */
+
+export function useGetRoomDevicesRoomsRoomIdDevicesGet<
+  TData = Awaited<ReturnType<typeof getRoomDevicesRoomsRoomIdDevicesGet>>,
+  TError = HTTPValidationError,
+>(
+  roomId: number,
+  options?: {
+    query?: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof getRoomDevicesRoomsRoomIdDevicesGet>>,
+        TError,
+        TData
+      >
+    >
+  },
+  queryClient?: QueryClient,
+): UseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>
+} {
+  const queryOptions = getGetRoomDevicesRoomsRoomIdDevicesGetQueryOptions(
+    roomId,
+    options,
+  )
 
   const query = useQuery(queryOptions, queryClient) as UseQueryResult<
     TData,

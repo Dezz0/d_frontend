@@ -7,9 +7,7 @@
  */
 import type { SensorDataValue } from './sensorDataValue'
 import type { SensorDataIsOn } from './sensorDataIsOn'
-import type { SensorDataPpm } from './sensorDataPpm'
 import type { SensorDataHumidityLevel } from './sensorDataHumidityLevel'
-import type { SensorDataFanSpeed } from './sensorDataFanSpeed'
 import type { SensorDataTriggerTime } from './sensorDataTriggerTime'
 
 /**
@@ -20,8 +18,6 @@ export interface SensorData {
   type: string
   value?: SensorDataValue
   is_on?: SensorDataIsOn
-  ppm?: SensorDataPpm
   humidity_level?: SensorDataHumidityLevel
-  fan_speed?: SensorDataFanSpeed
   trigger_time?: SensorDataTriggerTime
 }

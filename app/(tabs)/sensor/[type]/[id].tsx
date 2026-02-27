@@ -10,11 +10,23 @@ import {
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import { router, useLocalSearchParams } from 'expo-router'
 import { Header } from '@/app/(tabs)/components/header'
-import { useGetSensorInfoSensorsSensorTypeSensorIdGet } from '@/shared/api/generated/sensors/sensors'
-import { formatDate } from '@/shared/utils/format-date'
+import {
+  getGetSensorInfoSensorsSensorTypeSensorIdGetQueryKey,
+  useGetSensorInfoSensorsSensorTypeSensorIdGet,
+} from '@/shared/api/generated/sensors/sensors'
+import {
+  getGetHomeControlModeHomeControlModeGetQueryKey,
+  useGetHomeControlModeHomeControlModeGet,
+  useToggleDeviceHomeControlToggleDevicePatch,
+  useUpdateHomeControlModeHomeControlModePatch,
+} from '@/shared/api/generated/home-control/home-control'
+import { useQueryClient } from '@tanstack/react-query'
 
 export default function SensorDetailScreen() {
   const insets = useSafeAreaInsets()
+
+  const queryClient = useQueryClient()
+
   const { type: sensorType, id: sensorId } = useLocalSearchParams<{
     type: string
     id: string
@@ -32,10 +44,59 @@ export default function SensorDetailScreen() {
       },
     })
 
+  const { data: controlMode } = useGetHomeControlModeHomeControlModeGet()
+  const { mutate: updateModeMutation } =
+    useUpdateHomeControlModeHomeControlModePatch()
+  const { mutate: toggleDeviceMutation } =
+    useToggleDeviceHomeControlToggleDevicePatch()
+
   const sensorData = data as any
 
   const handleBack = () => {
     router.back()
+  }
+
+  const handleToggleManualMode = async () => {
+    if (!sensorType || !sensorId) return
+
+    updateModeMutation(
+      {
+        data: {
+          is_manual: !controlMode?.is_manual,
+        },
+      },
+      {
+        onSuccess: () => {
+          queryClient.invalidateQueries({
+            queryKey: getGetHomeControlModeHomeControlModeGetQueryKey(),
+          })
+        },
+      },
+    )
+  }
+
+  const handleToggleDevice = async () => {
+    if (!sensorType || !sensorId || !sensorData?.room_id) return
+    toggleDeviceMutation(
+      {
+        data: {
+          type: sensorType,
+          room_id: sensorData.room_id,
+          sensor_id: sensorData.sensor_id,
+          is_on: !sensorData.is_on,
+        },
+      },
+      {
+        onSuccess: () => {
+          queryClient.invalidateQueries({
+            queryKey: getGetSensorInfoSensorsSensorTypeSensorIdGetQueryKey(
+              sensorType,
+              sensorId,
+            ),
+          })
+        },
+      },
+    )
   }
 
   const getSensorDisplayName = (type: string) => {
@@ -50,8 +111,6 @@ export default function SensorDetailScreen() {
         return 'Датчик влажности'
       case 'ventilation':
         return 'Датчик вентиляции'
-      case 'motion':
-        return 'Датчик движения'
       default:
         return 'Датчик'
     }
@@ -69,12 +128,11 @@ export default function SensorDetailScreen() {
         return '💧'
       case 'ventilation':
         return '🌬️'
-      case 'motion':
-        return '👣'
       default:
         return '📱'
     }
   }
+  console.log('sensorData', sensorData)
 
   const renderSensorData = () => {
     if (!sensorData) return null
@@ -89,7 +147,7 @@ export default function SensorDetailScreen() {
               <View style={styles.temperatureStatus}>
                 {sensorData.value < 18 ? (
                   <Text style={styles.statusCold}>Холодно</Text>
-                ) : sensorData.value > 25 ? (
+                ) : sensorData.value > 27 ? (
                   <Text style={styles.statusHot}>Жарко</Text>
                 ) : (
                   <Text style={styles.statusNormal}>Нормально</Text>
@@ -100,6 +158,7 @@ export default function SensorDetailScreen() {
         )
 
       case 'light':
+      case 'ventilation':
         return (
           <View style={styles.sensorDataSection}>
             <Text style={styles.dataLabel}>Состояние:</Text>
@@ -113,6 +172,34 @@ export default function SensorDetailScreen() {
                 {sensorData.is_on ? 'ВКЛЮЧЕН' : 'ВЫКЛЮЧЕН'}
               </Text>
             </View>
+
+            {/* Кнопка переключения режима */}
+            <TouchableOpacity
+              style={[
+                styles.controlButton,
+                controlMode?.is_manual && styles.controlButtonActive,
+              ]}
+              onPress={handleToggleManualMode}
+            >
+              <Text style={styles.controlButtonText}>
+                {controlMode?.is_manual ? 'Авто' : 'Ручное управление'}
+              </Text>
+            </TouchableOpacity>
+
+            {/* Кнопка включения/выключения */}
+            {controlMode?.is_manual && (
+              <TouchableOpacity
+                style={[
+                  styles.toggleDeviceButton,
+                  { backgroundColor: sensorData.is_on ? '#6B7280' : '#10B981' },
+                ]}
+                onPress={handleToggleDevice}
+              >
+                <Text style={styles.toggleDeviceButtonText}>
+                  {sensorData.is_on ? 'Выключить' : 'Включить'}
+                </Text>
+              </TouchableOpacity>
+            )}
           </View>
         )
 
@@ -120,18 +207,16 @@ export default function SensorDetailScreen() {
         return (
           <View style={styles.sensorDataSection}>
             <Text style={styles.dataLabel}>Концентрация CO:</Text>
-            <Text style={styles.gasValue}>{sensorData.ppm} ppm</Text>
-
-            <Text style={styles.dataLabel}>Статус:</Text>
             <View
               style={[
                 styles.statusBadge,
-                sensorData.status === 'уличный воздух'
+                sensorData.value === false
                   ? styles.statusSafe
-                  : sensorData.status === 'рекомендованная концентрация'
-                    ? styles.statusWarning
-                    : sensorData.status === 'предельная концентрация'
-                      ? styles.statusDanger
+                  : sensorData.value === true
+                    ? styles.statusDanger
+                    : sensorData.value === undefined ||
+                        sensorData.value === null
+                      ? styles.statusWarning
                       : styles.statusCritical,
               ]}
             >
@@ -164,36 +249,6 @@ export default function SensorDetailScreen() {
                 />
               </View>
             </View>
-          </View>
-        )
-
-      case 'ventilation':
-        return (
-          <View style={styles.sensorDataSection}>
-            <Text style={styles.dataLabel}>Состояние:</Text>
-            <View
-              style={[
-                styles.statusBadge,
-                sensorData.is_on ? styles.statusOn : styles.statusOff,
-              ]}
-            >
-              <Text style={styles.statusText}>
-                {sensorData.is_on ? 'ВКЛЮЧЕНА' : 'ВЫКЛЮЧЕНА'}
-              </Text>
-            </View>
-
-            <Text style={styles.dataLabel}>Скорость вентилятора:</Text>
-            <Text style={styles.fanSpeed}>{sensorData.fan_speed}%</Text>
-          </View>
-        )
-
-      case 'motion':
-        return (
-          <View style={styles.sensorDataSection}>
-            <Text style={styles.dataLabel}>Последняя активация:</Text>
-            <Text style={styles.timeValue}>
-              {formatDate(sensorData.trigger_time)}
-            </Text>
           </View>
         )
 
@@ -251,7 +306,11 @@ export default function SensorDetailScreen() {
       ]}
     >
       <ScrollView contentContainerStyle={styles.content}>
-        <Header title={getSensorDisplayName(sensorType)} showLogout={false} />
+        <Header
+          title={getSensorDisplayName(sensorType)}
+          showLogout={false}
+          hideUserName={true}
+        />
 
         <TouchableOpacity style={styles.backButton} onPress={handleBack}>
           <Text style={styles.backButtonText}>← Назад</Text>
@@ -504,12 +563,6 @@ const styles = StyleSheet.create({
   statusCritical: {
     backgroundColor: '#7C2D12',
   },
-  gasValue: {
-    fontSize: 24,
-    fontWeight: 'bold',
-    color: '#EF4444',
-    marginBottom: 16,
-  },
   humidityContainer: {
     marginBottom: 16,
   },
@@ -537,11 +590,6 @@ const styles = StyleSheet.create({
   },
   humidityHigh: {
     backgroundColor: '#EF4444',
-  },
-  fanSpeed: {
-    fontSize: 24,
-    fontWeight: 'bold',
-    color: '#8B5CF6',
   },
   timeValue: {
     fontSize: 16,
@@ -572,5 +620,32 @@ const styles = StyleSheet.create({
     color: '#3B82F6',
     marginBottom: 4,
     lineHeight: 20,
+  },
+  controlButton: {
+    marginTop: 12,
+    paddingVertical: 8,
+    paddingHorizontal: 16,
+    borderRadius: 8,
+    backgroundColor: '#EF4444',
+    alignItems: 'center',
+  },
+  controlButtonActive: {
+    backgroundColor: '#2563EB',
+  },
+  controlButtonText: {
+    color: 'white',
+    fontWeight: '600',
+  },
+
+  toggleDeviceButton: {
+    marginTop: 8,
+    paddingVertical: 8,
+    paddingHorizontal: 16,
+    borderRadius: 8,
+    alignItems: 'center',
+  },
+  toggleDeviceButtonText: {
+    color: 'white',
+    fontWeight: '600',
   },
 })

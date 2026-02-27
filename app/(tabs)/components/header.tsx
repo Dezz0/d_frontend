@@ -5,18 +5,22 @@ import { router } from 'expo-router'
 import { useQueryClient } from '@tanstack/react-query'
 
 interface HeaderProps {
-  title: string
+  title?: string
   showLogout?: boolean
+  hideUserName?: boolean
   subtitle?: string
 }
 
 export const Header: React.FC<HeaderProps> = ({
   title,
   showLogout = true,
+  hideUserName = false,
   subtitle,
 }) => {
   const queryClient = useQueryClient()
   const { user, logout } = useAuthStore()
+
+  const hasFullName = user?.first_name && user?.last_name
 
   const handleLogout = () => {
     queryClient.clear()
@@ -29,10 +33,12 @@ export const Header: React.FC<HeaderProps> = ({
   return (
     <View style={styles.header}>
       <View>
-        <Text style={styles.title}>{title}</Text>
+        {title && <Text style={styles.title}>{title}</Text>}
         {subtitle && <Text style={styles.subtitle}>{subtitle}</Text>}
-        {!subtitle && user?.login && (
-          <Text style={styles.subtitle}>{user.login}</Text>
+        {!subtitle && !hideUserName && user && (
+          <Text style={styles.userName}>
+            {hasFullName ? `${user.last_name} ${user.first_name}` : user.login}
+          </Text>
         )}
       </View>
       {showLogout && (
@@ -60,6 +66,12 @@ const styles = StyleSheet.create({
     fontSize: 16,
     color: '#6B7280',
     marginTop: 4,
+  },
+  userName: {
+    fontSize: 20,
+    color: '#6B7280',
+    marginTop: 4,
+    fontWeight: 'bold',
   },
   logoutButton: {
     backgroundColor: '#EF4444',

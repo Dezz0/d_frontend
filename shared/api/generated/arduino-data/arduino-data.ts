@@ -22,8 +22,6 @@ import type {
 import { baseApiRequest } from '../../baseApiRequest'
 
 /**
- * Универсальный эндпоинт для приема данных от Arduino.
-Принимает все данные от датчиков в комнате одним запросом.
  * @summary Receive Arduino Data
  */
 export const receiveArduinoDataArduinoSendDataPost = (

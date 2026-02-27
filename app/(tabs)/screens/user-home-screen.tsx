@@ -29,7 +29,7 @@ export const UserHomeScreen: React.FC = () => {
 
   return (
     <ScrollView contentContainerStyle={styles.container}>
-      <Header title="Умный дом" />
+      <Header />
       <ContentComponent />
     </ScrollView>
   )
