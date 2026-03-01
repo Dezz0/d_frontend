@@ -7,5 +7,5 @@
  */
 
 export type RoomDevicesResponseDevices = {
-  [key: string]: { [key: string]: boolean }
+  [key: string]: { [key: string]: string | boolean }
 }

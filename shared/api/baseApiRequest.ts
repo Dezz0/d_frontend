@@ -33,7 +33,7 @@ const createApiClient = () => {
       if (token) {
         config.headers.Authorization = `Bearer ${token}`
 
-          console.log('TOKEN:', token)
+          // console.log('TOKEN:', token)
 
       }
       return config

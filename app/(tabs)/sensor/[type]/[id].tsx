@@ -34,7 +34,7 @@ export default function SensorDetailScreen() {
   const { room: roomName } = useLocalSearchParams<{
     room?: string
   }>()
-
+  console.log(sensorType, sensorId)
   const { data, isLoading, error } =
     useGetSensorInfoSensorsSensorTypeSensorIdGet(sensorType, sensorId, {
       query: {

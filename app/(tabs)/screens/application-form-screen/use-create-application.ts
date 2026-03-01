@@ -214,10 +214,6 @@ export const useCreateApplication = () => {
 
     // Проверяем дублирование комнат
     const roomIds = rooms.map(room => room.selectedRoomId).filter(Boolean)
-    const uniqueRoomIds = new Set(roomIds)
-    if (uniqueRoomIds.size !== roomIds.length) {
-      errors.push('Выбраны одинаковые комнаты')
-    }
 
     // Проверяем, что есть хотя бы одна комната
     const activeRooms = roomIds.filter(Boolean)
@@ -244,19 +240,21 @@ export const useCreateApplication = () => {
         // Используем строковый ключ для совместимости с беком
         const roomKey = room.selectedRoomId.toString()
         sensorsMap[roomKey] = validSensorIds
-
-        // Также добавляем числовой ключ для обратной совместимости
-        // sensorsMap[room.selectedRoomId] = validSensorIds;
       }
     })
 
-    // Отправляем заявку
+    const roomsConfig = rooms
+        .filter(room => room.selectedRoomId)
+        .map(room => ({
+          room_id: room.selectedRoomId!,
+          sensor_ids: room.sensorIds.filter(id => id !== -1)
+        }));
+
     createApplicationMutation.mutate({
       data: {
-        rooms: selectedRooms,
-        sensors: sensorsMap,
-      },
-    })
+        rooms_config: roomsConfig
+      }
+    });
   }
 
   const isLoading =

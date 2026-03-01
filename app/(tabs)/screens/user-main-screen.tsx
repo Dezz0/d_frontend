@@ -8,7 +8,10 @@ import {
   View,
 } from 'react-native'
 import { router } from 'expo-router'
-import { useGetUserRoomsRoomsUserRoomsGet } from '@/shared/api/generated/rooms/rooms'
+import {
+  useGetRoomDevicesRoomsRoomIdDevicesGet,
+  useGetUserRoomsRoomsUserRoomsGet
+} from '@/shared/api/generated/rooms/rooms'
 import { useGetLatestOutdoorTemperatureOutdoorTemperatureLatestGet } from '@/shared/api/generated/outdoor-temperature/outdoor-temperature'
 
 export const UserMainScreen: React.FC = () => {
@@ -25,7 +28,7 @@ export const UserMainScreen: React.FC = () => {
   } = useGetLatestOutdoorTemperatureOutdoorTemperatureLatestGet({
     query: { refetchInterval: 10000 },
   })
-
+  console.log(rooms?.find(room => room.id === 4))
   const [expandedRooms, setExpandedRooms] = useState<number[]>([])
 
   const toggleRoom = (roomId: number) => {
@@ -129,8 +132,8 @@ export const UserMainScreen: React.FC = () => {
           </Text>
           {outdoorTemp.temperatures.length > 0 && (
             <View style={{ marginTop: 8 }}>
-              {outdoorTemp.temperatures.map(item => (
-                <Text key={item.side} style={styles.infoText}>
+              {outdoorTemp.temperatures.map((item, index) => (
+                <Text key={`${item.side}-${index}`} style={styles.infoText}>
                   {item.side}: {item.value}°C
                 </Text>
               ))}
@@ -145,12 +148,12 @@ export const UserMainScreen: React.FC = () => {
           Нажмите на комнату, чтобы увидеть датчики
         </Text>
 
-        {rooms.map(room => {
+        {rooms.map((room, index) => {
           const isExpanded = expandedRooms.includes(room.id)
           const sensorsCount = room.sensors?.length || 0
 
           return (
-            <View key={room.id} style={styles.roomCard}>
+            <View key={`${room.id}-${index}`} style={styles.roomCard}>
               <TouchableOpacity
                 style={styles.roomHeader}
                 onPress={() => toggleRoom(room.id)}

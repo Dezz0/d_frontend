@@ -23,44 +23,47 @@ export const ApplicationStatusScreen: React.FC = () => {
 
   // Получаем словари для отображения названий комнат и датчиков
   const { data: dictionaries, isLoading: isLoadingDictionaries } =
-    useGetDictionariesApplicationsDictionariesGet({ query: { retry: false } })
+      useGetDictionariesApplicationsDictionariesGet({ query: { retry: false } })
 
   // Объединяем загрузки
   const isLoading = isLoadingApplications || isLoadingDictionaries
 
   // Получаем самую свежую заявку (первую в списке)
   const latestApplication =
-    applications && applications.length > 0 ? applications[0] : null
+      applications && applications.length > 0 ? applications[0] : null
 
-  const totalSensors = Object.values(latestApplication?.sensors || {}).reduce(
-    (sum, sensorArray) => sum + sensorArray.length,
-    0,
-  )
+  console.log('Latest application:', latestApplication)
+
+  // Подсчет общего количества датчиков из rooms_config
+  const totalSensors = latestApplication?.rooms_config?.reduce(
+      (sum, roomConfig) => sum + (roomConfig.sensor_ids?.length || 0),
+      0
+  ) || 0
 
   if (isLoading) {
     return (
-      <View style={styles.loadingContainer}>
-        <ActivityIndicator size="large" color="#007AFF" />
-        <Text style={styles.loadingText}>Загрузка информации о заявке...</Text>
-      </View>
+        <View style={styles.loadingContainer}>
+          <ActivityIndicator size="large" color="#007AFF" />
+          <Text style={styles.loadingText}>Загрузка информации о заявке...</Text>
+        </View>
     )
   }
 
   if (applicationsError) {
     return (
-      <View style={styles.errorContainer}>
-        <StatusCard
-          icon="❌"
-          title="Ошибка загрузки"
-          message="Не удалось загрузить информацию о заявке. Пожалуйста, попробуйте позже."
-          status="rejected"
-        />
-        <View style={styles.retryContainer}>
-          <Text style={styles.retryText}>
-            Проверьте подключение к интернету или попробуйте обновить данные
-          </Text>
+        <View style={styles.errorContainer}>
+          <StatusCard
+              icon="❌"
+              title="Ошибка загрузки"
+              message="Не удалось загрузить информацию о заявке. Пожалуйста, попробуйте позже."
+              status="rejected"
+          />
+          <View style={styles.retryContainer}>
+            <Text style={styles.retryText}>
+              Проверьте подключение к интернету или попробуйте обновить данные
+            </Text>
+          </View>
         </View>
-      </View>
     )
   }
 
@@ -88,7 +91,7 @@ export const ApplicationStatusScreen: React.FC = () => {
           icon: '⏳',
           title: 'Заявка принята на рассмотрение',
           message:
-            'Ваша заявка на создание умного дома находится на рассмотрении. Мы свяжемся с вами в ближайшее время для уточнения деталей.',
+              'Ваша заявка на создание умного дома находится на рассмотрении. Мы свяжемся с вами в ближайшее время для уточнения деталей.',
           status: 'pending' as const,
         }
       case 'rejected':
@@ -96,8 +99,8 @@ export const ApplicationStatusScreen: React.FC = () => {
           icon: '❌',
           title: 'Заявка отклонена',
           message: latestApplication.rejection_comment
-            ? `Заявка отклонена. Причина: ${latestApplication.rejection_comment}`
-            : 'Ваша заявка была отклонена. Вы можете создать новую заявку.',
+              ? `Заявка отклонена. Причина: ${latestApplication.rejection_comment}`
+              : 'Ваша заявка была отклонена. Вы можете создать новую заявку.',
           status: 'rejected' as const,
         }
       default:
@@ -113,163 +116,130 @@ export const ApplicationStatusScreen: React.FC = () => {
   const statusCardConfig = getStatusCardConfig()
 
   return (
-    <ScrollView>
-      <StatusCard
-        icon={statusCardConfig.icon}
-        title={statusCardConfig.title}
-        message={statusCardConfig.message}
-        status={statusCardConfig.status}
-        note="Статус: "
-      />
-      <View style={styles.detailsCard}>
-        <Text style={styles.detailsTitle}>
-          Детали заявки #{latestApplication.id}
-        </Text>
+      <ScrollView>
+        <StatusCard
+            icon={statusCardConfig.icon}
+            title={statusCardConfig.title}
+            message={statusCardConfig.message}
+            status={statusCardConfig.status}
+            note="Статус: "
+        />
+        <View style={styles.detailsCard}>
+          <Text style={styles.detailsTitle}>
+            Детали заявки #{latestApplication.id}
+          </Text>
 
-        <View style={styles.infoSection}>
-          <View style={styles.infoRow}>
-            <Text style={styles.infoLabel}>Номер заявки:</Text>
-            <Text style={styles.infoValue}>#{latestApplication.id}</Text>
-          </View>
-          <View style={styles.infoRow}>
-            <Text style={styles.infoLabel}>Дата создания:</Text>
-            <Text style={styles.infoValue}>
-              {formatDate(latestApplication.created_at)}
-            </Text>
-          </View>
-          <View style={styles.infoRow}>
-            <Text style={styles.infoLabel}>Дата обновления:</Text>
-            <Text style={styles.infoValue}>
-              {formatDate(latestApplication.updated_at)}
-            </Text>
-          </View>
-          <View style={styles.infoRow}>
-            <Text style={styles.infoLabel}>Статус:</Text>
-            <View
-              style={[
-                styles.statusBadge,
-                {
-                  backgroundColor:
-                    latestApplication.status === 'pending'
-                      ? '#FA8C16'
-                      : '#FF4D4F',
-                },
-              ]}
-            >
-              <Text style={styles.statusBadgeText}>
-                {latestApplication.status === 'pending'
-                  ? 'В обработке'
-                  : 'Отклонена'}
+          <View style={styles.infoSection}>
+            <View style={styles.infoRow}>
+              <Text style={styles.infoLabel}>Номер заявки:</Text>
+              <Text style={styles.infoValue}>#{latestApplication.id}</Text>
+            </View>
+            <View style={styles.infoRow}>
+              <Text style={styles.infoLabel}>Дата создания:</Text>
+              <Text style={styles.infoValue}>
+                {formatDate(latestApplication.created_at)}
               </Text>
             </View>
-          </View>
-          <View style={styles.infoRow}>
-            <Text style={styles.infoLabel}>Количество комнат:</Text>
-            <Text style={styles.infoValue}>
-              {latestApplication.rooms.length}
-            </Text>
-          </View>
-          <View style={styles.infoRow}>
-            <Text style={styles.infoLabel}>Количество датчиков:</Text>
-            <Text style={styles.infoValue}>{totalSensors}</Text>
-          </View>
-        </View>
-
-        {/* Выбранные комнаты */}
-        <View style={styles.section}>
-          <Text style={styles.sectionTitle}>Выбранные комнаты:</Text>
-          <View style={styles.listContainer}>
-            {latestApplication.rooms.map((roomId, index) => (
-              <View key={roomId} style={styles.listItem}>
-                <Text style={styles.listItemText}>
-                  {index + 1}. {getRoomName(roomId)}
+            <View style={styles.infoRow}>
+              <Text style={styles.infoLabel}>Дата обновления:</Text>
+              <Text style={styles.infoValue}>
+                {formatDate(latestApplication.updated_at)}
+              </Text>
+            </View>
+            <View style={styles.infoRow}>
+              <Text style={styles.infoLabel}>Статус:</Text>
+              <View
+                  style={[
+                    styles.statusBadge,
+                    {
+                      backgroundColor:
+                          latestApplication.status === 'pending'
+                              ? '#FA8C16'
+                              : '#FF4D4F',
+                    },
+                  ]}
+              >
+                <Text style={styles.statusBadgeText}>
+                  {latestApplication.status === 'pending'
+                      ? 'В обработке'
+                      : 'Отклонена'}
                 </Text>
               </View>
-            ))}
+            </View>
+            <View style={styles.infoRow}>
+              <Text style={styles.infoLabel}>Количество комнат:</Text>
+              <Text style={styles.infoValue}>
+                {latestApplication.rooms_config?.length || 0}
+              </Text>
+            </View>
+            <View style={styles.infoRow}>
+              <Text style={styles.infoLabel}>Количество датчиков:</Text>
+              <Text style={styles.infoValue}>{totalSensors}</Text>
+            </View>
           </View>
-        </View>
 
-        {/* Датчики по комнатам */}
-        <View style={styles.section}>
-          <Text style={styles.sectionTitle}>Распределение датчиков:</Text>
-          {Object.entries(latestApplication.sensors).map(
-            ([roomId, sensorIds]) => {
-              const roomName = getRoomName(parseInt(roomId))
-              return (
-                <View key={roomId} style={styles.roomSection}>
-                  <Text style={styles.roomTitle}>{roomName}:</Text>
-                  {sensorIds.length > 0 ? (
-                    <View style={styles.sensorsList}>
-                      {sensorIds.map((sensorId, index) => (
-                        <View key={sensorId} style={styles.sensorItem}>
-                          <Text style={styles.sensorText}>
-                            {index + 1}. {getSensorName(sensorId)}
-                          </Text>
-                        </View>
-                      ))}
-                    </View>
+          {/* Конфигурация комнат и датчиков */}
+          <View style={styles.section}>
+            <Text style={styles.sectionTitle}>Конфигурация умного дома:</Text>
+            {latestApplication.rooms_config?.map((roomConfig, index) => (
+                <View key={`${roomConfig.room_id}-${index}`} style={styles.roomSection}>
+                  <Text style={styles.roomTitle}>
+                    {index + 1}. {getRoomName(roomConfig.room_id)}
+                  </Text>
+                  {roomConfig.sensor_ids && roomConfig.sensor_ids.length > 0 ? (
+                      <View style={styles.sensorsList}>
+                        {roomConfig.sensor_ids.map((sensorId, sensorIndex) => (
+                            <View key={`${sensorId}-${sensorIndex}`} style={styles.sensorItem}>
+                              <Text style={styles.sensorText}>
+                                • {getSensorName(sensorId)}
+                              </Text>
+                            </View>
+                        ))}
+                      </View>
                   ) : (
-                    <Text style={styles.noItemsText}>
-                      Нет выбранных датчиков
-                    </Text>
+                      <Text style={styles.noItemsText}>
+                        Нет выбранных датчиков
+                      </Text>
                   )}
                 </View>
-              )
-            },
-          )}
+            ))}
+          </View>
 
-          {latestApplication.rooms.map(roomId => {
-            const roomIdStr = roomId.toString()
-            if (
-              !latestApplication.sensors[roomIdStr] ||
-              latestApplication.sensors[roomIdStr].length === 0
-            ) {
-              return (
-                <View key={roomId} style={styles.roomSection}>
-                  <Text style={styles.roomTitle}>{getRoomName(roomId)}:</Text>
-                  <Text style={styles.noItemsText}>Нет выбранных датчиков</Text>
-                </View>
-              )
-            }
-            return null
-          })}
-        </View>
-
-        {/* Примечание в зависимости от статуса */}
-        <View
-          style={[
-            styles.noteSection,
-            latestApplication.status === 'pending' && styles.notePending,
-            latestApplication.status === 'rejected' && styles.noteRejected,
-          ]}
-        >
-          <Text style={styles.noteTitle}>
-            {latestApplication.status === 'pending'
-              ? 'Что дальше?'
-              : 'Что делать дальше?'}
-          </Text>
-          <Text style={styles.noteText}>
-            {latestApplication.status === 'pending'
-              ? 'Наш специалист свяжется с вами в течение 24 часов для согласования дальнейших действий по настройке умного дома.'
-              : 'Вы можете создать новую заявку, скорректировав конфигурацию по своему усмотрению.'}
-          </Text>
-        </View>
-      </View>
-
-      {/* Показываем форму для создания новой заявки, если текущая отклонена */}
-      {latestApplication.status === 'rejected' && (
-        <View style={styles.newApplicationSection}>
-          <Text style={styles.newApplicationTitle}>Создать новую заявку</Text>
-          <Text style={styles.newApplicationText}>
-            Ваша предыдущая заявка была отклонена. Вы можете создать новую
-            заявку с учетом замечаний или изменить конфигурацию.
-          </Text>
-          <View style={styles.formContainer}>
-            <ApplicationFormScreen />
+          {/* Примечание в зависимости от статуса */}
+          <View
+              style={[
+                styles.noteSection,
+                latestApplication.status === 'pending' && styles.notePending,
+                latestApplication.status === 'rejected' && styles.noteRejected,
+              ]}
+          >
+            <Text style={styles.noteTitle}>
+              {latestApplication.status === 'pending'
+                  ? 'Что дальше?'
+                  : 'Что делать дальше?'}
+            </Text>
+            <Text style={styles.noteText}>
+              {latestApplication.status === 'pending'
+                  ? 'Наш специалист свяжется с вами в течение 24 часов для согласования дальнейших действий по настройке умного дома.'
+                  : 'Вы можете создать новую заявку, скорректировав конфигурацию по своему усмотрению.'}
+            </Text>
           </View>
         </View>
-      )}
-    </ScrollView>
+
+        {/* Показываем форму для создания новой заявки, если текущая отклонена */}
+        {latestApplication.status === 'rejected' && (
+            <View style={styles.newApplicationSection}>
+              <Text style={styles.newApplicationTitle}>Создать новую заявку</Text>
+              <Text style={styles.newApplicationText}>
+                Ваша предыдущая заявка была отклонена. Вы можете создать новую
+                заявку с учетом замечаний или изменить конфигурацию.
+              </Text>
+              <View style={styles.formContainer}>
+                <ApplicationFormScreen />
+              </View>
+            </View>
+        )}
+      </ScrollView>
   )
 }
 

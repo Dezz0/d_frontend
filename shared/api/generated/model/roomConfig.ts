@@ -5,8 +5,8 @@
  * API для управления умным домом
  * OpenAPI spec version: 1.0.0
  */
-import type { RoomConfig } from './roomConfig'
 
-export interface ApplicationCreate {
-  rooms_config: RoomConfig[]
+export interface RoomConfig {
+  room_id: number
+  sensor_ids: number[]
 }
