@@ -10,7 +10,7 @@ import {
 import { router } from 'expo-router'
 import {
   useGetRoomDevicesRoomsRoomIdDevicesGet,
-  useGetUserRoomsRoomsUserRoomsGet
+  useGetUserRoomsRoomsUserRoomsGet,
 } from '@/shared/api/generated/rooms/rooms'
 import { useGetLatestOutdoorTemperatureOutdoorTemperatureLatestGet } from '@/shared/api/generated/outdoor-temperature/outdoor-temperature'
 

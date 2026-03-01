@@ -8,16 +8,11 @@
 import type { SensorDataValue } from './sensorDataValue'
 import type { SensorDataIsOn } from './sensorDataIsOn'
 import type { SensorDataHumidityLevel } from './sensorDataHumidityLevel'
-import type { SensorDataTriggerTime } from './sensorDataTriggerTime'
 
-/**
- * Данные от одного датчика
- */
 export interface SensorData {
-  sensor_id: number
+  sensor_db_id: number
   type: string
   value?: SensorDataValue
   is_on?: SensorDataIsOn
   humidity_level?: SensorDataHumidityLevel
-  trigger_time?: SensorDataTriggerTime
 }

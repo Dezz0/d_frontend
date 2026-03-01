@@ -362,7 +362,6 @@ export function useGetDictionariesApplicationsDictionariesGet<
 }
 
 /**
- * Создать новую заявку
  * @summary Create Application
  */
 export const createApplicationApplicationsPost = (

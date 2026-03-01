@@ -34,7 +34,7 @@ export default function SensorDetailScreen() {
   const { room: roomName } = useLocalSearchParams<{
     room?: string
   }>()
-  console.log(sensorType, sensorId)
+
   const { data, isLoading, error } =
     useGetSensorInfoSensorsSensorTypeSensorIdGet(sensorType, sensorId, {
       query: {
@@ -77,12 +77,18 @@ export default function SensorDetailScreen() {
 
   const handleToggleDevice = async () => {
     if (!sensorType || !sensorId || !sensorData?.room_id) return
+    console.log('ПЕРЕКЛЮЧЕНИЕ СОСТОЯНИЯ ДАТЧИКА ---', {
+      type: sensorType,
+      room_id: sensorData.room_id,
+      sensor_id: sensorData.id,
+      is_on: !sensorData.is_on,
+    })
     toggleDeviceMutation(
       {
         data: {
           type: sensorType,
           room_id: sensorData.room_id,
-          sensor_id: sensorData.sensor_id,
+          sensor_id: sensorData.id,
           is_on: !sensorData.is_on,
         },
       },

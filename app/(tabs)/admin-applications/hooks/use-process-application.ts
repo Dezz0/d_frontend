@@ -18,7 +18,7 @@ type ApplicationResponse = {
   id: number
   user_id: number
   user_login: string
-  rooms_config: RoomConfig[]  // Изменено с rooms и sensors
+  rooms_config: RoomConfig[] // Изменено с rooms и sensors
   status: 'pending' | 'approved' | 'rejected'
   rejection_comment?: string
   created_at: string
@@ -35,7 +35,7 @@ export const useProcessApplication = () => {
 
   // Загружаем справочники
   const { data: dictionaries, isLoading: loadingDictionaries } =
-      useGetDictionariesApplicationsDictionariesGet({ query: { retry: false } })
+    useGetDictionariesApplicationsDictionariesGet({ query: { retry: false } })
 
   // Загружаем детали заявки
   const {
@@ -46,14 +46,9 @@ export const useProcessApplication = () => {
 
   // Мутация для обновления статуса
   const { mutate: updateStatus, isPending: updatingStatus } =
-      useUpdateApplicationStatusApplicationsApplicationIdPut()
+    useUpdateApplicationStatusApplicationsApplicationIdPut()
 
   const loading = loadingApplication || loadingDictionaries
-
-  const getRoomName = (roomId: number) => {
-    if (!dictionaries?.rooms) return `Комната ${roomId}`
-    return dictionaries.rooms[roomId] || `Комната ${roomId}`
-  }
 
   const getSensorName = (sensorId: number) => {
     if (!dictionaries?.sensors) return `Датчик ${sensorId}`
@@ -63,7 +58,10 @@ export const useProcessApplication = () => {
   // Вспомогательная функция для подсчета общего количества датчиков
   const getTotalSensors = (roomsConfig?: RoomConfig[]) => {
     if (!roomsConfig) return 0
-    return roomsConfig.reduce((sum, room) => sum + (room.sensor_ids?.length || 0), 0)
+    return roomsConfig.reduce(
+      (sum, room) => sum + (room.sensor_ids?.length || 0),
+      0,
+    )
   }
 
   // Вспомогательная функция для получения всех комнат с их датчиками в плоском виде (для обратной совместимости, если нужно)
@@ -86,47 +84,47 @@ export const useProcessApplication = () => {
     if (!applicationData) return
 
     Alert.alert(
-        'Подтверждение одобрения',
-        'Вы уверены, что хотите одобрить эту заявку?',
-        [
-          { text: 'Отмена', style: 'cancel' },
-          {
-            text: 'Одобрить',
-            style: 'default',
-            onPress: () => {
-              updateStatus(
-                  {
-                    applicationId: applicationData.id,
-                    data: {
-                      status: 'approved',
-                      rejection_comment: undefined,
-                    },
-                  },
-                  {
-                    onSuccess: () => {
-                      refetchApplication().then(() => {
-                        Alert.alert('Успех', 'Заявка одобрена')
-                      })
-                    },
-                    onError: (error: any) => {
-                      console.error('Update status error:', error)
-                      let errorMessage = 'Не удалось обновить статус заявки'
+      'Подтверждение одобрения',
+      'Вы уверены, что хотите одобрить эту заявку?',
+      [
+        { text: 'Отмена', style: 'cancel' },
+        {
+          text: 'Одобрить',
+          style: 'default',
+          onPress: () => {
+            updateStatus(
+              {
+                applicationId: applicationData.id,
+                data: {
+                  status: 'approved',
+                  rejection_comment: undefined,
+                },
+              },
+              {
+                onSuccess: () => {
+                  refetchApplication().then(() => {
+                    Alert.alert('Успех', 'Заявка одобрена')
+                  })
+                },
+                onError: (error: any) => {
+                  console.error('Update status error:', error)
+                  let errorMessage = 'Не удалось обновить статус заявки'
 
-                      if (error?.status === 400) {
-                        errorMessage = 'Некорректные данные'
-                      } else if (error?.status === 403) {
-                        errorMessage = 'Недостаточно прав'
-                      } else if (error?.status === 404) {
-                        errorMessage = 'Заявка не найдена'
-                      }
+                  if (error?.status === 400) {
+                    errorMessage = 'Некорректные данные'
+                  } else if (error?.status === 403) {
+                    errorMessage = 'Недостаточно прав'
+                  } else if (error?.status === 404) {
+                    errorMessage = 'Заявка не найдена'
+                  }
 
-                      Alert.alert('Ошибка', errorMessage)
-                    },
-                  },
-              )
-            },
+                  Alert.alert('Ошибка', errorMessage)
+                },
+              },
+            )
           },
-        ],
+        },
+      ],
     )
   }
 
@@ -139,49 +137,49 @@ export const useProcessApplication = () => {
     }
 
     Alert.alert(
-        'Подтверждение отклонения',
-        'Вы уверены, что хотите отклонить эту заявку?',
-        [
-          { text: 'Отмена', style: 'cancel' },
-          {
-            text: 'Отклонить',
-            style: 'destructive',
-            onPress: () => {
-              updateStatus(
-                  {
-                    applicationId: applicationData.id,
-                    data: {
-                      status: 'rejected',
-                      rejection_comment: comment || undefined,
-                    },
-                  },
-                  {
-                    onSuccess: () => {
-                      refetchApplication().then(() => {
-                        Alert.alert('Отклонено', 'Заявка отклонена')
-                        setShowCommentInput(false)
-                        setComment('')
-                      })
-                    },
-                    onError: (error: any) => {
-                      console.error('Update status error:', error)
-                      let errorMessage = 'Не удалось обновить статус заявки'
+      'Подтверждение отклонения',
+      'Вы уверены, что хотите отклонить эту заявку?',
+      [
+        { text: 'Отмена', style: 'cancel' },
+        {
+          text: 'Отклонить',
+          style: 'destructive',
+          onPress: () => {
+            updateStatus(
+              {
+                applicationId: applicationData.id,
+                data: {
+                  status: 'rejected',
+                  rejection_comment: comment || undefined,
+                },
+              },
+              {
+                onSuccess: () => {
+                  refetchApplication().then(() => {
+                    Alert.alert('Отклонено', 'Заявка отклонена')
+                    setShowCommentInput(false)
+                    setComment('')
+                  })
+                },
+                onError: (error: any) => {
+                  console.error('Update status error:', error)
+                  let errorMessage = 'Не удалось обновить статус заявки'
 
-                      if (error?.status === 400) {
-                        errorMessage = 'Некорректные данные'
-                      } else if (error?.status === 403) {
-                        errorMessage = 'Недостаточно прав'
-                      } else if (error?.status === 404) {
-                        errorMessage = 'Заявка не найдена'
-                      }
+                  if (error?.status === 400) {
+                    errorMessage = 'Некорректные данные'
+                  } else if (error?.status === 403) {
+                    errorMessage = 'Недостаточно прав'
+                  } else if (error?.status === 404) {
+                    errorMessage = 'Заявка не найдена'
+                  }
 
-                      Alert.alert('Ошибка', errorMessage)
-                    },
-                  },
-              )
-            },
+                  Alert.alert('Ошибка', errorMessage)
+                },
+              },
+            )
           },
-        ],
+        },
+      ],
     )
   }
 
@@ -202,10 +200,9 @@ export const useProcessApplication = () => {
     handleReject,
     handleToggleComment,
     comment,
-    getRoomName,
     getSensorName,
     loading,
-    applicationData: applicationData as ApplicationResponse | undefined,
+    applicationData,
     showCommentInput,
     setComment,
     updatingStatus,

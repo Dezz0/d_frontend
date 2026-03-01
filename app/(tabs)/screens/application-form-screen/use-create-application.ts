@@ -244,17 +244,25 @@ export const useCreateApplication = () => {
     })
 
     const roomsConfig = rooms
-        .filter(room => room.selectedRoomId)
-        .map(room => ({
-          room_id: room.selectedRoomId!,
-          sensor_ids: room.sensorIds.filter(id => id !== -1)
-        }));
+      .filter(room => room.selectedRoomId)
+      .map(room => {
+        const roomType = roomOptions.find(
+          r => r.value === room.selectedRoomId,
+        )?.label
+        if (!roomType) {
+          throw new Error('Invalid room selection')
+        }
+        return {
+          room_type: roomType,
+          sensor_ids: room.sensorIds.filter(id => id !== -1),
+        }
+      })
 
     createApplicationMutation.mutate({
       data: {
-        rooms_config: roomsConfig
-      }
-    });
+        rooms_config: roomsConfig,
+      },
+    })
   }
 
   const isLoading =

@@ -7,6 +7,6 @@
  */
 
 export interface RoomConfig {
-  room_id: number
+  room_type: string
   sensor_ids: number[]
 }

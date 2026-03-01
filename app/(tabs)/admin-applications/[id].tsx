@@ -23,7 +23,6 @@ export default function ApplicationDetailScreen() {
     comment,
     handleReject,
     getSensorName,
-    getRoomName,
     loading,
     applicationData,
     showCommentInput,
@@ -59,220 +58,229 @@ export default function ApplicationDetailScreen() {
 
   if (loading) {
     return (
-        <View style={[styles.container, { paddingTop: insets.top }]}>
-          <View style={styles.loadingContainer}>
-            <ActivityIndicator size="large" color="#007AFF" />
-            <Text style={styles.loadingText}>Загрузка заявки...</Text>
-          </View>
+      <View style={[styles.container, { paddingTop: insets.top }]}>
+        <View style={styles.loadingContainer}>
+          <ActivityIndicator size="large" color="#007AFF" />
+          <Text style={styles.loadingText}>Загрузка заявки...</Text>
         </View>
+      </View>
     )
   }
 
   if (!applicationData) {
     return (
-        <View style={[styles.container, { paddingTop: insets.top }]}>
-          <View style={styles.errorContainer}>
-            <Text style={styles.errorText}>Заявка не найдена</Text>
-            <TouchableOpacity style={styles.backButton} onPress={handleBack}>
-              <Text style={styles.backButtonText}>Вернуться назад</Text>
-            </TouchableOpacity>
-          </View>
+      <View style={[styles.container, { paddingTop: insets.top }]}>
+        <View style={styles.errorContainer}>
+          <Text style={styles.errorText}>Заявка не найдена</Text>
+          <TouchableOpacity style={styles.backButton} onPress={handleBack}>
+            <Text style={styles.backButtonText}>Вернуться назад</Text>
+          </TouchableOpacity>
         </View>
+      </View>
     )
   }
 
   // Подсчитываем общее количество датчиков из rooms_config
-  const totalSensors = applicationData.rooms_config?.reduce(
+  const totalSensors =
+    applicationData.rooms_config?.reduce(
       (sum, roomConfig) => sum + (roomConfig.sensor_ids?.length || 0),
-      0
-  ) || 0
+      0,
+    ) || 0
+
+  console.log('ЗАЯВКА У АДМИНА ---', applicationData?.rooms_config)
 
   return (
-      <View
-          style={[
-            styles.container,
-            {
-              paddingTop: insets.top,
-              paddingBottom: insets.bottom,
-              paddingLeft: insets.left,
-              paddingRight: insets.right,
-            },
-          ]}
+    <View
+      style={[
+        styles.container,
+        {
+          paddingTop: insets.top,
+          paddingBottom: insets.bottom,
+          paddingLeft: insets.left,
+          paddingRight: insets.right,
+        },
+      ]}
+    >
+      <ScrollView
+        contentContainerStyle={styles.content}
+        keyboardShouldPersistTaps="handled"
       >
-        <ScrollView
-            contentContainerStyle={styles.content}
-            keyboardShouldPersistTaps="handled"
-        >
-          <Header title={`Заявка #${applicationData.id}`} showLogout={false} />
+        <Header title={`Заявка #${applicationData.id}`} showLogout={false} />
 
-          <TouchableOpacity style={styles.backButton} onPress={handleBack}>
-            <Text style={styles.backButtonText}>← Назад к списку</Text>
-          </TouchableOpacity>
+        <TouchableOpacity style={styles.backButton} onPress={handleBack}>
+          <Text style={styles.backButtonText}>← Назад к списку</Text>
+        </TouchableOpacity>
 
-          <View style={styles.statusSection}>
-            <Text style={styles.sectionTitle}>Статус заявки</Text>
+        <View style={styles.statusSection}>
+          <Text style={styles.sectionTitle}>Статус заявки</Text>
+          <View
+            style={[
+              styles.statusBadge,
+              { backgroundColor: getStatusColor(applicationData.status) },
+            ]}
+          >
+            <Text style={styles.statusText}>
+              {getStatusText(applicationData.status)}
+            </Text>
+          </View>
+        </View>
+
+        <View style={styles.section}>
+          <Text style={styles.sectionTitle}>Информация о пользователе</Text>
+          <View style={styles.infoItem}>
+            <Text style={styles.infoLabel}>Пользователь:</Text>
+            <Text style={styles.infoValue}>{applicationData.user_login}</Text>
+          </View>
+          <View style={styles.infoItem}>
+            <Text style={styles.infoLabel}>ID пользователя:</Text>
+            <Text style={styles.infoValue}>{applicationData.user_id}</Text>
+          </View>
+          <View style={styles.infoItem}>
+            <Text style={styles.infoLabel}>Дата подачи:</Text>
+            <Text style={styles.infoValue}>
+              {formatDate(applicationData.created_at)}
+            </Text>
+          </View>
+          <View style={styles.infoItem}>
+            <Text style={styles.infoLabel}>Дата обновления:</Text>
+            <Text style={styles.infoValue}>
+              {formatDate(applicationData.updated_at)}
+            </Text>
+          </View>
+        </View>
+
+        <View style={styles.section}>
+          <Text style={styles.sectionTitle}>Конфигурация умного дома</Text>
+          <View style={styles.summary}>
+            <Text style={styles.summaryItem}>
+              • Количество комнат: {applicationData.rooms_config?.length || 0}
+            </Text>
+            <Text style={styles.summaryItem}>
+              • Общее количество датчиков: {totalSensors} шт.
+            </Text>
+          </View>
+
+          <Text style={styles.roomsTitle}>Конфигурация:</Text>
+          {applicationData.rooms_config?.map((roomConfig, index) => (
             <View
-                style={[
-                  styles.statusBadge,
-                  { backgroundColor: getStatusColor(applicationData.status) },
-                ]}
+              key={`${roomConfig.room_type}-${index}`}
+              style={styles.roomCard}
             >
-              <Text style={styles.statusText}>
-                {getStatusText(applicationData.status)}
+              <Text style={styles.roomTitle}>
+                {index + 1}. {roomConfig.room_type}
               </Text>
-            </View>
-          </View>
 
-          <View style={styles.section}>
-            <Text style={styles.sectionTitle}>Информация о пользователе</Text>
-            <View style={styles.infoItem}>
-              <Text style={styles.infoLabel}>Пользователь:</Text>
-              <Text style={styles.infoValue}>{applicationData.user_login}</Text>
-            </View>
-            <View style={styles.infoItem}>
-              <Text style={styles.infoLabel}>ID пользователя:</Text>
-              <Text style={styles.infoValue}>{applicationData.user_id}</Text>
-            </View>
-            <View style={styles.infoItem}>
-              <Text style={styles.infoLabel}>Дата подачи:</Text>
-              <Text style={styles.infoValue}>
-                {formatDate(applicationData.created_at)}
-              </Text>
-            </View>
-            <View style={styles.infoItem}>
-              <Text style={styles.infoLabel}>Дата обновления:</Text>
-              <Text style={styles.infoValue}>
-                {formatDate(applicationData.updated_at)}
-              </Text>
-            </View>
-          </View>
-
-          <View style={styles.section}>
-            <Text style={styles.sectionTitle}>Конфигурация умного дома</Text>
-            <View style={styles.summary}>
-              <Text style={styles.summaryItem}>
-                • Количество комнат: {applicationData.rooms_config?.length || 0}
-              </Text>
-              <Text style={styles.summaryItem}>
-                • Общее количество датчиков: {totalSensors} шт.
-              </Text>
-            </View>
-
-            <Text style={styles.roomsTitle}>Конфигурация:</Text>
-            {applicationData.rooms_config?.map((roomConfig, index) => (
-                <View key={`${roomConfig.room_id}-${index}`} style={styles.roomCard}>
-                  <Text style={styles.roomTitle}>
-                    {index + 1}. {getRoomName(roomConfig.room_id)}
+              {roomConfig.sensor_ids && roomConfig.sensor_ids.length > 0 ? (
+                <>
+                  <Text style={styles.sensorsTitle}>Датчики:</Text>
+                  {roomConfig.sensor_ids.map((sensorId, sensorIndex) => (
+                    <Text
+                      key={`${sensorId}-${sensorIndex}`}
+                      style={styles.sensorItem}
+                    >
+                      {sensorIndex + 1}. {getSensorName(sensorId)}
+                    </Text>
+                  ))}
+                  <Text style={styles.roomTotal}>
+                    Всего датчиков в комнате: {roomConfig.sensor_ids.length} шт.
                   </Text>
+                </>
+              ) : (
+                <Text style={styles.noSensorsText}>Нет датчиков</Text>
+              )}
+            </View>
+          ))}
+        </View>
 
-                  {roomConfig.sensor_ids && roomConfig.sensor_ids.length > 0 ? (
-                      <>
-                        <Text style={styles.sensorsTitle}>Датчики:</Text>
-                        {roomConfig.sensor_ids.map((sensorId, sensorIndex) => (
-                            <Text key={`${sensorId}-${sensorIndex}`} style={styles.sensorItem}>
-                              {sensorIndex + 1}. {getSensorName(sensorId)}
-                            </Text>
-                        ))}
-                        <Text style={styles.roomTotal}>
-                          Всего датчиков в комнате: {roomConfig.sensor_ids.length} шт.
-                        </Text>
-                      </>
-                  ) : (
-                      <Text style={styles.noSensorsText}>Нет датчиков</Text>
-                  )}
-                </View>
-            ))}
+        {applicationData.status === 'pending' && (
+          <View style={styles.actionsSection}>
+            <Text style={styles.sectionTitle}>Действия с заявкой</Text>
+
+            {showCommentInput && (
+              <View style={styles.commentContainer}>
+                <Text style={styles.commentLabel}>
+                  Комментарий к отклонению (опционально):
+                </Text>
+                <TextInput
+                  style={styles.commentInput}
+                  value={comment}
+                  onChangeText={setComment}
+                  placeholder="Укажите причину отклонения заявки..."
+                  multiline
+                  numberOfLines={3}
+                  textAlignVertical="top"
+                />
+                <TouchableOpacity
+                  style={styles.cancelCommentButton}
+                  onPress={handleToggleComment}
+                >
+                  <Text style={styles.cancelCommentButtonText}>Отмена</Text>
+                </TouchableOpacity>
+              </View>
+            )}
+
+            <View style={styles.actionButtons}>
+              <TouchableOpacity
+                style={styles.approveButton}
+                onPress={handleApprove}
+                disabled={updatingStatus}
+              >
+                {updatingStatus ? (
+                  <ActivityIndicator color="white" size="small" />
+                ) : (
+                  <Text style={styles.approveButtonText}>Одобрить заявку</Text>
+                )}
+              </TouchableOpacity>
+
+              <TouchableOpacity
+                style={styles.rejectButton}
+                onPress={handleReject}
+                disabled={updatingStatus}
+              >
+                {updatingStatus ? (
+                  <ActivityIndicator color="white" size="small" />
+                ) : showCommentInput ? (
+                  <Text style={styles.rejectButtonText}>
+                    Подтвердить отклонение
+                  </Text>
+                ) : (
+                  <Text style={styles.rejectButtonText}>Отклонить заявку</Text>
+                )}
+              </TouchableOpacity>
+            </View>
           </View>
+        )}
 
-          {applicationData.status === 'pending' && (
-              <View style={styles.actionsSection}>
-                <Text style={styles.sectionTitle}>Действия с заявкой</Text>
+        {applicationData.status === 'approved' && (
+          <View style={styles.successSection}>
+            <Text style={styles.successIcon}>✅</Text>
+            <Text style={styles.successTitle}>Заявка одобрена</Text>
+            <Text style={styles.successText}>
+              Заявка была одобрена и передана в отдел реализации. Пользователь
+              уведомлен о решении.
+            </Text>
+          </View>
+        )}
 
-                {showCommentInput && (
-                    <View style={styles.commentContainer}>
-                      <Text style={styles.commentLabel}>
-                        Комментарий к отклонению (опционально):
-                      </Text>
-                      <TextInput
-                          style={styles.commentInput}
-                          value={comment}
-                          onChangeText={setComment}
-                          placeholder="Укажите причину отклонения заявки..."
-                          multiline
-                          numberOfLines={3}
-                          textAlignVertical="top"
-                      />
-                      <TouchableOpacity
-                          style={styles.cancelCommentButton}
-                          onPress={handleToggleComment}
-                      >
-                        <Text style={styles.cancelCommentButtonText}>Отмена</Text>
-                      </TouchableOpacity>
-                    </View>
-                )}
-
-                <View style={styles.actionButtons}>
-                  <TouchableOpacity
-                      style={styles.approveButton}
-                      onPress={handleApprove}
-                      disabled={updatingStatus}
-                  >
-                    {updatingStatus ? (
-                        <ActivityIndicator color="white" size="small" />
-                    ) : (
-                        <Text style={styles.approveButtonText}>Одобрить заявку</Text>
-                    )}
-                  </TouchableOpacity>
-
-                  <TouchableOpacity
-                      style={styles.rejectButton}
-                      onPress={handleReject}
-                      disabled={updatingStatus}
-                  >
-                    {updatingStatus ? (
-                        <ActivityIndicator color="white" size="small" />
-                    ) : showCommentInput ? (
-                        <Text style={styles.rejectButtonText}>
-                          Подтвердить отклонение
-                        </Text>
-                    ) : (
-                        <Text style={styles.rejectButtonText}>Отклонить заявку</Text>
-                    )}
-                  </TouchableOpacity>
-                </View>
-              </View>
-          )}
-
-          {applicationData.status === 'approved' && (
-              <View style={styles.successSection}>
-                <Text style={styles.successIcon}>✅</Text>
-                <Text style={styles.successTitle}>Заявка одобрена</Text>
-                <Text style={styles.successText}>
-                  Заявка была одобрена и передана в отдел реализации. Пользователь
-                  уведомлен о решении.
-                </Text>
-              </View>
-          )}
-
-          {applicationData.status === 'rejected' && (
-              <View style={styles.rejectedSection}>
-                <Text style={styles.rejectedIcon}>❌</Text>
-                <Text style={styles.rejectedTitle}>Заявка отклонена</Text>
+        {applicationData.status === 'rejected' && (
+          <View style={styles.rejectedSection}>
+            <Text style={styles.rejectedIcon}>❌</Text>
+            <Text style={styles.rejectedTitle}>Заявка отклонена</Text>
+            <Text style={styles.rejectedText}>
+              Заявка была отклонена. Пользователь был уведомлен о решении.
+            </Text>
+            {applicationData.rejection_comment && (
+              <View>
+                <Text style={styles.rejectedTitle}>Причина:</Text>
                 <Text style={styles.rejectedText}>
-                  Заявка была отклонена. Пользователь был уведомлен о решении.
+                  {applicationData.rejection_comment}
                 </Text>
-                {applicationData.rejection_comment && (
-                    <View>
-                      <Text style={styles.rejectedTitle}>Причина:</Text>
-                      <Text style={styles.rejectedText}>
-                        {applicationData.rejection_comment}
-                      </Text>
-                    </View>
-                )}
               </View>
-          )}
-        </ScrollView>
-      </View>
+            )}
+          </View>
+        )}
+      </ScrollView>
+    </View>
   )
 }
 
