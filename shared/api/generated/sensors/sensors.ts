@@ -367,7 +367,7 @@ export function useGetRoomSensorsSensorsRoomRoomIdGet<
  */
 export const getSensorInfoSensorsSensorTypeSensorIdGet = (
   sensorType: string,
-  sensorId: string,
+  sensorId: number,
   signal?: AbortSignal,
 ) => {
   return baseApiRequest<unknown>({
@@ -379,14 +379,14 @@ export const getSensorInfoSensorsSensorTypeSensorIdGet = (
 
 export const getGetSensorInfoSensorsSensorTypeSensorIdGetInfiniteQueryKey = (
   sensorType?: string,
-  sensorId?: string,
+  sensorId?: number,
 ) => {
   return ['infinate', `/sensors/${sensorType}/${sensorId}`] as const
 }
 
 export const getGetSensorInfoSensorsSensorTypeSensorIdGetQueryKey = (
   sensorType?: string,
-  sensorId?: string,
+  sensorId?: number,
 ) => {
   return [`/sensors/${sensorType}/${sensorId}`] as const
 }
@@ -399,7 +399,7 @@ export const getGetSensorInfoSensorsSensorTypeSensorIdGetInfiniteQueryOptions =
     TError = HTTPValidationError,
   >(
     sensorType: string,
-    sensorId: string,
+    sensorId: number,
     options?: {
       query?: Partial<
         UseInfiniteQueryOptions<
@@ -450,7 +450,7 @@ export function useGetSensorInfoSensorsSensorTypeSensorIdGetInfinite<
   TError = HTTPValidationError,
 >(
   sensorType: string,
-  sensorId: string,
+  sensorId: number,
   options: {
     query: Partial<
       UseInfiniteQueryOptions<
@@ -479,7 +479,7 @@ export function useGetSensorInfoSensorsSensorTypeSensorIdGetInfinite<
   TError = HTTPValidationError,
 >(
   sensorType: string,
-  sensorId: string,
+  sensorId: number,
   options?: {
     query?: Partial<
       UseInfiniteQueryOptions<
@@ -508,7 +508,7 @@ export function useGetSensorInfoSensorsSensorTypeSensorIdGetInfinite<
   TError = HTTPValidationError,
 >(
   sensorType: string,
-  sensorId: string,
+  sensorId: number,
   options?: {
     query?: Partial<
       UseInfiniteQueryOptions<
@@ -533,7 +533,7 @@ export function useGetSensorInfoSensorsSensorTypeSensorIdGetInfinite<
   TError = HTTPValidationError,
 >(
   sensorType: string,
-  sensorId: string,
+  sensorId: number,
   options?: {
     query?: Partial<
       UseInfiniteQueryOptions<
@@ -571,7 +571,7 @@ export const getGetSensorInfoSensorsSensorTypeSensorIdGetQueryOptions = <
   TError = HTTPValidationError,
 >(
   sensorType: string,
-  sensorId: string,
+  sensorId: number,
   options?: {
     query?: Partial<
       UseQueryOptions<
@@ -616,7 +616,7 @@ export function useGetSensorInfoSensorsSensorTypeSensorIdGet<
   TError = HTTPValidationError,
 >(
   sensorType: string,
-  sensorId: string,
+  sensorId: number,
   options: {
     query: Partial<
       UseQueryOptions<
@@ -643,7 +643,7 @@ export function useGetSensorInfoSensorsSensorTypeSensorIdGet<
   TError = HTTPValidationError,
 >(
   sensorType: string,
-  sensorId: string,
+  sensorId: number,
   options?: {
     query?: Partial<
       UseQueryOptions<
@@ -670,7 +670,7 @@ export function useGetSensorInfoSensorsSensorTypeSensorIdGet<
   TError = HTTPValidationError,
 >(
   sensorType: string,
-  sensorId: string,
+  sensorId: number,
   options?: {
     query?: Partial<
       UseQueryOptions<
@@ -693,7 +693,7 @@ export function useGetSensorInfoSensorsSensorTypeSensorIdGet<
   TError = HTTPValidationError,
 >(
   sensorType: string,
-  sensorId: string,
+  sensorId: number,
   options?: {
     query?: Partial<
       UseQueryOptions<

@@ -30,6 +30,7 @@ import type {
   HomeControlModeResponse,
   HomeControlModeUpdate,
   ToggleDeviceRequest,
+  ToggleOutdoorLightRequest,
 } from '.././model'
 
 import { baseApiRequest } from '../../baseApiRequest'
@@ -504,6 +505,107 @@ export const useToggleDeviceHomeControlToggleDevicePatch = <
 > => {
   const mutationOptions =
     getToggleDeviceHomeControlToggleDevicePatchMutationOptions(options)
+
+  return useMutation(mutationOptions, queryClient)
+}
+/**
+ * @summary Toggle Outdoor Light
+ */
+export const toggleOutdoorLightHomeControlOutdoorToggleDevicePatch = (
+  toggleOutdoorLightRequest: ToggleOutdoorLightRequest,
+) => {
+  return baseApiRequest<unknown>({
+    url: `/home-control/outdoor-toggle-device`,
+    method: 'PATCH',
+    headers: { 'Content-Type': 'application/json' },
+    data: toggleOutdoorLightRequest,
+  })
+}
+
+export const getToggleOutdoorLightHomeControlOutdoorToggleDevicePatchMutationOptions =
+  <TError = HTTPValidationError, TContext = unknown>(options?: {
+    mutation?: UseMutationOptions<
+      Awaited<
+        ReturnType<typeof toggleOutdoorLightHomeControlOutdoorToggleDevicePatch>
+      >,
+      TError,
+      { data: ToggleOutdoorLightRequest },
+      TContext
+    >
+  }): UseMutationOptions<
+    Awaited<
+      ReturnType<typeof toggleOutdoorLightHomeControlOutdoorToggleDevicePatch>
+    >,
+    TError,
+    { data: ToggleOutdoorLightRequest },
+    TContext
+  > => {
+    const mutationKey = [
+      'toggleOutdoorLightHomeControlOutdoorToggleDevicePatch',
+    ]
+    const { mutation: mutationOptions } = options
+      ? options.mutation &&
+        'mutationKey' in options.mutation &&
+        options.mutation.mutationKey
+        ? options
+        : { ...options, mutation: { ...options.mutation, mutationKey } }
+      : { mutation: { mutationKey } }
+
+    const mutationFn: MutationFunction<
+      Awaited<
+        ReturnType<typeof toggleOutdoorLightHomeControlOutdoorToggleDevicePatch>
+      >,
+      { data: ToggleOutdoorLightRequest }
+    > = props => {
+      const { data } = props ?? {}
+
+      return toggleOutdoorLightHomeControlOutdoorToggleDevicePatch(data)
+    }
+
+    return { mutationFn, ...mutationOptions }
+  }
+
+export type ToggleOutdoorLightHomeControlOutdoorToggleDevicePatchMutationResult =
+  NonNullable<
+    Awaited<
+      ReturnType<typeof toggleOutdoorLightHomeControlOutdoorToggleDevicePatch>
+    >
+  >
+export type ToggleOutdoorLightHomeControlOutdoorToggleDevicePatchMutationBody =
+  ToggleOutdoorLightRequest
+export type ToggleOutdoorLightHomeControlOutdoorToggleDevicePatchMutationError =
+  HTTPValidationError
+
+/**
+ * @summary Toggle Outdoor Light
+ */
+export const useToggleOutdoorLightHomeControlOutdoorToggleDevicePatch = <
+  TError = HTTPValidationError,
+  TContext = unknown,
+>(
+  options?: {
+    mutation?: UseMutationOptions<
+      Awaited<
+        ReturnType<typeof toggleOutdoorLightHomeControlOutdoorToggleDevicePatch>
+      >,
+      TError,
+      { data: ToggleOutdoorLightRequest },
+      TContext
+    >
+  },
+  queryClient?: QueryClient,
+): UseMutationResult<
+  Awaited<
+    ReturnType<typeof toggleOutdoorLightHomeControlOutdoorToggleDevicePatch>
+  >,
+  TError,
+  { data: ToggleOutdoorLightRequest },
+  TContext
+> => {
+  const mutationOptions =
+    getToggleOutdoorLightHomeControlOutdoorToggleDevicePatchMutationOptions(
+      options,
+    )
 
   return useMutation(mutationOptions, queryClient)
 }

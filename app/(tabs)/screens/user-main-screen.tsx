@@ -8,13 +8,23 @@ import {
   View,
 } from 'react-native'
 import { router } from 'expo-router'
-import {
-  useGetRoomDevicesRoomsRoomIdDevicesGet,
-  useGetUserRoomsRoomsUserRoomsGet,
-} from '@/shared/api/generated/rooms/rooms'
+import { useGetUserRoomsRoomsUserRoomsGet } from '@/shared/api/generated/rooms/rooms'
 import { useGetLatestOutdoorTemperatureOutdoorTemperatureLatestGet } from '@/shared/api/generated/outdoor-temperature/outdoor-temperature'
+import {
+  getGetLatestOutdoorLightOutdoorLightLatestGetQueryKey,
+  useGetLatestOutdoorLightOutdoorLightLatestGet,
+} from '@/shared/api/generated/outdoor-light/outdoor-light'
+import {
+  getGetHomeControlModeHomeControlModeGetQueryKey,
+  useGetHomeControlModeHomeControlModeGet,
+  useToggleOutdoorLightHomeControlOutdoorToggleDevicePatch,
+  useUpdateHomeControlModeHomeControlModePatch,
+} from '@/shared/api/generated/home-control/home-control'
+import { useQueryClient } from '@tanstack/react-query'
 
 export const UserMainScreen: React.FC = () => {
+  const queryClient = useQueryClient()
+
   const {
     data: rooms,
     isLoading: roomsLoading,
@@ -28,7 +38,23 @@ export const UserMainScreen: React.FC = () => {
   } = useGetLatestOutdoorTemperatureOutdoorTemperatureLatestGet({
     query: { refetchInterval: 10000 },
   })
-  console.log(rooms?.find(room => room.id === 4))
+
+  const {
+    data: outdoorLight,
+    isLoading: lightLoading,
+    error: lightError,
+  } = useGetLatestOutdoorLightOutdoorLightLatestGet({
+    query: { refetchInterval: 10000 },
+  })
+
+  const { mutate: toggleOutdoorLight } =
+    useToggleOutdoorLightHomeControlOutdoorToggleDevicePatch()
+
+  const { data: controlMode } = useGetHomeControlModeHomeControlModeGet()
+
+  const { mutate: updateModeMutation } =
+    useUpdateHomeControlModeHomeControlModePatch()
+
   const [expandedRooms, setExpandedRooms] = useState<number[]>([])
 
   const toggleRoom = (roomId: number) => {
@@ -46,6 +72,43 @@ export const UserMainScreen: React.FC = () => {
   ) => {
     router.push(
       `/sensor/${sensorType}/${sensorId}?room=${encodeURIComponent(roomName)}`,
+    )
+  }
+
+  const handleToggleManualMode = async () => {
+    updateModeMutation(
+      {
+        data: {
+          is_manual: !controlMode?.is_manual,
+        },
+      },
+      {
+        onSuccess: () => {
+          queryClient.invalidateQueries({
+            queryKey: getGetHomeControlModeHomeControlModeGetQueryKey(),
+          })
+        },
+      },
+    )
+  }
+
+  const handleToggleLight = (side: 'front' | 'back', currentState: boolean) => {
+    if (!controlMode?.is_manual) return
+
+    toggleOutdoorLight(
+      {
+        data: {
+          side,
+          is_on: !currentState,
+        },
+      },
+      {
+        onSuccess: () => {
+          queryClient.invalidateQueries({
+            queryKey: getGetLatestOutdoorLightOutdoorLightLatestGetQueryKey(),
+          })
+        },
+      },
     )
   }
 
@@ -83,7 +146,7 @@ export const UserMainScreen: React.FC = () => {
     }
   }
 
-  if (roomsLoading || tempLoading) {
+  if (roomsLoading || tempLoading || lightLoading) {
     return (
       <View style={styles.loadingContainer}>
         <ActivityIndicator size="large" color="#007AFF" />
@@ -92,7 +155,7 @@ export const UserMainScreen: React.FC = () => {
     )
   }
 
-  if (roomError || tempError) {
+  if (roomError || tempError || lightError) {
     return (
       <View style={styles.errorContainer}>
         <Text style={styles.errorTitle}>Ошибка загрузки</Text>
@@ -123,7 +186,7 @@ export const UserMainScreen: React.FC = () => {
       {/* ------------------- Внешняя температура ------------------- */}
       {outdoorTemp && (
         <View style={styles.infoSection}>
-          <Text style={styles.infoTitle}>Температура вокруг дома</Text>
+          <Text style={styles.infoTitle}>Температура снаружи</Text>
           <Text style={styles.infoText}>
             Минимальная: {outdoorTemp.min_temperature}°C
           </Text>
@@ -139,6 +202,67 @@ export const UserMainScreen: React.FC = () => {
               ))}
             </View>
           )}
+        </View>
+      )}
+      {/* ------------------- Освещение снаружи ------------------- */}
+      {outdoorLight && (
+        <View style={styles.infoSection}>
+          <Text style={styles.infoTitle}>Освещение снаружи</Text>
+
+          {outdoorLight.lights.map((item, index) => {
+            const isManual = controlMode?.is_manual
+
+            return (
+              <View key={`${item.side}-${index}`} style={styles.lightRow}>
+                <View>
+                  <Text style={styles.infoText}>
+                    {item.side === 'front' ? 'Передний двор' : 'Задний двор'}
+                  </Text>
+                  <Text style={styles.lightStatus}>
+                    {item.is_on ? 'Включен' : 'Выключен'}
+                  </Text>
+                </View>
+
+                <TouchableOpacity
+                  style={[
+                    styles.lightToggleButton,
+                    item.is_on && styles.lightToggleActive,
+                    !isManual && styles.disabledButton,
+                  ]}
+                  disabled={!isManual}
+                  onPress={() =>
+                    handleToggleLight(item.side as 'front' | 'back', item.is_on)
+                  }
+                >
+                  <Text style={styles.lightToggleText}>
+                    {item.is_on ? 'Выключить' : 'Включить'}
+                  </Text>
+                </TouchableOpacity>
+              </View>
+            )
+          })}
+
+          {/* ---------- Режим управления ---------- */}
+          <View style={{ marginTop: 16 }}>
+            <Text style={styles.infoText}>
+              Активный режим:{' '}
+              {controlMode?.is_manual ? 'Ручной' : 'Автоматический'}
+            </Text>
+
+            <TouchableOpacity
+              style={[
+                styles.manualButton,
+                controlMode?.is_manual && styles.manualButtonActive,
+              ]}
+              onPress={handleToggleManualMode}
+            >
+              <Text style={styles.manualButtonText}>
+                {controlMode?.is_manual
+                  ? 'Автоматический режим'
+                  : 'Ручной режим'}
+              </Text>
+            </TouchableOpacity>
+          </View>
         </View>
       )}
       {/* ------------------- Комнаты и датчики ------------------- */}
@@ -405,5 +529,52 @@ const styles = StyleSheet.create({
     color: '#3B82F6',
     marginBottom: 4,
     lineHeight: 20,
+  },
+  manualButton: {
+    marginTop: 8,
+    backgroundColor: '#007AFF',
+    paddingVertical: 10,
+    borderRadius: 8,
+    alignItems: 'center',
+  },
+
+  manualButtonActive: {
+    backgroundColor: '#34C759',
+  },
+
+  manualButtonText: {
+    color: '#fff',
+    fontWeight: '600',
+  },
+  lightRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginTop: 12,
+  },
+
+  lightStatus: {
+    fontSize: 14,
+    color: '#666',
+  },
+
+  lightToggleButton: {
+    paddingVertical: 8,
+    paddingHorizontal: 14,
+    borderRadius: 8,
+    backgroundColor: '#007AFF',
+  },
+
+  lightToggleActive: {
+    backgroundColor: '#FF9500',
+  },
+
+  lightToggleText: {
+    color: '#fff',
+    fontWeight: '600',
+  },
+
+  disabledButton: {
+    opacity: 0.5,
   },
 })

@@ -19,7 +19,9 @@ export const ApplicationStatusScreen: React.FC = () => {
     data: applications,
     isLoading: isLoadingApplications,
     error: applicationsError,
-  } = useGetMyApplicationsApplicationsMyGet()
+  } = useGetMyApplicationsApplicationsMyGet({
+    query: { refetchInterval: 10000 },
+  })
 
   // Получаем словари для отображения названий комнат и датчиков
   const { data: dictionaries, isLoading: isLoadingDictionaries } =

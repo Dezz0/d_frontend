@@ -140,10 +140,12 @@ export default function UserApplicationsScreen() {
 
                 <View style={styles.applicationInfo}>
                   <Text style={styles.infoText}>
-                    Комнат: {application.rooms.length}
+                    Комнат: {application?.rooms_config?.length ?? 0}
                   </Text>
                   <Text style={styles.infoText}>
-                    Датчиков: {Object.values(application.sensors).flat().length}
+                    Датчиков:{' '}
+                    {application?.rooms_config?.flatMap(room => room.sensor_ids)
+                      .length ?? 0}
                   </Text>
                 </View>
 

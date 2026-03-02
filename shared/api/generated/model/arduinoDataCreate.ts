@@ -12,6 +12,5 @@ import type { SensorData } from './sensorData'
  */
 export interface ArduinoDataCreate {
   room_id: number
-  room_name: string
   sensors: SensorData[]
 }

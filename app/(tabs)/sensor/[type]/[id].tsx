@@ -8,7 +8,7 @@ import {
   View,
 } from 'react-native'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
-import { router, useLocalSearchParams } from 'expo-router'
+import { router, useLocalSearchParams, usePathname } from 'expo-router'
 import { Header } from '@/app/(tabs)/components/header'
 import {
   getGetSensorInfoSensorsSensorTypeSensorIdGetQueryKey,
@@ -24,22 +24,23 @@ import { useQueryClient } from '@tanstack/react-query'
 
 export default function SensorDetailScreen() {
   const insets = useSafeAreaInsets()
-
   const queryClient = useQueryClient()
+  const pathname = usePathname()
 
   const { type: sensorType, id: sensorId } = useLocalSearchParams<{
     type: string
     id: string
   }>()
+
   const { room: roomName } = useLocalSearchParams<{
     room?: string
   }>()
 
   const { data, isLoading, error } =
-    useGetSensorInfoSensorsSensorTypeSensorIdGet(sensorType, sensorId, {
+    useGetSensorInfoSensorsSensorTypeSensorIdGet(sensorType, +sensorId, {
       query: {
         enabled: !!sensorType && !!sensorId,
-        refetchInterval: 5000,
+        refetchInterval: pathname.includes('sensor') ? 5000 : false,
         retry: false,
       },
     })
@@ -97,7 +98,7 @@ export default function SensorDetailScreen() {
           queryClient.invalidateQueries({
             queryKey: getGetSensorInfoSensorsSensorTypeSensorIdGetQueryKey(
               sensorType,
-              sensorId,
+              +sensorId,
             ),
           })
         },
