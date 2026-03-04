@@ -5,8 +5,7 @@
  * API для управления умным домом
  * OpenAPI spec version: 1.0.0
  */
-import type { OutdoorLightData } from './outdoorLightData'
 
 export interface OutdoorLightCreate {
-  lights: OutdoorLightData[]
+  is_on: boolean
 }

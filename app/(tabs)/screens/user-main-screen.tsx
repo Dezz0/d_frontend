@@ -10,21 +10,10 @@ import {
 import { router } from 'expo-router'
 import { useGetUserRoomsRoomsUserRoomsGet } from '@/shared/api/generated/rooms/rooms'
 import { useGetLatestOutdoorTemperatureOutdoorTemperatureLatestGet } from '@/shared/api/generated/outdoor-temperature/outdoor-temperature'
-import {
-  getGetLatestOutdoorLightOutdoorLightLatestGetQueryKey,
-  useGetLatestOutdoorLightOutdoorLightLatestGet,
-} from '@/shared/api/generated/outdoor-light/outdoor-light'
-import {
-  getGetHomeControlModeHomeControlModeGetQueryKey,
-  useGetHomeControlModeHomeControlModeGet,
-  useToggleOutdoorLightHomeControlOutdoorToggleDevicePatch,
-  useUpdateHomeControlModeHomeControlModePatch,
-} from '@/shared/api/generated/home-control/home-control'
-import { useQueryClient } from '@tanstack/react-query'
+import { useGetLatestOutdoorLightOutdoorLightLatestGet } from '@/shared/api/generated/outdoor-light/outdoor-light'
+import { useGetHomeControlModeHomeControlModeGet } from '@/shared/api/generated/home-control/home-control'
 
 export const UserMainScreen: React.FC = () => {
-  const queryClient = useQueryClient()
-
   const {
     data: rooms,
     isLoading: roomsLoading,
@@ -36,24 +25,17 @@ export const UserMainScreen: React.FC = () => {
     isLoading: tempLoading,
     error: tempError,
   } = useGetLatestOutdoorTemperatureOutdoorTemperatureLatestGet({
-    query: { refetchInterval: 10000 },
+    query: { refetchInterval: 5000 },
   })
-
   const {
     data: outdoorLight,
     isLoading: lightLoading,
     error: lightError,
   } = useGetLatestOutdoorLightOutdoorLightLatestGet({
-    query: { refetchInterval: 10000 },
+    query: { refetchInterval: 5000 },
   })
 
-  const { mutate: toggleOutdoorLight } =
-    useToggleOutdoorLightHomeControlOutdoorToggleDevicePatch()
-
   const { data: controlMode } = useGetHomeControlModeHomeControlModeGet()
-
-  const { mutate: updateModeMutation } =
-    useUpdateHomeControlModeHomeControlModePatch()
 
   const [expandedRooms, setExpandedRooms] = useState<number[]>([])
 
@@ -72,43 +54,6 @@ export const UserMainScreen: React.FC = () => {
   ) => {
     router.push(
       `/sensor/${sensorType}/${sensorId}?room=${encodeURIComponent(roomName)}`,
-    )
-  }
-
-  const handleToggleManualMode = async () => {
-    updateModeMutation(
-      {
-        data: {
-          is_manual: !controlMode?.is_manual,
-        },
-      },
-      {
-        onSuccess: () => {
-          queryClient.invalidateQueries({
-            queryKey: getGetHomeControlModeHomeControlModeGetQueryKey(),
-          })
-        },
-      },
-    )
-  }
-
-  const handleToggleLight = (side: 'front' | 'back', currentState: boolean) => {
-    if (!controlMode?.is_manual) return
-
-    toggleOutdoorLight(
-      {
-        data: {
-          side,
-          is_on: !currentState,
-        },
-      },
-      {
-        onSuccess: () => {
-          queryClient.invalidateQueries({
-            queryKey: getGetLatestOutdoorLightOutdoorLightLatestGetQueryKey(),
-          })
-        },
-      },
     )
   }
 
@@ -143,6 +88,21 @@ export const UserMainScreen: React.FC = () => {
         return 'Вентиляция'
       default:
         return 'Датчик'
+    }
+  }
+
+  const getSideMap = (side: string) => {
+    switch (side) {
+      case 'north':
+        return 'Север'
+      case 'west':
+        return 'Запад'
+      case 'south':
+        return 'Юг'
+      case 'east':
+        return 'Восток'
+      default:
+        return ''
     }
   }
 
@@ -197,7 +157,7 @@ export const UserMainScreen: React.FC = () => {
             <View style={{ marginTop: 8 }}>
               {outdoorTemp.temperatures.map((item, index) => (
                 <Text key={`${item.side}-${index}`} style={styles.infoText}>
-                  {item.side}: {item.value}°C
+                  {getSideMap(item.side)}: {item.value}°C
                 </Text>
               ))}
             </View>
@@ -209,38 +169,14 @@ export const UserMainScreen: React.FC = () => {
         <View style={styles.infoSection}>
           <Text style={styles.infoTitle}>Освещение снаружи</Text>
 
-          {outdoorLight.lights.map((item, index) => {
-            const isManual = controlMode?.is_manual
-
-            return (
-              <View key={`${item.side}-${index}`} style={styles.lightRow}>
-                <View>
-                  <Text style={styles.infoText}>
-                    {item.side === 'front' ? 'Передний двор' : 'Задний двор'}
-                  </Text>
-                  <Text style={styles.lightStatus}>
-                    {item.is_on ? 'Включен' : 'Выключен'}
-                  </Text>
-                </View>
-
-                <TouchableOpacity
-                  style={[
-                    styles.lightToggleButton,
-                    item.is_on && styles.lightToggleActive,
-                    !isManual && styles.disabledButton,
-                  ]}
-                  disabled={!isManual}
-                  onPress={() =>
-                    handleToggleLight(item.side as 'front' | 'back', item.is_on)
-                  }
-                >
-                  <Text style={styles.lightToggleText}>
-                    {item.is_on ? 'Выключить' : 'Включить'}
-                  </Text>
-                </TouchableOpacity>
-              </View>
-            )
-          })}
+          <View style={styles.lightRow}>
+            <View>
+              <Text style={styles.infoText}>Свет вне дома</Text>
+              <Text style={styles.lightStatus}>
+                {outdoorLight.is_on ? 'Включен' : 'Выключен'}
+              </Text>
+            </View>
+          </View>
 
           {/* ---------- Режим управления ---------- */}
           <View style={{ marginTop: 16 }}>
@@ -248,20 +184,6 @@ export const UserMainScreen: React.FC = () => {
               Активный режим:{' '}
               {controlMode?.is_manual ? 'Ручной' : 'Автоматический'}
             </Text>
-
-            <TouchableOpacity
-              style={[
-                styles.manualButton,
-                controlMode?.is_manual && styles.manualButtonActive,
-              ]}
-              onPress={handleToggleManualMode}
-            >
-              <Text style={styles.manualButtonText}>
-                {controlMode?.is_manual
-                  ? 'Автоматический режим'
-                  : 'Ручной режим'}
-              </Text>
-            </TouchableOpacity>
           </View>
         </View>
       )}

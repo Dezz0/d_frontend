@@ -7,6 +7,5 @@
  */
 
 export interface ToggleOutdoorLightRequest {
-  side: string
   is_on: boolean
 }

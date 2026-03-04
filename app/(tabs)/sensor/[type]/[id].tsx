@@ -40,7 +40,7 @@ export default function SensorDetailScreen() {
     useGetSensorInfoSensorsSensorTypeSensorIdGet(sensorType, +sensorId, {
       query: {
         enabled: !!sensorType && !!sensorId,
-        refetchInterval: pathname.includes('sensor') ? 5000 : false,
+        refetchInterval: pathname.includes('sensor') ? 1000 : false,
         retry: false,
       },
     })
@@ -78,12 +78,7 @@ export default function SensorDetailScreen() {
 
   const handleToggleDevice = async () => {
     if (!sensorType || !sensorId || !sensorData?.room_id) return
-    console.log('ПЕРЕКЛЮЧЕНИЕ СОСТОЯНИЯ ДАТЧИКА ---', {
-      type: sensorType,
-      room_id: sensorData.room_id,
-      sensor_id: sensorData.id,
-      is_on: !sensorData.is_on,
-    })
+
     toggleDeviceMutation(
       {
         data: {
@@ -139,7 +134,6 @@ export default function SensorDetailScreen() {
         return '📱'
     }
   }
-  console.log('sensorData', sensorData)
 
   const renderSensorData = () => {
     if (!sensorData) return null
@@ -165,7 +159,6 @@ export default function SensorDetailScreen() {
         )
 
       case 'light':
-      case 'ventilation':
         return (
           <View style={styles.sensorDataSection}>
             <Text style={styles.dataLabel}>Состояние:</Text>
@@ -210,6 +203,23 @@ export default function SensorDetailScreen() {
           </View>
         )
 
+      case 'ventilation':
+        return (
+          <View style={styles.sensorDataSection}>
+            <Text style={styles.dataLabel}>Состояние:</Text>
+            <View
+              style={[
+                styles.statusBadge,
+                sensorData.is_on ? styles.statusOn : styles.statusOff,
+              ]}
+            >
+              <Text style={styles.statusText}>
+                {sensorData.is_on ? 'ВКЛЮЧЕН' : 'ВЫКЛЮЧЕН'}
+              </Text>
+            </View>
+          </View>
+        )
+
       case 'gas':
         return (
           <View style={styles.sensorDataSection}>
@@ -235,21 +245,23 @@ export default function SensorDetailScreen() {
         )
 
       case 'humidity':
+        const humidityPercent = Math.round(
+          (sensorData.humidity_level / 1023) * 100,
+        )
+
         return (
           <View style={styles.sensorDataSection}>
             <Text style={styles.dataLabel}>Уровень влажности:</Text>
             <View style={styles.humidityContainer}>
-              <Text style={styles.humidityValue}>
-                {sensorData.humidity_level}%
-              </Text>
+              <Text style={styles.humidityValue}>{humidityPercent}%</Text>
               <View style={styles.humidityBar}>
                 <View
                   style={[
                     styles.humidityFill,
-                    { width: `${Math.min(sensorData.humidity_level, 100)}%` },
-                    sensorData.humidity_level < 30
+                    { width: `${humidityPercent}%` },
+                    humidityPercent < 30
                       ? styles.humidityLow
-                      : sensorData.humidity_level > 70
+                      : humidityPercent > 70
                         ? styles.humidityHigh
                         : styles.humidityNormal,
                   ]}
@@ -352,20 +364,13 @@ export default function SensorDetailScreen() {
           <View style={styles.dataHeader}>
             <Text style={styles.sectionTitle}>Показания</Text>
           </View>
-
-          <View style={styles.lastUpdate}>
-            <Text style={styles.lastUpdateText}>
-              Обновляется каждые 5 секунд
-            </Text>
-          </View>
-
           {renderSensorData()}
         </View>
 
         <View style={styles.infoBox}>
           <Text style={styles.infoBoxTitle}>Справка</Text>
           <Text style={styles.infoBoxText}>
-            • Данные обновляются автоматически каждые 5 секунд
+            • Данные обновляются автоматически
           </Text>
         </View>
       </ScrollView>

@@ -34,8 +34,6 @@ export const ApplicationStatusScreen: React.FC = () => {
   const latestApplication =
     applications && applications.length > 0 ? applications[0] : null
 
-  console.log('ЗАЯВКИ В КОМНАТЕ ---', latestApplication?.rooms_config)
-
   // Подсчет общего количества датчиков из rooms_config
   const totalSensors =
     latestApplication?.rooms_config?.reduce(

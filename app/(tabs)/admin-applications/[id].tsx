@@ -87,8 +87,6 @@ export default function ApplicationDetailScreen() {
       0,
     ) || 0
 
-  console.log('ЗАЯВКА У АДМИНА ---', applicationData?.rooms_config)
-
   return (
     <View
       style={[
